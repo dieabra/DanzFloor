@@ -1,0 +1,105 @@
+﻿@model DanzFloor.Web.Models.ViewModels.PuntoEntregaViewModel
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@using (Html.BeginForm("Create", "PuntoEntrega", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(m => m.Id)
+
+<div class="card z-depth-4">
+    <div class="card-header">
+        <h2>
+            Nuevo Punto de Entrega
+        </h2>
+    </div>
+
+    <div class="card-body card-padding">
+        <div class="row">
+
+            <div class="col-md-6 form-group fg-float m-t-25 m-b-0">
+                <div class="fg-line">
+                    @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control input-sm" } })
+                    @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+                    <label class="fg-label">Nombre</label>
+                </div>
+            </div>
+
+            <div class="col-md-6 form-group m-b-5">
+                <label class="nombre-campo">Cliente</label>
+                <div class="select fg-line">
+                    <select id="ClienteId" name="ClienteId" class="form-control">
+                        @foreach (var cliente in Model.Clientes)
+                        {
+                            <option value="@cliente.Id">@cliente.Nombre</option>
+                        }
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-sm-12 m-b-25">
+                <label class="nombre-campo">Usuarios</label>
+                <select class="chosen" id="UsuariosId" multiple="multiple" name="UsuariosId">
+                    @foreach (var usuario in Model.UsuariosClientes)
+                {
+                        <option value="@usuario.Id">@usuario.NombreYCliente</option>
+                    }
+                </select>
+            </div>
+
+            <div class="col-md-11 form-group  m-b-5">
+                <label class="nombre-campo">Zona</label>
+                <div class="select fg-line">
+                    <select id="ZonaId" name="ZonaId" class="form-control">
+                        @foreach (var zona in Model.Zonas)
+                        {
+                            <option value="@zona.Id">@zona.Nombre</option>
+                        }
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-sm-1 m-t-15 m-b-5">
+                <a href="/Zona/Create" class="btn btn-primary btn-icon waves-effect waves-circle waves-float"><i class="zmdi zmdi-plus"></i></a>
+            </div>
+
+            <div class="col-md-6 form-group fg-float m-t-25 m-b-0">
+                <div class="fg-line">
+                    @Html.EditorFor(model => model.Latitud, new { htmlAttributes = new { @class = "form-control input-sm" } })
+                    @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+                    <label class="fg-label">Latitud</label>
+                </div>
+            </div>
+
+            <div class="col-md-6 form-group fg-float m-t-25 m-b-0">
+                <div class="fg-line">
+                    @Html.EditorFor(model => model.Longitud, new { htmlAttributes = new { @class = "form-control input-sm" } })
+                    @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+                    <label class="fg-label">Longitud</label>
+                </div>
+            </div>
+
+            <div class="col-sm-12 m-b-25 m-t-25">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3286.7777829625934!2d@(Model.Latitud)!3d@(Model.Longitud)!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95bcb6a5e08c840b%3A0xf493186e2107a04c!2sBINIT+SRL!5e0!3m2!1sen!2sar!4v1499109441146" width="100%" height="200" frameborder="0" style="border:0" allowfullscreen></iframe>
+            </div>
+
+        </div>
+
+        <button type="submit" class="btn btn-float bgm-blue m-btn waves-effect waves-circle waves-float"><i class="zmdi zmdi-check"></i></button>
+
+    </div>
+
+</div>
+
+}
+       
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

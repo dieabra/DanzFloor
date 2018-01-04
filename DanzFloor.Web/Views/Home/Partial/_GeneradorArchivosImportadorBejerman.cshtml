@@ -1,0 +1,62 @@
+﻿@model List<DanzFloor.Web.Models.Dominio.Pedido>
+
+
+<div class="col-md-6">
+    <div class="card z-depth-4">
+        <div class="card-header ch-alt">
+            <h2>
+                Importador de archivos
+                @*<small>
+                    Fusce eget dolor id justo luctus commodo vel pharetra nisi. Donec velit
+                    libero
+                </small>*@
+            </h2>
+        </div>
+        <div class="card-body card-padding">
+            <label class="control-label col-md-4">Fecha Publicación</label>
+            <a id="btnImportacion" class="btn btn-default"><i class="zmdi zmdi-search"></i></a>
+            <br />
+            <div class="input-group form-group col-md-5">
+                <span class="input-group-addon"><i class="zmdi zmdi-calendar"></i></span>
+                <div class="dtp-container">
+                    <input type="text" id="fechaimportacion" name="fechaimportacion" class="form-control" placeholder="Click here...">
+                </div>
+            </div>
+           
+            <br />
+            Pedidos para el día @ViewBag.Fecha
+            <div class="pmo-contact">
+                <ul>
+                    <li class="ng-binding"><i class="zmdi zmdi-time"></i> Pendientes: @Model.Where(m=> m.Instancia == DanzFloor.Web.Models.Enum.InstanciaPedido.Pendiente).Count()</li>
+                    <li class="ng-binding"><i class="zmdi zmdi-check"></i> Procesados: @Model.Where(m => m.Instancia == DanzFloor.Web.Models.Enum.InstanciaPedido.Procesando).Count() </li>
+             
+                </ul>
+            </div>
+
+        </div>
+    </div>
+  
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("#fechaimportacion").on('change', 'input', function () {
+            alert("change");
+        });
+
+
+
+
+        //Date
+        $('#fechaimportacion').datetimepicker({
+            format: 'DD/MM/YYYY',
+        });
+
+        $('#btnImportacion').on('click', function () {
+            var fecha = $('#fechaimportacion').val();
+            cargarImportadorArchivos(fecha);
+        });
+
+    });
+    
+</script>

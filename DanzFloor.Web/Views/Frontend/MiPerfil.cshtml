@@ -1,0 +1,208 @@
+﻿@using DanzFloor.Web.Models.ViewModels.Frontend
+@using DanzFloor.Web.Models.Dominio
+
+@model FrontendViewModel
+@{
+    ViewBag.Title = "MiPerfil";
+    Layout = "~/Views/Shared/_LayoutFront.cshtml";
+}
+
+<div class="container">
+    <div class="row margintop30">
+        <div class="col-xs-12">
+            <p class="general-title">Configuración de cuenta</p>  
+        </div>
+    </div>
+    <div class="row margintop10">
+        <div class="col-sm-3">
+            <ul class="nav nav-pills nav-stacked">
+                <li class="active"><a data-toggle="tab" href="#informacionpersonal" class="general-title">Información Personal</a></li>
+                @if (Model.PedidoInicial.UsuarioCliente.EsAdministrador ||
+                    Model.PedidoInicial.UsuarioCliente.EsGerenteSucursal)
+                {
+                    <li><a data-toggle="tab" href="#usuarios" class="general-title">Usuarios</a></li>
+                    <li><a data-toggle="tab" href="#puntosdeventa" class="general-title">Puntos de venta</a></li>
+                }
+                <li><a data-toggle="tab" href="#informaciondecuenta" class="general-title hide">Información de cuenta</a></li>
+                <li><a data-toggle="tab" href="#preferenciasdecontacto" class="general-title hide">Preferencias de contacto</a></li>
+                <li><a data-toggle="tab" href="#contactenos" class="general-title hide">Contáctenos</a></li>
+                <li><a data-toggle="tab" href="#politicasdeprivacidad" class="general-title hide">Políticas de privacidad</a></li>
+            </ul>
+        </div>
+        <div class="col-sm-9 col-md-8 col-md-offset-1">
+            <div class="tab-content">
+                
+                <div id="informacionpersonal" role="tabpanel" class="tab-pane fade in active">
+                    <h3 class="clearmargin hidden-xs">Información Personal</h3>
+
+                    <div class="panel panel-default margintop20">
+                        <div class="panel-body brandon">
+                            <div class="">
+                                <div class="general-title">Email:</div>
+                                <span>@Model.PedidoInicial.UsuarioCliente.Email</span>
+                            </div>
+
+                            <div class="margintop20">
+                                <div class="general-title">Nombre:</div>
+                                    <span>@Model.PedidoInicial.UsuarioCliente.Nombre</span>
+                                </div>
+
+                            <div class="margintop20">
+                                <div class="general-title">Apellido:</div>
+                                <span>@Model.PedidoInicial.UsuarioCliente.Apellido</span>
+                            </div>
+
+                            <div class="margintop20">
+                                <div class="general-title"> Rol:</div>
+                                <span>
+                                    @(Model.PedidoInicial.UsuarioCliente.EsAdministrador ? "Administrador" :
+                                        Model.PedidoInicial.UsuarioCliente.EsGerenteSucursal ? "Gerente sucursal" : "Usuario")
+                                </span>
+                            </div>
+
+                            <hr />
+
+                            <div class="margintop20">
+                                <div class="general-title">Cliente:</div>
+                                <span>@Model.PedidoInicial.Cliente.Nombre</span>
+                            </div>
+
+                            <div class="margintop20">
+                                <div class="general-title">Razón social:</div>
+                                <span>@Model.PedidoInicial.Cliente.RazonSocial</span>
+                            </div>
+
+                            <div class="margintop20">
+                                <div class="general-title"> Puntos de Entrega:</div>
+                                @foreach (var item in Model.PuntosEntregaUsuarioActual())
+                                {
+                                    <span>@item.NombreYDireccion</span>
+                                }
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div id="usuarios" class="tab-pane fade in" role="tabpanel">
+                    <hr class="visible-xs" />
+                    <div class="pull-left">
+                        <h3 class="clearmargin hidden-xs">Usuarios</h3>
+                        <div class="general-title margintop20 hidden-xs">Cliente</div>
+                        <div class="general-title visible-xs">Cliente</div>
+                        <div class="black brandonMd marginbottom15">@Model.PedidoInicial.Cliente.RazonSocial</div>
+                    </div>
+                    @if (Model.PedidoInicial.UsuarioCliente.EsAdministrador)
+                    {
+                        <div class="pull-right-left">
+                            <a href="/Frontend/AltaUsuario" class="btn btn-primary btn-sm">Nuevo usuario</a>
+                        </div>
+                    }
+                    <div class="clearfix"></div>
+                    <hr class="visible-xs" />
+                    
+                    <div class="margintop-20"></div>
+                    <div class="table-responsive">
+                        <table id="data-table-usuario" class="table table-pedidos table-perfil">
+                            <thead>
+                                <tr>
+                                    <th data-column-id="Id" data-visible="false" data-searchable="false">Id</th>
+                                    <th data-column-id="NOMBRE">NOMBRE</th>
+                                    <th data-column-id="ROL">ROL</th>
+                                    @*<th data-column-id="INGRESO">ÚLTIMO INGRESO</th>*@
+                                    <th data-column-id="commands" data-formatter="commands" data-sortable="false">
+                                        ACCIONES
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.Usuarios)
+                                {
+                                    <tr>
+                                        <td>@item.Id</td>
+                                        <td>@item.NombreYApellido</td>
+                                        <td>@(item.EsAdministrador ? "Administrador": item.EsGerenteSucursal ? "Gerente sucursal": "Usuario")</td>
+                                        @*<td>XX/XX/XXXX <span>XX:XX</span> hs</td>*@
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="puntosdeventa" role="tabpanel" class="tab-pane fade in ">
+                    <hr class="visible-xs" />
+                    <h3 class="clearmargin hidden-xs">Punto de Venta</h3>
+                    <div class="general-title margintop20 hidden-xs">Cliente</div>
+                    <div class="general-title visible-xs">Cliente</div>
+                    <div class="black brandonMd marginbottom15">@Model.PedidoInicial.Cliente.RazonSocial</div>
+
+                    <hr class="visible-xs" />
+
+                    <div class="margintop-20"></div>
+                    <div class="table-responsive">
+                        <table id="data-table-punto-entrega" class="table table-pedidos table-perfil">
+                            <thead>
+                                <tr>
+                                    <th data-column-id="Id" data-visible="false" data-searchable="false">Id</th>
+                                    <th data-column-id="NOMBRE">NOMBRE</th>
+                                    <th data-column-id="DIRECCION">DIRECCIÓN</th>
+                                    <th data-column-id="LOCALIDAD">LOCALIDAD</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.PuntosEntrega)
+                                {
+                                    <tr>
+                                        <td>@item.Id</td>
+                                        <td>@item.Nombre</td>
+                                        <td>@item.Direccion</td>
+                                        <td>@item.Localidad</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <div id="informaciondecuenta" role="tabpanel" class="tab-pane fade">
+                    <h3 class="clearmargin">Información De Cuenta</h3>
+                </div>
+
+
+                <div id="preferenciasdecontacto" role="tabpanel" class="tab-pane fade">
+                    <h3 class="clearmargin">Preferencias de Contacto</h3>
+                </div>
+
+
+                <div id="contactenos" role="tabpanel" class="tab-pane fade">
+                    <h3 class="clearmargin">Contactenos</h3>
+                </div>
+
+
+                <div id="politicasdeprivacidad" role="tabpanel" class="tab-pane fade">
+                    <h3 class="clearmargin">Políticas de privacidad</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr class="marginbottom0 footer-line">
+<script src="~/Scripts/Frontend/BootgridPuntoEntrega.js"></script>
+@if (Model.PedidoInicial.UsuarioCliente.EsAdministrador)
+{
+    <script src="~/Scripts/Frontend/BootgridUsuario.js"></script>
+}
+else if (Model.PedidoInicial.UsuarioCliente.EsGerenteSucursal)
+{
+    <script src="~/Scripts/Frontend/BootgridUsuarioRestringido.js"></script>
+}
+<script type="text/javascript">
+    setTimeout(function () {
+        $('[data-page=first]').remove();
+        $('[data-page=prev]').append('<span>«</span>');
+        $('[data-page=next]').append('<span>»</span>');
+        $('[data-page=last]').remove();
+    }, 1000);
+</script>

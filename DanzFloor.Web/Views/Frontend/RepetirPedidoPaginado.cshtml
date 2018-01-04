@@ -1,0 +1,37 @@
+﻿@using DanzFloor.Web.Models.ViewModels.Frontend
+
+@model RepetirPedidoViewModel
+
+@{
+    Layout = null;
+}
+
+
+@if (!Request.Browser.IsMobileDevice)
+{
+    foreach (var item in Model.Pedidos)
+    {
+        Html.RenderPartial("~/Views/Frontend/Partial/_ItemRepetirPedido.cshtml", item);
+    }
+    //if (ViewBag.MaxPaginas >= (ViewBag.Pagina + 1))
+    //{
+
+        <a class="next-selector" href="@Url.Action("RepetirPedidoPaginado", "Frontend", new { pagina = (ViewBag.Pagina + 1) })"></a>
+
+    //}
+}
+
+@if (Request.Browser.IsMobileDevice)
+{
+    foreach (var item in Model.Pedidos)
+    {
+        Html.RenderPartial("~/Views/Frontend/Partial/_ItemRepetirPedidoMobile.cshtml", item);
+    }
+    if (ViewBag.MaxPaginas >= (ViewBag.Pagina + 1))
+    {
+
+        <a class="next-selector" href="@Url.Action("RepetirPedidoPaginado", "Frontend", new { pagina = (ViewBag.Pagina + 1) })"></a>
+
+    }
+
+}

@@ -1,0 +1,66 @@
+﻿@using DanzFloor.Web.Models;
+@using System.Linq;
+@model  List<Vendedor>
+@{
+    ViewBag.Title = "Busqueda de Usuarios";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card z-depth-4">
+    <div class="card-header">
+        <h2>
+            Usuarios Comerciales
+        </h2>
+    </div>
+    
+    <div class="table-responsive">
+        <table id="data-table-basic-vendedor" class="table table-striped">
+            <thead>
+                <tr>
+                    <th data-column-id="Id" data-visible="false" data-searchable="false">Id</th>
+                    <th data-column-id="Email">Email</th>
+                    <th data-column-id="Nombre">Nombre</th>
+                    <th data-column-id="Direccion">Dirección</th>
+                    <th data-column-id="Localidad">Localidad</th>
+                    <th data-column-id="Telefono">Telefono</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var usuario in Model)
+                {
+                    <tr>
+                        <td>@usuario.Id</td>
+                        <td>@usuario.Email</td>
+                        <td>@usuario.Nombre</td>
+                        <td>@usuario.Domicilio</td>
+                        <td>@usuario.Localidad</td>
+                        <td>@usuario.Telefono</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+@section Scripts {
+    @if (Request.Params["Message"] == "UpdateUserSuccess")
+    {
+        <script>
+            swal("Buen trabajo!", "El Usuario ha sido actualizado", "success");
+        </script>
+    }
+    @if (Request.Params["Message"] == "UpdateUserError")
+    {
+        <script>
+            swal("No se realizo la modificación!", "El Usuario no ha sido actualizado", "error");
+        </script>
+    }
+    @if (Request.Params["Message"] == "DeleteUserSuccess")
+    {
+        <script>
+            swal("Se elimino un vendedor", "", "warning");
+        </script>
+    }
+    
+}
+<script src="~/Scripts/BootgridVendedor.js"></script>

@@ -1,0 +1,250 @@
+﻿@model DanzFloor.Web.Models.ViewModels.PuntoEntregaViewModel
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@using (Html.BeginForm("Edit", "PuntoEntrega", FormMethod.Post, new { id= "form"}))
+{
+    @Html.AntiForgeryToken()
+
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="card z-depth-4">
+        <div class="card-header">
+            <h2>
+                Punto de Entrega
+            </h2>
+        </div>
+
+        <div class="card-body card-padding">
+            <div class="row">
+
+                <div class="col-md-6 form-group fg-float m-t-25 m-b-0">
+                    <div class="fg-line">
+                        @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control input-sm", @disabled= "disabled" } })
+                        @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+                        <label class="fg-label">Nombre</label>
+                    </div>
+                </div>
+
+                <div class="col-md-6 form-group m-b-5">
+                    <label class="nombre-campo">Cliente</label>
+                    <div class="select fg-line">
+                        <select disabled="disabled" id="ClienteId" name="ClienteId" class="form-control">
+                            @foreach (var cliente in Model.Clientes)
+                            {
+                                if (cliente.Id == Model.ClienteId)
+                                {
+                                    <option selected="selected" value="@cliente.Id">@cliente.Nombre</option>
+                                }
+                                else
+                                {
+                                    <option value="@cliente.Id">@cliente.Nombre</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+
+
+                <div class="col-md-6 form-group fg-float m-t-25 m-b-0">
+                    <div class="fg-line">
+                        @Html.EditorFor(model => model.Direccion, new { htmlAttributes = new { @class = "form-control input-sm", @disabled = "disabled" } })
+                        @Html.ValidationMessageFor(model => model.Direccion, "", new { @class = "text-danger" })
+                        <label class="fg-label">Direccion</label>
+                    </div>
+                </div>
+
+                <div class="col-md-6 form-group fg-float m-t-25 m-b-0">
+                    <div class="fg-line">
+                        @Html.EditorFor(model => model.Localidad, new { htmlAttributes = new { @class = "form-control input-sm" } })
+                        @Html.ValidationMessageFor(model => model.Localidad, "", new { @class = "text-danger" })
+                        <label class="fg-label">Localidad</label>
+                    </div>
+                </div>
+
+                <div class="col-sm-6 form-group m-b-5">
+                    <label class="nombre-campo">Usuarios</label>
+                    <select class="chosen" id="UsuariosId" multiple="multiple" name="UsuariosId">
+                        @foreach (var usuario in Model.UsuariosClientes)
+                        {
+                            if (Model.UsuariosId.Contains(usuario.Id))
+                            {
+                                <option selected="selected" value="@usuario.Id">@usuario.NombreYCliente</option>
+                            }
+                            else
+                            {
+                                <option value="@usuario.Id">@usuario.NombreYCliente</option>
+                            }
+                        }
+                    </select>
+                    @Html.ValidationMessageFor(model => model.UsuariosId, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="col-md-6 form-group  m-b-5">
+                    <label class="nombre-campo">Zona</label>
+                    <div class="select fg-line">
+                        <select id="ZonaId" name="ZonaId" class="form-control">
+                            <option>Seleccione...</option>
+                            @foreach (var zona in Model.Zonas)
+                            {
+                                if (zona.Id == Model.ZonaId)
+                                {
+                                    <option selected="selected" value="@zona.Id">@zona.Nombre</option>
+                                }
+                                else
+                                {
+                                    <option value="@zona.Id">@zona.Nombre</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    @Html.ValidationMessageFor(model => model.ZonaId, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="col-md-6 form-group fg-float m-t-25 m-b-0">
+                    <div class="fg-line">
+                        @Html.EditorFor(model => model.Latitud, new { htmlAttributes = new { @class = "form-control input-sm" } })
+                        @Html.ValidationMessageFor(model => model.Latitud, "", new { @class = "text-danger" })
+                        <label class="fg-label">Latitud</label>
+                    </div>
+                </div>
+
+                <div class="col-md-6 form-group fg-float m-t-25 m-b-0">
+                    <div class="fg-line">
+                        @Html.EditorFor(model => model.Longitud, new { htmlAttributes = new { @class = "form-control input-sm" } })
+                        @Html.ValidationMessageFor(model => model.Longitud, "", new { @class = "text-danger" })
+                        <label class="fg-label">Longitud</label>
+                    </div>
+                </div>
+                
+                <div mapa-iframe class="col-sm-12 m-b-25 m-t-25">
+                    <iframe  src="" width="100%" height="200" frameborder="0" style="border:0" allowfullscreen></iframe>
+                </div>
+
+                <div class="col-sm-12 m-b-20">
+
+                    <div class="table-responsive">
+                        <table id="tabla" class="table table-condensed">
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Día/s Semanales</th>
+                                    <th>Desde</th>
+                                    <th>Hasta</th>
+                                    <th style="text-align:left">
+                                        <a href="/DiaEntrega/Create/?puntoEntregaId=@Model.Id" class="btn btn-primary btn-icon waves-effect waves-circle waves-float left"><i class="zmdi zmdi-plus"></i></a>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var diaEntrega in Model.DiasEntrega.Where(x => !x.Eliminado))
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => diaEntrega.Nombre)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => diaEntrega.DiaFormateado)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => diaEntrega.HoraDesdeFormateada)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => diaEntrega.HoraHastaFormateada)
+                                        </td>
+                                        <td>
+                                            <a eliminar-dia-entrega="@diaEntrega.Id" class="btn btn-default btn-icon waves-effect waves-circle waves-float"><i class="zmdi zmdi-close"></i></a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+
+            <button type="button" id="btnGuardar" class="btn btn-float bgm-blue m-btn waves-effect waves-circle waves-float"><i class="zmdi zmdi-check"></i></button>
+
+        </div>
+
+    </div>
+    
+}
+
+
+<script type="text/javascript">
+   
+    $("#btnGuardar").click(function () {
+        var rowCount = 0;
+        var id = '@Model.Id';
+        $.ajax({
+            dataType: 'json',
+            type: 'GET',
+            url: window.location.origin + '/PuntoEntrega' + '/VerificarFechasPuntoEntrega/' + id,
+            success: function (count) {
+                if (count < 2)
+                {
+                    swal({
+                        title: "Está por guardar un punto de entrega sin fechas posibles de entrega ¿Está seguro?",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#DD6B55",
+                        confirmButtonText: "Sí",
+                        cancelButtonText: "No",
+                        closeOnConfirm: false
+                    }, function () {
+                        document.getElementById("form").submit();
+                    });
+                }
+                else
+                    document.getElementById("form").submit();
+
+            },
+            error: function (error) {
+            }
+        });
+    });
+
+</script>
+
+<script type="text/javascript">
+    var CargarMapa = function (latitud, longitud) {
+        var src = 'http://maps.google.com/?q=' + latitud + ',' + longitud + '&key=AIzaSyDSR7uWWIfhVuawiNx6n56YAsl4SgwKZ-s&output=embed';
+
+        $('[mapa-iframe]').html('<iframe  src="' + src + '" width="100%" height="200" frameborder="0" style="border:0" allowfullscreen></iframe>');
+    }
+    $(document).ready(function () {
+        $('#Latitud').keyup(function () {
+            CargarMapa($(this).val(), $('#Longitud').val());
+        });
+
+        $('#Longitud').keyup(function () {
+            CargarMapa($('#Latitud').val(), $(this).val());
+        });
+
+        CargarMapa($('#Latitud').val(), $('#Longitud').val());
+
+        $('[eliminar-dia-entrega]').click(function () {
+            var diaEntregaId = $(this).attr('eliminar-dia-entrega');
+            var boton = $(this);
+            
+            $.ajax({
+                dataType: 'json',
+                type: 'GET',
+                url: core + '/DiaEntrega/Eliminar/' + diaEntregaId,
+                success: function (result) {
+                    boton.parent().parent().remove();
+                },
+                error: function (ex) {
+                    swal("Ha ocurrido un inconveniente", "Contactese con el administrador.", "error");
+                },
+            });
+
+        })
+    });
+</script>

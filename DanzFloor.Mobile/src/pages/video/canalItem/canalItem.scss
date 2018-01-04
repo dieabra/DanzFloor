@@ -1,0 +1,56 @@
+.item-ios{
+	.channel-title{
+		font-size: 1.5rem;
+		margin-bottom: 0;
+	}
+	.channel-subtitle{
+		font-size: 1.3rem;
+	}
+}
+
+.btn-followers{
+	font-size: 1.5rem;
+	text-align: right;
+	position: relative;
+	height: 3.3em;
+	padding: 0 19px;
+	border: 1px solid #e9e9e9;
+	.text-button{
+		display: block;
+		margin-left: -3px;
+	}
+	.followers{
+		font-size: 1.3rem;
+		color: #8e9093;
+	}
+	ion-icon{
+		color: #F8C1DB;
+	    padding-left: 22px;
+    	margin-right: -6px;
+    	margin-top: -2px;
+    	font-size: 1.6em;
+	}
+	.divider-followers{
+		position: absolute;
+	    top: 0;
+	    bottom: 0;
+	    width: 1px;
+	    background: #e9e9e9;
+	    right: 45px;
+	}
+	&.activated{
+		background-color: #f6f6f6;
+	}
+}
+
+.description-channel{
+	margin-top: 0;
+	margin-bottom: 10px;
+}
+
+.content-ios{
+	.divider-card{
+		background-color: #e9e9e9;
+		margin: 0;
+	}
+}

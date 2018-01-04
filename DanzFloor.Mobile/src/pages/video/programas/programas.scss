@@ -1,0 +1,67 @@
+div#scroll{
+    white-space: nowrap;
+    overflow-x: scroll;
+
+    .scroll-item-box{
+        display: inline-block;
+        margin: 0 4px;
+        &:first-child{
+        	margin-left: 12px;
+        }
+        &:last-child{
+            margin-right: 12px;
+        }
+        p{
+            margin-top: 10px;
+            color: #262626;
+        }
+    }
+    div#scroll-item{
+        img{
+            height: 100%;
+        }
+    } 
+}
+
+.profile-item{
+	div#scroll{
+        display: flex;
+        align-items: flex-start;
+        .scroll-item-box{
+            width: 100px;
+            white-space: normal;
+            &:first-child{
+                margin-left: 16px;
+            }
+            p{
+                margin-top: 10px;
+                color: #262626;
+            }
+        }
+	    div#scroll-item{
+	    	height: 70px;
+	    	width: 70px;
+            overflow: hidden;
+            border-radius: 50%;
+            &:first-child{
+                margin-left: 0;
+            }
+	        img{
+	        	height: 70px;
+	        	width: 70px;
+	        }
+	    } 
+	}
+}
+
+.loading-program{
+    height: 160px;    
+    width: 111px;
+    background-color: #ccc;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.margintop10{
+    margin-top: 10px;
+}

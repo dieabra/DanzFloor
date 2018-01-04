@@ -1,0 +1,100 @@
+﻿@model DanzFloor.Web.Models.ViewModels.Backend.PuntoEntregaContactarViewModel
+
+
+@{
+    ViewBag.Title = "Contactar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="card z-depth-4">
+    <div class="card-header">
+        <h2>
+            Puntos de Entrega a Contactar
+        </h2>
+        <ul class="actions">
+            <li>
+                <a href="/PuntoEntrega/ExcelContactarPuntoEntrega">
+                    <i class="zmdi zmdi-download"></i>
+                </a>
+            </li>
+            <li>
+                <a contactar-usuarios style="cursor:pointer">
+                    <i class="zmdi zmdi-mail-send"></i>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+
+    <div class="table-responsive">
+        <table id="data-table-basic-cliente" class="table table-striped">
+            <thead>
+                <tr>
+                    <th data-column-id="Id" data-visible="false" data-searchable="false" class="hidden">Id</th>
+                    <th data-column-id="Cliente">Cliente</th>
+                    <th data-column-id="PuntoEntrega">Punto de Entrega</th>
+                    <th data-column-id="Direccion">Direccion</th>
+                    <th data-column-id="UltimoPedido">último pedido</th>
+                    <th data-column-id="Telefono">Telefono</th>
+                    <th data-column-id="Email">Email</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Listado)
+                {
+                    <tr>
+                        <td class="hidden">@item.PuntoEntregaID</td>
+                        <td>@item.Cliente</td>
+                        <td>@item.NombrePuntoEntrega</td>
+                        <td>@item.Direccion</td>
+                        <td>@item.FechaUltimoPedido.ToShortDateString()</td>
+                        <td>@(item.Telefonos.Count() > 0 ? item.Telefonos.Select(i => i).Aggregate((i, j) => i + ", " + j) : "-")</td>
+                        <td>@(item.Mails.Count() > 0 ? item.Mails.Select(i => i).Aggregate((i, j) => i + ", " + j) : "-")</td>
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script src="~/Scripts/BootgridCliente.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('[contactar-usuarios]').click(function () {
+            swal({
+                title: "Se enviará un mail a todos los usuarios del listado.",
+                text: "¿Está seguro que desea continuar?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Sí",
+                cancelButtonText: "No",
+                closeOnConfirm: false
+            }, function () {
+
+                swal({
+                    title: 'Se ha iniciado el envío masivo',
+                    text: "Este proceso puede demorar unos minutos.",
+                    timer: 2000
+                });
+
+                $.ajax({
+                    dataType: 'json',
+                    type: 'POST',
+                    url: window.location.origin + '/Proceso/ContactarPorMailVenta',
+                    success: function (result) {
+                        swal("¡Proceso Finalizado!", "El proceso de envía ha finalizado exitosamente.", "success");
+                    },
+                    error: function (error) {
+                        swal("¡Ups!", "Ha ocurrido un incidente, contactese con el administrador.", "error");
+                    }
+                });
+            });
+        });
+    });
+</script>

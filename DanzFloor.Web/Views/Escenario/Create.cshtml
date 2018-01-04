@@ -1,0 +1,52 @@
+﻿@model DanzFloor.Web.Models.Dominio.Escenario
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="card z-depth-4">
+    <div class="card-header">
+        <h2>
+            Nuevo Escenario
+        </h2>
+    </div>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="card-body card-padding">
+
+            <div class="row">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.Id)
+
+
+                <div class="col-md-6 form-group fg-float m-b-15">
+                    <div class="fg-line">
+                        @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control input-sm" } })
+                        @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+                        <label class="fg-label">Nombre</label>
+                    </div>
+                </div>
+
+                <div class="col-sm-6 m-b-20">
+                    <div class="toggle-switch toggle-switch-demo" data-ts-color="blue">
+                        <label for="Habilitado" class="ts-label">Habilitado</label>
+                        <input @(Model.Habilitado ? "checked='checked'" : "") data-val="true"
+                               data-val-required="The Es administrador field is required."
+                               id="Habilitado" name="Habilitado" type="checkbox" value="true" hidden="hidden" chk-alerta>
+                        <label for="Habilitado" class="ts-helper"></label>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-float bgm-blue m-btn waves-effect waves-circle waves-float"><i class="zmdi zmdi-check"></i></button>
+
+        </div>
+    }
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

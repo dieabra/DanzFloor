@@ -1,0 +1,132 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="EducacionBA.web.Models.Entidad" Collapsed="true">
+    <Position X="15.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAiAAAAIAABAAAAAAAAgAAEAAAAAIAAAACAAAAAAAA=</HashCode>
+      <FileName>Models\Dominio\_Entidad.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="EducacionBA.web.Models.EntidadComparer" Collapsed="true">
+    <Position X="32.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAgAAAAAAAAAAAAIAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Dominio\_Entidad.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="EducacionBA.web.Models.Persona" Collapsed="true">
+    <Position X="13" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAACAAAAAEkAAAAAAAAAEAAAAAAAAEAggAAAA=</HashCode>
+      <FileName>Models\Dominio\_Persona.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EducacionBA.web.Models.Alumno" Collapsed="true">
+    <Position X="14" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Dominio\Alumno.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EducacionBA.web.Models.Archivo" Collapsed="true">
+    <Position X="25.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAABA=</HashCode>
+      <FileName>Models\Dominio\Archivo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EducacionBA.web.Models.Curso" Collapsed="true">
+    <Position X="0.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAAACAAAAACAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Models\Dominio\Curso.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EducacionBA.web.Models.Dimension" Collapsed="true">
+    <Position X="7.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAEABAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Dominio\Dimension.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EducacionBA.web.Models.Empleado" Collapsed="true">
+    <Position X="11.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Dominio\Empleado.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EducacionBA.web.Models.Establecimiento" Collapsed="true">
+    <Position X="20.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Dominio\Establecimiento.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EducacionBA.web.Models.Funcion" Collapsed="true">
+    <Position X="27.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Dominio\Funcion.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EducacionBA.web.Models.Informe" Collapsed="true">
+    <Position X="2.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAEAAAAARAAAAAAQAIAIAA=</HashCode>
+      <FileName>Models\Dominio\Informe.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EducacionBA.web.Models.Justificacion" Collapsed="true">
+    <Position X="16.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAACAAAAAAAAEABAAABgAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Dominio\Justificacion.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EducacionBA.web.Models.RegistroAsistencia" Collapsed="true">
+    <Position X="23" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIQAAAAEAAAAAAABAAAAgAAAAACAAAAAAAAA=</HashCode>
+      <FileName>Models\Dominio\RegistroAsistencia.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EducacionBA.web.Models.Sexo" Collapsed="true">
+    <Position X="29.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Dominio\Sexo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EducacionBA.web.Models.TipoJustificacion" Collapsed="true">
+    <Position X="5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAA=</HashCode>
+      <FileName>Models\Dominio\TipoJustificacion.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EducacionBA.web.Models.Turno" Collapsed="true">
+    <Position X="9.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Dominio\Turno.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EducacionBA.web.Models.VersionMobile" Collapsed="true">
+    <Position X="18.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAACAAAAAACAAAAAAAAAAAAAAEA=</HashCode>
+      <FileName>Models\Dominio\VersionMobile.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="EducacionBA.web.Models.EnumEstadoInforme" Collapsed="true">
+    <Position X="32.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>Models\Dominio\Informe.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

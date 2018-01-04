@@ -1,0 +1,22 @@
+﻿@using DanzFloor.Web.Models
+@model DanzFloor.Web.Models.ViewModels.Frontend.IndexViewModel
+    @if (Model.Destacado != null)
+    {
+        <div class="sdp-hero" style="background-image: url('@Archivo.ObtenerUrlArchivo(Model.Destacado.Archivos, TipoEntidadConst.DESTACADO, "Imagen Principal")')">
+            @*<div class="gradient"></div>*@
+            @*<img src="~/assets/SdP/Frontend/img/id-levain.png" alt="Alternate Text" class="img-responsive img-logo-hero visible-xs"/>*@
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-5 col-sm-offset-1 col-md-5 col-md-offset-0">
+                        <h3 class="sdp-hero-title">@Model.Destacado.Titulo</h3>
+                        <p class="font24 hidden-xs">
+                            @Model.Destacado.Descripcion
+                        </p>
+                        <a href="@Model.Destacado.Link" class="@(string.IsNullOrEmpty(Model.Destacado.NombreLink) ? "hidden" : "") btn btn-primary btn-lg btn-outlined make-order">
+                            @Model.Destacado.NombreLink
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }

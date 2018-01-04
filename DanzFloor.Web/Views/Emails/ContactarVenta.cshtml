@@ -1,0 +1,178 @@
+﻿@using DanzFloor.Web.Models.Dominio
+@using DanzFloor.Web.Models
+
+@{
+    var Recomendados = ViewBag.Recomendados;
+
+    Layout = null;
+}
+
+To: @ViewBag.To
+From: do-not-reply@sapore-di-pane.com.ar
+Subject: Confirmación de compra
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+    <!-- This is a simple example template that you can edit to create your own custom templates -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!-- Facebook sharing information tags -->
+    <title>Sapore Di Pane</title>
+    <link rel="shortcut icon" type="image/png" href="http://pos-sdp.binit.cloud/assets/SdP/Frontend/img/id-sapore.png" />
+    <style type="text/css">
+        /* NOTE: CSS should be inlined to avoid having it stripped in certain email clients like GMail.
+        MailChimp automatically inlines CSS for you or you can use this tool: http://beaker.mailchimp.com/inline-css. */
+
+        /* Client-specific Styles */
+        #outlook a {
+            padding: 0;
+        }
+        /* Force Outlook to provide a "view in browser" button. */
+        body {
+            width: 100% !important;
+        }
+        /* Force Hotmail to display emails at full width */
+        body {
+            -webkit-text-size-adjust: none;
+        }
+        /* Prevent Webkit platforms from changing default text sizes. */
+
+        /* Reset Styles */
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        img {
+            border: none;
+            font-size: 14px;
+            font-weight: bold;
+            height: auto;
+            line-height: 100%;
+            outline: none;
+            text-decoration: none;
+            text-transform: capitalize;
+        }
+
+        #backgroundTable {
+            height: 100% !important;
+            margin: 0;
+            padding: 0;
+            width: 100% !important;
+        }
+    </style>
+</head>
+
+
+
+
+
+<body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0" offset="0" style="background-color:#FFF;border:0px none; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;">
+    <table class="" border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" style="padding:0px;margin:0px 0 0; background-color: #fff;">
+        <tbody>
+            <tr>
+                <td align="center" valign="top">
+                    <table id="" border="0" cellpadding="0" cellspacing="0" width="560" style="background-color: #fff; padding: 0 15px;">
+                        <tr>
+                            <td>
+                                <table id="" border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #fff;">
+                                    <tbody>
+                                        <tr>
+                                            <td width="110" align="left" valign="bottom">
+                                                <div style="padding: 15px 0;">
+                                                    <a href="http://www.sapore-di-pane.com.ar/" target="_blank"><img src="http://pos-sdp.binit.cloud/assets/SdP/Frontend/img/id-sapore.png" width="110" border="0" /></a>
+                                                </div>
+                                            </td>
+                                            <td align="right" valign="bottom">
+                                                <div>
+                                                    <p style="font-size: 18px; font-weight: 500;">Recordatorio de Pedido</p>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <div style="border-bottom:1px solid #ddd;"></div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <div style="color:#505050;font-size:15px;line-height:135%;text-align:left; padding: 30px 0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;">
+                                    Hola,
+                                    <br /><br />
+                                    Le recordamos que puede generar su pedido en nuestro canal de venta on line @System.Configuration.ConfigurationManager.AppSettings["Core"]
+                                    <br /><br />
+                                    Le deseamos una excelente jornalda y esperamos verle muy pronto.
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <table class="" border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" style="padding:0px;margin:30px 0; background-color:#fff;">
+                                    <tbody>
+                                        <tr style="text-align: center;">
+                                            <td colspan="3" style="font-size: 20px;letter-spacing: 0.05em;color: #c1a17d;font-weight: 600; margin-top: 10px;text-align: center;text-transform: uppercase;">
+                                                Te recomendamos que pruebes los productos de selección
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            @foreach (var item in Recomendados)
+                                            {
+                                                <td width="146" valign="top" style="padding:15px;font-size: 13px; font-weight: normal; margin-top: 10px;text-align: center;text-transform: uppercase;">
+                                                    <div style="height: 140px;">
+                                                        <img src="http://pos-sdp.binit.cloud/assets/SdP/Frontend/img/id-sapore-bw.jpg" width="146" border="0" />
+                                                    </div>
+                                                    <div style="margin-top: 5px;">@item.Producto.Nombre</div>
+                                                </td>
+                                            }
+                                        </tr>
+
+                                        <tr>
+                                            @foreach (var item in Recomendados)
+                                            {
+
+                                                <td valign="top" align="center">
+                                                    <a href="@(System.Configuration.ConfigurationManager.AppSettings["Core"] + "/Fronted/DetalleArticulo/" + item.Id)" style="text-align: center;text-transform: uppercase;padding:5px 16px 6px;font-size: 13px;background-color: #c1a17d;color: #fff;border: 1px solid #c1a17d;text-decoration: none;border-radius: 6px; font-weight: 500; display: inline-block; margin-top: 10px; margin-top:10px;">Ver</a>
+                                                </td>
+                                            }
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div style="border-bottom:1px solid #ddd;"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center; padding: 30px 0;">
+                                <img src="http://pos-sdp.binit.cloud/assets/SdP/Frontend/img/id-sdp.png" width="100%" border="0" style="max-width: 35%;" />
+                                <p style="margin: 25px 0 0;font-weight: 300;font-size: 10px;color: #b2b2b2;line-height: 1.3;">
+                                    By placing your order, you agree to Sapore Di Pane Privacy Notice and Conditions of Use. Unless otherwise noted, items sold by Sapore Di Pane are subject to sales tax in select states in accordance with the applicable laws of that state. If your order contains one or more items from a seller other than Sapore Di Pane, it may be subject to state and local sales tax, depending upon the seller's business policies and the location of their operations. Learn more about tax and seller information.
+
+                                    This email was sent from a notification-only address that cannot accept incoming email. Please do not reply to this message. <br /> <br />
+                                    <span style="color: #666;">© 2017 Sapore Di Pane. Todos los derechos reservados.</span>
+
+                                </p>
+                            </td>
+                        </tr>
+
+                    </table>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <!-- // End Footer \\ -->
+</body>
+</html>
+
+

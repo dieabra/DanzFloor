@@ -1,0 +1,113 @@
+﻿
+@using DanzFloor.Web.Models
+
+@model DanzFloor.Web.Models.ViewModels.IndexViewModel
+@{
+    ViewBag.Title = "Bienvenido";
+    Layout = "~/Views/Shared/_LayoutFront.cshtml";
+}
+
+    <ul class="nav nav-tabs nav-tabs-justified nav-tabs-fixed nav-index-mobile">
+        @if (Model.CantidadArticulos < 15)
+        {
+            <li class="active"><a href="#productos" data-toggle="tab">Productos</a></li>
+        }
+        else
+        {
+            <li class="active"><a href="#selecciones" data-toggle="tab">Selecciones</a></li>
+            <li class="@(Model.GruposTag.Any() ? "" : "hide")"><a href="#categorias" data-toggle="tab">Categorías</a></li>
+        }        
+       
+        @*<li><a href="#mis-favoritos" data-toggle="tab" class="truncate">Favoritos</a></li>*@
+    </ul>
+    <div class="tab-content tab-content-index-mobile margintop100 clearfix">
+        @if (Model.CantidadArticulos < 15)
+        {
+            <div class="tab-pane fade in active" id="productos">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="our-selections">
+                                <h3>Explora nuestros Productos</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container">
+                        <div class="row">
+                            @foreach (var item in Model.Articulos)
+                            {
+                                <div class="col-xs-12 col-sm-6 col-md-4">
+                                    <div class="product-item relative">
+                                        <a href="/Frontend/DetalleArticulo/@item.Id" class="img-box">
+                                            <img src="@Archivo.ObtenerUrlArchivo(item.Producto.Archivos, TipoEntidadConst.PRODUCTO, "Imagen Principal")" class="img-responsive img-producto-categoria" alt="Foto de Categoría">
+                                        </a>
+                                        @*<img src="@Archivo.ObtenerUrlArchivo(item.Producto.Familia.Archivos, TipoEntidadConst.FAMILIA, "Logo Negro")" alt="Alternate Text" class="img-responsive img-logo-category" />*@
+                                        <div class="footer-product">
+                                            <a href="/Frontend/DetalleArticulo/@item.Id" class="h5 title-product show">@item.Producto.Nombre</a>
+                                            <a @(Model.PedidoInicial.VerModalMultiplePuntoEntrega ? "punto-entrega-elegir" : "agregar-articulo")="@item.Id" class="btn btn-primary btn-sm btn-outlined">Añadir</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="tab-pane fade in active" id="selecciones">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="our-selections">
+                                <h3>Explora nuestras selecciones</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row box-home-categories">
+                        @foreach (var item in Model.Familias)
+                        {
+                            <div class="col-xs-12 col-sm-6 col-md-4">
+                                <a href="/Frontend/Familia/@item.Id">
+                                    <div class="categories-box">
+                                        <div class="img-producto-familia-box">
+                                            <img src="@Archivo.ObtenerUrlArchivo(item.Archivos, TipoEntidadConst.FAMILIA, "Imagen Principal")" class="img-responsive img-producto-familia" alt="@item.Nombre">
+                                        </div>
+                                        <img src="@Archivo.ObtenerUrlArchivo(item.Archivos, TipoEntidadConst.FAMILIA, "Logo Negro")" class="margintop20 img-responsive img-logo-categories" alt="@item.Nombre">
+                                        <div>
+                                            <a href="/Frontend/Familia/@item.Id" class="btn btn-primary btn-sm btn-outlined inline-block margintop30">Ver Productos</a>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+        <div class="tab-pane fade" id="categorias">
+            <ul class="list-unstyled list-categories">
+                @foreach (var item in Model.GruposTag)
+                {
+                    <li>
+                        <h4><a href="/Frontend/Categoria/@item.Id">@item.Nombre</a></h4>
+                        <i class="pe-7s-angle-right"></i>
+                    </li>
+                }
+            </ul>
+        </div>
+        <div class="tab-pane fade" id="mis-favoritos">
+            Mis Favoritos
+        </div>
+    </div>
+
+    <hr class="divider-line footer-line">
+
+<script>
+    $(".nav-tabs li").click(function () {
+    //user clicked on the li
+    scrollTo(0, 0);
+});
+</script>

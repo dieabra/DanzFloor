@@ -1,0 +1,157 @@
+﻿@model DanzFloor.Web.Models.ViewModels.TicketIndexViewModel
+
+@using DanzFloor.Web.Models.Dominio;
+@using DanzFloor.Web.Models;
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<a href="/Ticket/Create" style="z-index:4" class="btn btn-float bgm-blue m-btn waves-effect waves-circle waves-float"><i class="zmdi zmdi-plus"></i></a>
+
+@using (Html.BeginForm("Buscar", "Ticket", FormMethod.Post))
+{
+    <div class="card z-depth-4">
+        <div class="card-header">
+            <h2>
+                Buscador
+            </h2>
+
+            <a btn-buscar="buscar" class="actions btn btn-default btn-icon waves-effect waves-circle waves-float right m-r-10"><i class="zmdi zmdi-search"></i></a>
+        </div>
+        
+        <div class="card-body card-padding">
+            <div class="row">
+                <div class="col-md-4 form-group m-b-5">
+                    <label class="nombre-campo">Estado</label>
+                    <div class="select fg-line">
+                        <select id="EstadoId" name="EstadoId" class="chosen">
+                            @foreach (var item in Model.Estados)
+                            {
+                                <option @(item == Model.EstadoId ? "selected='selected'" : "") value="@((int)item)">@item.ToString()</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-4 form-group fg-float m-t-25 m-b-15">
+                    <div class="fg-line">
+                        @Html.EditorFor(model => model.FechaDesde, new { htmlAttributes = new { @class = "form-control input-sm date-picker" } })
+                        <label class="fg-label">Fecha desde</label>
+                    </div>
+                </div>
+                <div class="col-md-4 form-group fg-float m-t-25 m-b-15">
+                    <div class="fg-line">
+                        @Html.EditorFor(model => model.FechaHasta, new { htmlAttributes = new { @class = "form-control input-sm date-picker" } })
+                        <label class="fg-label">Fecha hasta</label>
+                    </div>
+                </div>
+
+                <div class="col-md-4 form-group m-b-5">
+                    <label class="nombre-campo">Tipo de ticket</label>
+                    <div class="select fg-line">
+                        <select id="TipoTicketId" name="TipoTicketId" class="chosen TipoTicketId">
+                            <option value="@Guid.Empty">Seleccione...</option>
+                            @foreach (var item in Model.TiposTicket)
+                            {
+                                <option @(item.Id == Model.TipoTicketId ? "selected='selected'" : "") value="@item.Id">@item.Nombre</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-4 form-group m-b-5">
+                    <label class="nombre-campo">Area</label>
+                    <div class="select fg-line">
+                        <select id="AreaId" name="AreaId" class="chosen AreaId">
+                            <option value="@Guid.Empty">Seleccione...</option>
+                            @foreach (var area in Model.Areas)
+                            {
+                                <option @(area.Id == Model.AreaId ? "selected='selected'" : "") value="@area.Id">@area.Nombre</option>
+                            }
+
+                        </select>
+                    </div>
+                    @Html.ValidationMessageFor(model => model.AreaId, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-4 form-group m-b-5">
+                    <label class="nombre-campo">Responsable</label>
+                    <div class="select fg-line">
+                        <select id="ResponsableId" name="ResponsableId" class="chosen" responsable-ticket>
+                            <option value="@Guid.Empty"></option>
+                            @foreach (var item in Model.Responsables)
+                            {
+                                <option @(item.Id == Model.ResponsableId ? "selected='selected'" : "") value="@item.Id">@item.NombreYApellido</option>
+                            }
+                        </select>
+                    </div>
+                    @Html.ValidationMessageFor(model => model.ResponsableId, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="col-md-6 form-group m-b-5">
+                    <label class="nombre-campo">Cliente</label>
+                    <div class="select fg-line">
+                        <select id="ClienteId" name="ClienteId" class="chosen ClienteId">
+                            <option value="@Guid.Empty"></option>
+                            @foreach (var item in Model.Clientes)
+                            {
+                                <option @(item.Id == Model.ClienteId ? "selected='selected'" : "") value="@item.Id">@item.NombreYRazonSocial</option>
+                            }
+                        </select>
+                    </div>
+                    @Html.ValidationMessageFor(model => model.ClienteId, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-6 form-group m-b-5">
+                    <label class="nombre-campo">Punto de Entrega</label>
+                    <div class="select fg-line">
+                        <select id="PuntoEntregaId" name="PuntoEntregaId" class="chosen" punto-entrega-select>
+                            <option value="@Guid.Empty"></option>
+                            @foreach (var puntoEntrega in Model.PuntosEntrega)
+                            {
+                                <option @(puntoEntrega.Id == Model.PuntoEntregaId ? "selected='selected'" : "") value="@puntoEntrega.Id">@puntoEntrega.NombreYZona</option>
+                            }
+                            @Html.ValidationMessageFor(model => model.PuntoEntregaId, "", new { @class = "text-danger" })
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="card z-depth-4">
+        <div class="list-group lg-odd-black">
+            <div class="action-header clearfix">
+                <div class="ah-label">Tickets</div>
+
+            </div>
+
+            @foreach (var item in (List<Ticket>)Model.Resultado)
+            {
+                    <div class="list-group-item media">
+                        <a href="/Ticket/Edit/@Html.DisplayFor(modelItem => item.Id)">
+                            <div class="pull-left" style="width:100px">
+                                @(item.Creador is UsuarioCliente ? ((UsuarioCliente)item.Creador).Cliente.Nombre : item.Creador.NombreYApellido)
+                            </div>
+
+                            <div class="media-body">
+                                <div class="lgi-heading">@Html.DisplayFor(modelItem => item.Nombre)</div>
+                                <small class="lgi-text">@Html.DisplayFor(modelItem => item.ComentarioOriginal)</small>
+                                <ul class="lgi-attrs">
+                                    <li>Fecha Creación: @Html.DisplayFor(modelItem => item.FechaCreacion)</li>
+                                    <li>@item.Estado.ToString()</li>
+                                    <li>@item.Area.Nombre</li>
+                                    <li>Responsable: @(item.Responsable == null ? "Sin asignar" : item.Responsable.NombreYApellido)</li>
+                                    <li>@item.Numero</li>
+                                </ul>
+                            </div>
+                        </a>
+                    </div>
+            }
+        </div>
+
+        @Html.Partial("_Paginador", Model)
+
+    </div>
+}
+<script src="~/Scripts/BootgridAdministrativo.js"></script>
+<script src="~/Scripts/TicketController.js"></script>

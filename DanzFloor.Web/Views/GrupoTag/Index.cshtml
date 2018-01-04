@@ -1,0 +1,53 @@
+﻿@model IEnumerable<DanzFloor.Web.Models.GrupoTag>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card z-depth-4">
+    <div class="card-header">
+        <h2>
+            @(ViewBag.esCaracteristica ? "Categorías" : "Grupos de Tags")
+        </h2>
+    </div>
+
+    <a href="/GrupoTag/Create?caracteristica=@ViewBag.esCaracteristica.ToString()" class="btn btn-float bgm-blue m-btn waves-effect waves-circle waves-float"><i class="zmdi zmdi-plus"></i></a>
+    <div class="table-responsive">
+        <table id="data-table-basic-grupotag" class="table table-striped">
+            <thead>
+                <tr>
+                    <th data-column-id="Id" data-visible="false" data-searchable="false">
+                        @Html.DisplayNameFor(model => model.Id)
+                    </th>
+                    <th data-column-id="Nombre">@Html.DisplayNameFor(model => model.Nombre)</th>
+                    <th data-column-id="VisibleFront">@Html.DisplayNameFor(model => model.VisibleFront)</th>
+                    <th data-column-id="commands" data-formatter="commands" data-sortable="false">
+                        Comandos
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Id)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Nombre)
+                        </td>
+                        <td>
+                            @(item.VisibleFront ? "Visible" : "No")
+                        </td>
+
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script src="~/Scripts/BootgridGrupoTag.js"></script>

@@ -1,0 +1,174 @@
+/*.profile-page{
+	.scroll-content{
+		margin-top: 65px !important;
+	}
+}*/
+
+button.item-ios:not([detail-none]).no-icon{
+	.item-inner{
+		background-image: none;
+		padding-right: 0;
+		ion-icon{
+			color: #999;
+		}
+	}
+}	
+
+
+.absolute-right{
+	position: absolute;
+    right: 17px;
+    color: #ccc;
+}
+
+.button-transparent{
+	background: transparent;
+    box-shadow: none;
+    border: 1px solid #ccc;
+    color: #262626;	
+}
+
+.profile-item{
+	margin-top: 15px;
+	.scroll-content{
+		margin-top: 0 !important;
+	}
+	&.item-ios{
+		&.item-block{
+			.item-inner{
+				border-bottom: 0;
+			}
+		}
+		ion-avatar[item-start]{
+			img{
+				width: 50px;
+				height: 50px;
+			}
+			.loading-avatar{
+				width: 50px;
+				height: 50px;
+				border-radius: 50%;
+				overflow: hidden;
+				background-color: #ccc;
+			}
+		}
+	}
+	.label-md{
+		margin: 0;
+	}
+	.img-rounded{
+	    border-radius: 50%;
+	    overflow: hidden;
+	}
+	
+	&.cuenta{
+		margin-top: 0;
+		&.item-ios{
+			padding-left: 0;
+			&.item-block{
+				.item-inner{
+					padding-right: 0;
+					.label{
+						margin-right: 0;
+					}
+				}
+			}
+		}
+
+		/*#scroll{
+			#scroll-item{
+				&:first-child{
+					margin-left: 16px;
+				}
+			}
+		}*/
+	}
+}
+
+.list-ios{
+	.list-header-ios{
+		text-transform: none;
+		font-family: 'Roboto';
+		font-weight: 500;
+		font-size: 1.7rem;
+		color: #000;
+	}
+	.item-block{
+	    border-bottom: 0.55px solid #c8c7cc;
+		.item-inner{
+			border-bottom: 0;
+		}
+	}	
+}
+
+.clearmargin{
+	margin: 0;
+}
+
+.btn-edit{
+	padding: 17px 20px;
+	margin: 0 10px;
+	&.activated{
+		background-color: #f6f6f6;
+	}
+}
+
+.cuenta{
+	div#scroll{
+		white-space: inherit;
+		display: flex;
+		.scroll-item-box{
+			margin: 0 8px;
+			div#scroll-item{
+				width: 70px;
+				height: 70px;
+			    border-radius: 50%;
+			    overflow: hidden;
+			    
+				img{
+					width: 100%;
+					height: 100%;
+					background-color: #ccc;
+				}
+			}
+			&:last-child{
+				margin-right: 16px;
+			}
+		}
+	}
+}
+
+
+.list-ios{
+	&.list-profile{
+		margin-top: 20px;
+		.item-ios{
+			&:not(:first-child){
+				font-size: 1.6rem;
+			}
+			&:not([detail-none]){
+				.item-inner{
+				    background-position: right 11px center;
+    				background-size: 11px 11px;
+				}
+			}
+			ion-icon[name="ios-exit-outline"]{
+				font-size: 2.3rem;
+			} 
+		}
+		ion-list-header{
+			font-size: 1.4rem;
+		}
+	}
+	
+}
+
+.truncate{
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.firma{
+	color: #ccc;
+}

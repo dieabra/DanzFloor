@@ -1,0 +1,52 @@
+<ion-header>
+  <ion-navbar color="light">
+    <ion-title>Programas</ion-title>
+    <img src="assets/img/47CH_logoNavbar.png" class="img-navbar-heart" alt="Logo 47 Street Corazon">
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content *ngIf="programas" class="profile-page">
+ <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content
+      pullingIcon="arrow-dropdown"
+      pullingText="Refrescar"
+      refreshingSpinner="circles">
+    </ion-refresher-content>
+  </ion-refresher>
+    <div *ngFor="let programa of programas" class="margintop10">
+        <ion-card class="card-home">
+            <ion-item>
+                <ion-avatar item-left (click)="itemTapped(programa)">
+                    <div class="loading-avatar">
+                        <img [src]="ObtenerImagenPrograma(programa.FotoPortada)"> 
+                    </div>
+                </ion-avatar>
+                <h5>{{programa.Nombre}}</h5>
+
+                <ion-avatar item-right>
+                    <button (click)="seguirPrograma(programa)" *ngIf="!programa.EsFavorito" ion-button icon-only clear>
+                        <ion-icon name='ios-star-outline' ></ion-icon>
+                    </button>
+                    <button (click)="seguirPrograma(programa)" *ngIf="programa.EsFavorito" ion-button icon-only clear class="btn-active">
+                        <ion-icon name='ios-star'></ion-icon>
+                    </button> 
+                </ion-avatar>
+            </ion-item>
+        </ion-card>
+
+        <div id="scroll">
+            <div class="scroll-item-box" (click)="itemTappedEpisodio(episodio)" *ngFor="let episodio of programa.Episodios">
+                <div id="scroll-item">
+                    <div class="loading-program">
+                        <img [src]="ObtenerImagen(episodio.FotoPortada)"/> 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <ion-infinite-scroll (ionInfinite)="$event.waitFor(doInfinite())">
+        <ion-infinite-scroll-content></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+</ion-content>

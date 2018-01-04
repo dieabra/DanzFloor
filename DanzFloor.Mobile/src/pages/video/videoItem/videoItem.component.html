@@ -1,0 +1,138 @@
+<ion-content class="videoitem-page">
+	
+<!-- 	<ion-refresher (ionRefresh)="doRefresh($event)">
+		<ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Refrescar" refreshingSpinner="circles">
+		</ion-refresher-content>
+	</ion-refresher> -->
+
+	<ion-card class="card-home">
+		<div class="video-container">
+			<!-- <div *ngIf="!Player1" id="myMediaDiv"></div>
+			<div *ngIf="!Player2" id="myMediaDiv2"></div>
+			<div *ngIf="!Player3" id="myMediaDiv3"></div> -->
+			<div attr.id="{{playerid}}" > </div>
+		</div>
+		<button attr.id="{{backbutton}}" (click)="goBack()" ion-button icon-only clear class="btn-back-video"><ion-icon name='md-arrow-round-back'></ion-icon></button>
+	</ion-card>
+
+	<!-- <ion-card class="card-home">
+		<div class="video-container">
+			<div id="myMediaDiv2"></div>
+		</div>
+	</ion-card> -->
+
+	<ion-scroll scrollY="true">
+		<ion-card class="card-home">
+			
+			<div class="content-box">
+				<button (click)="bookmark(video)" ion-button icon-only clear icon-right>
+	        		<button *ngIf="!video.Bookmark" ion-button icon-only clear>
+	      				<ion-icon name='ios-bookmark-outline'></ion-icon>
+	        		</button>
+		          	<button *ngIf="video.Bookmark" ion-button icon-only clear>
+		            	<ion-icon name='ios-bookmark' class="btn-active"></ion-icon>
+		          	</button>
+	      		</button>
+	      		<div class="videoitem-icons">
+	          			<button ion-button icon-only clear float-right (click)="share(video)" class="btn-share">
+	            			<ion-icon name="ios-send-outline"></ion-icon>
+	          			</button>
+
+			    	    <div (click)="like(video)" class="btn-likes">
+	        	    		<button *ngIf="video.Like" ion-button icon-only clear float-right>
+	              				<ion-icon name="heart" class="btn-active"></ion-icon>
+				              	<!-- {{video.CantidadLikes}} {{video.CantidadLikes == 1 ? 'Like' : 'Likes'}} -->
+				            </button>
+	            			<button *ngIf="!video.Like" ion-button icon-only clear float-right>
+	              				<ion-icon name="ios-heart-outline"></ion-icon>
+	              				<!-- {{video.CantidadLikes}} {{video.CantidadLikes == 1 ? 'Like' : 'Likes'}} -->
+	            			</button>
+	          			</div>
+	        		</div>
+				<div class="img-box">
+					<img [src]="ObtenerImagenPortadaEpisodio(video.FotoPortada)" alt="" class="img-responsive"/> 
+				</div>
+				<div class="text-box">
+					<h2 class="robotoLt">{{video.Nombre}}</h2>
+		      		<!-- <p>{{video.Descripcion | truncate : 140}}</p> -->
+				</div>
+			</div>
+
+	    	<ion-card-content class="margintop10">
+				<!-- <h2 class="card-title">{{video.Nombre}}</h2> -->
+				<p>{{video.Descripcion}}</p>
+	      	<p class="upload-time">{{video.FechaPublicacion | mvcDatePipe}}</p>
+	    	</ion-card-content>
+		</ion-card>	
+
+		<ion-item class="profile-item">
+	    	<h2 class="robotoMd content-related">Contenido Relacionado</h2>
+		</ion-item>	
+
+		<ion-card *ngFor="let video of episodios" class="card-home">
+	    <ion-item *ngIf="video.Id != currentVideoId">
+	    	<ion-avatar item-start (click)="itemTappedPrograma(video.Programa)">
+        	<div class="loading-avatar">
+				<img *ngIf="video.Programa.FotoPortada" [src]="ObtenerImagenPrograma(video.Programa.FotoPortada)"> 	
+        	</div>
+      	</ion-avatar>
+      	<h5>{{video.Programa.Nombre}}</h5>
+	    </ion-item>
+
+	    <div class="loading-post" *ngIf="video.Id != currentVideoId">
+					  <img *ngIf="video.Thumbnail" [src]="ObtenerImagen(video.Thumbnail)" (click)="itemTapped(video)" />
+  			<ion-icon name="ios-play-outline" class="center-center" (click)="itemTapped(video)"></ion-icon>
+  		</div>
+		    
+	    <ion-grid class="card-padding" *ngIf="video.Id != currentVideoId">
+	     	<ion-row>					
+	        <ion-col center col-8 align-self-center>					
+	          <ion-note>
+	            <span>{{video.Programa.Nombre}}</span> <span class="number-episode"></span>
+	          </ion-note>
+	        </ion-col>
+
+	        <ion-col class="text-right">
+	        	
+	          <button ion-button icon-only clear float-right (click)="share(video.VimeoId)" class="btn-share">
+	            <ion-icon name="ios-send-outline"></ion-icon>
+	          </button>
+
+	          <div (click)="like(video)">
+	            <button *ngIf="video.Like" ion-button icon-only clear float-right>
+	              <ion-icon name="heart" class="btn-active"></ion-icon>
+	              <!-- {{video.CantidadLikes}} {{video.CantidadLikes == 1 ? 'Like' : 'Likes'}} -->
+	            </button>
+	            <button *ngIf="!video.Like" ion-button icon-only clear float-right>
+	              <ion-icon name="ios-heart-outline"></ion-icon>
+	              <!-- {{video.CantidadLikes}} {{video.CantidadLikes == 1 ? 'Like' : 'Likes'}} -->
+	            </button>
+	          </div>
+	          <div (click)="itemTapped(video)" class="content-related">
+					<button (click)="bookmark(video)" ion-button icon-only clear icon-right>
+        				<button *ngIf="!video.Bookmark" ion-button icon-only clear>
+      					<ion-icon name='ios-bookmark-outline'></ion-icon>
+        			</button>
+          			<button *ngIf="video.Bookmark" ion-button icon-only clear>
+            			<ion-icon name='ios-bookmark' class="btn-active"></ion-icon>
+          			</button>
+      			</button> 
+	   		 	</div>
+	        </ion-col>
+		    </ion-row>
+	    </ion-grid>
+
+	    		<ion-card-content (click)="itemTapped(video)" class="content-related" *ngIf="video.Id != currentVideoId">
+					 
+	      <h2>{{video.Nombre}}</h2>
+	      <p>{{video.Descripcion | truncate : 140}}</p>
+	    </ion-card-content>
+
+  	</ion-card>
+	</ion-scroll>
+
+	<ion-infinite-scroll (ionInfinite)="$event.waitFor(doInfinite())">
+		<ion-infinite-scroll-content></ion-infinite-scroll-content>
+	</ion-infinite-scroll>
+
+</ion-content>

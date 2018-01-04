@@ -1,0 +1,51 @@
+﻿@using DanzFloor.Web.Models.ViewModels.Backend.Home
+
+@model DanzFloor.Web.Models.ViewModels.Backend.PuntoEntregaContactarViewModel
+
+<div class="col-md-6">
+    <div class="card z-depth-4">
+        <div class="card-header">
+            <h2>Contactar Puntos de Entrega</h2>
+
+            <ul class="actions">
+                <li>
+                    <a href="/PuntoEntrega/Contactar">
+                        <i class="zmdi zmdi-eye"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="/PuntoEntrega/ExcelContactarPuntoEntrega">
+                        <i class="zmdi zmdi-download"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="card-body card-padding-sm">
+            <h5>Mostrando @Model.Listado.Count() de @Model.CantidadTotal</h5>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>                           
+                            <th data-column-id="Cliente">Cliente</th>
+                            <th data-column-id="PuntoEntrega">Punto de Entrega</th>                            
+                            <th data-column-id="UltimoPedido">último pedido</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Listado)
+                        {
+                            <tr>                               
+                                <td>@item.Cliente</td>
+                                <td>@item.NombrePuntoEntrega</td>                                
+                                <td>@item.FechaUltimoPedido.ToShortDateString()</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>
+

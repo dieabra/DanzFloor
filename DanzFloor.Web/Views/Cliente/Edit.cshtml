@@ -1,0 +1,200 @@
+﻿@model DanzFloor.Web.Models.ViewModels.ClienteViewModel
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="card z-depth-4">
+    <div class="card-header">
+        <ul class="actions">
+            <li>
+                <a id="listaPreciosCliente">
+                    <i class="zmdi zmdi-view-headline" style="cursor: pointer;"></i>
+                </a>
+            </li>
+        </ul>
+        <h2>
+            Información del Cliente
+        </h2>
+    </div>
+
+    <div class="card-body card-padding">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(m => m.Nombre)
+            @Html.HiddenFor(m => m.RazonSocial)
+
+            <div class="row m-b-30">
+
+                <div class="col-md-6 form-group fg-float m-t-25 m-b-0">
+                    <div class="fg-line">
+                        @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control input-sm", @disabled = "disabled" } })
+                        @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+                        <label class="fg-label">@Html.DisplayNameFor(model => model.Nombre)</label>
+                    </div>
+                </div>
+
+                <div class="col-md-6 form-group fg-float m-t-25 m-b-0">
+                    <div class="fg-line">
+                        @Html.EditorFor(model => model.RazonSocial, new { htmlAttributes = new { @class = "form-control input-sm", @disabled = "disabled" } })
+                        @Html.ValidationMessageFor(model => model.RazonSocial, "", new { @class = "text-danger" })
+                        <label class="fg-label">@Html.DisplayNameFor(model => model.RazonSocial)</label>
+                    </div>
+                </div>
+
+                <div class="col-md-6 form-group fg-float m-t-25 m-b-0">
+                    <div class="fg-line">
+                        @Html.EditorFor(model => model.Telefono, new { htmlAttributes = new { @class = "form-control input-sm" } })
+                        @Html.ValidationMessageFor(model => model.Telefono, "", new { @class = "text-danger" })
+                        <label class="fg-label">@Html.DisplayNameFor(model => model.Telefono)</label>
+                    </div>
+                </div>
+
+                <div class="col-md-6 form-group fg-float m-t-25 m-b-0">
+                    <div class="fg-line">
+                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control input-sm" } })
+                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                        <label class="fg-label">@Html.DisplayNameFor(model => model.Email)</label>
+                    </div>
+                </div>
+
+                <div class="col-md-6 form-group fg-float m-t-25 m-b-0">
+                    <div class="fg-line">
+                        @Html.EditorFor(model => model.CreditoMaximo, new { htmlAttributes = new { @class = "form-control input-sm" } })
+                        @Html.ValidationMessageFor(model => model.CreditoMaximo, "", new { @class = "text-danger" })
+                        <label class="fg-label">@Html.DisplayNameFor(model => model.CreditoMaximo)</label>
+                    </div>
+                </div>
+
+                <div class="col-md-6 form-group fg-float m-t-25 m-b-0">
+                    <div class="fg-line">
+                        @Html.EditorFor(model => model.MedioPago, new { htmlAttributes = new { @class = "form-control input-sm" } })
+                        @Html.ValidationMessageFor(model => model.MedioPago, "", new { @class = "text-danger" })
+                        <label class="fg-label">@Html.DisplayNameFor(model => model.MedioPago)</label>
+                    </div>
+                </div>
+
+                <div class="col-sm-6 m-t-20">
+                    <label class="nombre-campo">Tags Cliente</label>
+                    <div class="form-group fg-line">
+                        <select class="chosen" id="TagsClienteId" multiple="multiple" name="TagsClienteId" style="display: none;">
+                            @foreach (var item in Model.TagsCliente)
+                            {
+                                if (Model.TagsClienteId != null && Model.TagsClienteId.Contains(item.Id))
+                                {
+                                    <option value="@item.Id" selected="selected">@item.Nombre</option>
+                                }
+                                else
+                                {
+                                    <option value="@item.Id">@item.Nombre</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    @Html.ValidationMessageFor(model => model.TagsClienteId, "", new { @class = "text-danger" })
+                </div>
+
+            </div>
+
+
+            <button type="submit" class="btn btn-float bgm-blue m-btn waves-effect waves-circle waves-float"><i class="zmdi zmdi-check"></i></button>
+        }
+        </div>
+    </div>
+
+<div class="card z-depth-4">
+    <div class="card-header">
+        <h2>
+            Puntos de entrega
+        </h2>
+    </div>
+
+    <div class="card-body card-padding">
+
+        <div class="table-responsive">
+
+            <table id="data-table-basic-puntoentrega" class="table table-striped">
+                <thead>
+                    <tr>
+                        <th data-column-id="Id" data-visible="false" data-searchable="false">Id</th>
+                        <th data-column-id="Nombre">Nombre</th>
+                        <th data-column-id="Zona">Zona</th>
+                        <th data-column-id="Estado">Estado</th>
+                        <th data-column-id="commands" data-formatter="commands" data-sortable="false">
+                            Comandos
+                        </th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var puntoEntrega in Model.PuntosEntrega)
+                    {
+                        <tr>
+                            <td>@puntoEntrega.Id</td>
+                            <td>@puntoEntrega.Nombre</td>
+                            <td>@(puntoEntrega.Zona == null ? "Sin Zona" : puntoEntrega.Zona.Nombre)</td>
+                            <td>@puntoEntrega.Estado</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
+
+<div class="card z-depth-4">
+    <div class="card-header">
+        <h2>
+            Usuarios
+        </h2>
+    </div>
+
+    <div class="card-body card-padding">
+
+        <div class="table-responsive">
+
+            <a href="/Cuenta/Register/?clienteId=@Model.Id" class="btn btn-primary btn-icon waves-effect waves-circle waves-float right"><i class="zmdi zmdi-plus"></i></a>
+
+            <table id="data-table-basic" class="table table-striped">
+                <thead>
+                    <tr>
+                        <th data-column-id="Id" data-visible="false" data-searchable="false">Id</th>
+                        <th data-column-id="nombre">Nombre</th>
+                        <th data-column-id="mail">Email</th>
+                        <th data-column-id="commands" data-formatter="commands" data-sortable="false">
+                            Comandos
+                        </th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var usuario in Model.Usuarios)
+                    {
+                        <tr>
+                            <td>@usuario.Id</td>
+                            <td>@usuario.NombreYApellido</td>
+                            <td>@usuario.Email</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
+
+<script type="text/javascript">
+    var listaPreciosId = '@(Model.Id)';
+
+    $('#listaPreciosCliente').click(function () {
+        window.location.assign(window.location.origin + "/ListaPrecios?clienteId=" + listaPreciosId);
+    });
+</script>
+
+<script src="~/Scripts/BootgridPuntoEntrega.js"></script>

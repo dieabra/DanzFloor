@@ -1,0 +1,59 @@
+<ion-header class="register-header">
+  <ion-navbar color="light">
+<!--     <ion-title>Registrate</ion-title> -->
+    <img src="assets/img/47CH_logoNavbar.png" class="img-navbar-heart" alt="Logo 47 Street Corazon">
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="profile-page">
+
+  <ion-list class="list-no-margin">
+
+    <ion-item [class.gn-valid]="formulario.Email == true" [class.gn-invalid]="formulario.Email == false">
+      <ion-label floating>Email</ion-label>
+      <ion-input [(ngModel)]="registroModelo.Email" (keyup)="validarFormulario()" type="text"></ion-input>
+    </ion-item>
+
+    <ion-item *ngIf="!esRegistroSocial" [class.gn-valid]="formulario.Name == true" [class.gn-invalid]="formulario.Name == false">
+      <ion-label floating>Nombre</ion-label>
+      <ion-input [(ngModel)]="registroModelo.Name" (keyup)="validarFormulario()" type="text"></ion-input>
+    </ion-item>
+
+    <ion-item *ngIf="!esRegistroSocial" [class.gn-valid]="formulario.Lastname == true" [class.gn-invalid]="formulario.Lastname == false">
+      <ion-label floating>Apellido</ion-label>
+      <ion-input [(ngModel)]="registroModelo.Lastname" (keyup)="validarFormulario()" type="text"></ion-input>
+    </ion-item>
+
+    <ion-item *ngIf="!esRegistroSocial" [class.gn-valid]="formulario.Password == true" [class.gn-invalid]="formulario.Password == false">
+      <ion-label floating>Contraseña</ion-label>
+      <ion-input [(ngModel)]="registroModelo.Password" (keyup)="validarFormulario()" type="password"></ion-input>
+    </ion-item>
+
+    <ion-item *ngIf="!esRegistroSocial" [class.gn-valid]="formulario.ConfirmPassword == true" (keyup)="validarFormulario()" [class.gn-invalid]="formulario.ConfirmPassword == false">
+      <ion-label floating>Confirmación</ion-label>
+      <ion-input [(ngModel)]="registroModelo.ConfirmPassword" type="password"></ion-input>
+    </ion-item>
+
+  </ion-list>
+
+  <div padding>
+    <button (click)="Registrar()" ion-button class="btn-register robotoMd" block [disabled]="!formulario.Formulario">Registrarse</button>
+  </div>
+  
+  <div padding>
+    <div class="absolute-footer">
+      <ion-grid class="grid-login register">
+        <ion-row>
+          <ion-col col-8>
+            <p class="terms register">By clicking "Sign in", you agree to our
+            Terms of Service and Privacy Notice.</p>
+          </ion-col>
+          <ion-col offset-1 col-3>
+            <!-- <img src="assets/img/CH47_logoFooterPositive@3x.png" class="logo-47-street" alt="Logo 47 Street"> -->
+          </ion-col>
+        </ion-row>  
+      </ion-grid>
+    </div>
+  </div>
+  
+</ion-content>

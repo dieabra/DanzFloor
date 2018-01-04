@@ -1,0 +1,207 @@
+﻿@using DanzFloor.Web.Models.Dominio
+@using DanzFloor.Web.Models
+
+@{
+    var Model = ViewBag.Pedido as Pedido;
+    var Recomendados = ViewBag.Recomendados;
+    var subtotal = Model.Articulos.Sum(x => (x.Precio * x.Cantidad));
+    var iva = (Convert.ToDouble(Model.Cliente.IVA) * subtotal / 100);
+    var iibb = (Convert.ToDouble(Model.Cliente.IIBB) * subtotal / 100);
+
+    Layout = null;
+}
+
+To: @ViewBag.To
+From: do-not-reply@sapore-di-pane.com.ar
+Subject: Confirmación de compra
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+    <!-- This is a simple example template that you can edit to create your own custom templates -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!-- Facebook sharing information tags -->
+    <title>Sapore Di Pane</title>
+    <link rel="shortcut icon" type="image/png" href="http://pos-sdp.binit.cloud/assets/SdP/Frontend/img/id-sapore.png" />
+    <style type="text/css">
+        /* NOTE: CSS should be inlined to avoid having it stripped in certain email clients like GMail.
+        MailChimp automatically inlines CSS for you or you can use this tool: http://beaker.mailchimp.com/inline-css. */
+
+        /* Client-specific Styles */
+        #outlook a {
+            padding: 0;
+        }
+        /* Force Outlook to provide a "view in browser" button. */
+        body {
+            width: 100% !important;
+        }
+        /* Force Hotmail to display emails at full width */
+        body {
+            -webkit-text-size-adjust: none;
+        }
+        /* Prevent Webkit platforms from changing default text sizes. */
+
+        /* Reset Styles */
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        img {
+            border: none;
+            font-size: 14px;
+            font-weight: bold;
+            height: auto;
+            line-height: 100%;
+            outline: none;
+            text-decoration: none;
+            text-transform: capitalize;
+        }
+
+        #backgroundTable {
+            height: 100% !important;
+            margin: 0;
+            padding: 0;
+            width: 100% !important;
+        }
+    </style>
+</head>
+
+
+
+
+
+<body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0" offset="0" style="background-color:#FFF;border:0px none; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;">
+    <table class="" border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" style="padding:0px;margin:0px 0 0; background-color: #fff;">
+        <tbody>
+            <tr>
+                <td align="center" valign="top">
+                    <table id="" border="0" cellpadding="0" cellspacing="0" width="560" style="background-color: #fff; padding: 0 15px;">
+                        <tr>
+                            <td>
+                                <table id="" border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #fff;">
+                                    <tbody>
+                                        <tr>
+                                            <td width="110" align="left" valign="bottom">
+                                                <div style="padding: 15px 0;">
+                                                    <a href="http://www.sapore-di-pane.com.ar/" target="_blank"><img src="http://pos-sdp.binit.cloud/assets/SdP/Frontend/img/id-sapore.png" width="110" border="0" /></a>
+                                                </div>
+                                            </td>
+                                            <td align="right" valign="bottom">
+                                                <div>
+                                                    <p style="font-size: 18px; font-weight: 500;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;">Ticket finalizado</p>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <div style="border-bottom:1px solid #ddd;"></div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td  style="color:#505050;font-size:15px;line-height:135%;text-align:left; padding: 30px 0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;">
+                                <div>
+                                    Hola @ViewBag.Nombre,
+                                    <br /><br />
+                                    Su ticket se encuentra finalizado.
+                                    <br /><br />
+                                    Si necesita obtener más información, no dude en ponerse en contacto con nosotros.
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <table class="" border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" style="margin:0px 0 0; background-color:#fff;">
+                                    <tbody>
+
+                                        <tr>
+                                            <td valign="bottom" style="padding: 16px 0;">
+                                                <div style="font-weight: 600;font-size: 16px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif; margin: 0;">Detalles de su ticket</div>
+                                            </td>
+                                            <td align="right" valign="bottom">
+                                                <p style="font-size: 14px; font-weight: 300;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;">N° <span style="font-weight: 500; color: #c1a17d;">#12346578</span></p>
+                                            </td>
+                                        </tr>
+                                         <tr>
+                                            <td colspan="2" style="border-bottom:1px solid #ddd;" border="1">
+                                            </td>
+                                        </tr>
+                                        
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+
+
+                        <tr>
+                            <td style="padding: 20px 0 0 0;">
+                                <table class="" border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" style="padding:15px;border: 1px solid #ddd;background-color:#fff;font-size: 13px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;">
+                                    <tbody>
+                                        <tr>
+                                            <td width="130" style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;">Número de pedido</td>
+                                            <td style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;">779722883</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;"><div style="margin-top: 10px;"></div></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;">Fecha</td>
+                                            <td style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;">10/10/2017</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;"><div style="margin-top: 10px;"></div></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;">Estado</td>
+                                            <td style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;"><span style="line-height: 1;color: white;text-align: center;white-space: nowrap;vertical-align: baseline;display:inline; padding: 0.2em 0.6em 0.2em; font-size: 75%;font-weight: bold;border-radius: 0.25em;text-transform: uppercase;position: relative;top: -1px; background-color: #aac90a;">Finalizado</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;"><div style="margin-top: 10px;"></div></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;" valign="top">Observaciones</td>
+                                            <td style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;">Estimados les adjunto 2 fotografías de los productos recibidos esta tarde. Creemos que es por falta de refrigeración. Les pido corroborar esta mercadería por favor. Gracias.</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <div style="line-height: 1.5;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;">
+                                    Esperamos verlo pronto nuevamente. <br />
+                                    <a href="http://www.sapore-di-pane.com.ar" style="text-decoration: none; color: #c1a17d;font-weight: 500;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;">Sapore Di Pane</a>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style="border-bottom:1px solid #ddd; padding: 15px;"></td>
+                        </tr>  
+
+                        <tr>
+                            <td style="text-align: center; padding: 30px 0;">
+                                <img src="http://tienda.sapore-di-pane.com.ar/assets/SdP/Frontend/img/id-sdp.png" width="35%" border="0" style="max-width: 35%;" />
+                                <p style="font-weight: 300;font-size: 10px;color: #b2b2b2;line-height: 1.3;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;">
+                                    <span>© 2017 Sapore Di Pane. Todos los derechos reservados.</span>
+                                </p>
+                            </td>
+                        </tr>
+
+                    </table>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <!-- // End Footer \\ -->
+</body>
+</html>

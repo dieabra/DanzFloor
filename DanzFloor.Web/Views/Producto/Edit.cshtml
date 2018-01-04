@@ -1,0 +1,223 @@
+﻿@using DanzFloor.Web.Models.Enum
+@model DanzFloor.Web.Models.ViewModels.ProductoViewModel
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm("Edit", "Producto", FormMethod.Post))
+{
+<div class="card z-depth-4">
+    <div class="card-header">
+        <ul class="actions">
+            <li>
+                <a id="deleteProducto">
+                    <i class="zmdi zmdi-delete" style="cursor: pointer;"></i>
+                </a>
+            </li>
+        </ul>
+        <h2>
+            Editar Producto
+        </h2>
+    </div>
+
+    <div class="card-body card-padding">
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(m => m.ArchivosId)
+
+        <div class="row">
+            <div class="col-md-6 form-group fg-float m-t-25 m-b-0">
+                <div class="fg-line">
+                    @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control input-sm" } })
+                    @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+                    <label class="fg-label">Nombre</label>
+                </div>
+            </div>
+
+            <div class="col-md-2 form-group fg-float m-t-20 m-b-0">
+                <div class="fg-line">
+                    <input type="text" id="DeshabilitadoHasta" name="DeshabilitadoHasta" class="form-control date-picker"
+                           value="@(Model.DeshabilitadoHasta == null ? "" : Model.DeshabilitadoHasta)">
+                    <label class="fg-label">Deshabilitado Hasta</label>
+                </div>
+            </div>
+
+          
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 form-group fg-float m-t-25 m-b-0">
+                <label>Familia</label>
+                <div class="fg-line">
+                    <select class="chosen" id="FamiliaSelected" name="FamiliaSelected" style="display: none;">
+                        @foreach (var item in Model.ListaFamilias)
+                        {
+                            if (Model.Familia != null && Model.Familia.Id == item.Id)
+                            {
+                                <option value="@item.Id" selected="selected">@item.Nombre</option>
+                            }
+                            else
+                            {
+                                <option value="@item.Id">@item.Nombre</option>
+                            }
+                        }
+                    </select>
+                </div>
+                @Html.ValidationMessageFor(model => model.Familia, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-6 form-group fg-float m-t-25 m-b-0">
+                <label>Tags</label>
+                <div class="fg-line">
+                    <select class="chosen" id="TagsSelected" multiple="multiple" name="TagsSelected" style="display: none;">
+                        @foreach (var item in Model.ListaTags)
+                        {
+                            if (Model.Tags != null && Model.Tags.Where(x => x.Id.ToString() == item.Id.ToString()).Count() != 0)
+                            {
+                                <option value="@item.Id" selected="selected">@item.Nombre</option>
+                            }
+                            else
+                            {
+                                <option value="@item.Id">@item.Nombre</option>
+                            }
+                        }
+                    </select>
+                </div>
+                @Html.ValidationMessageFor(model => model.Tags, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 form-group fg-float m-t-25 m-b-0">
+                <div class="fg-line">
+                    <textarea id="Descripcion" name="Descripcion" class="form-control auto-size input-sm">@Model.Descripcion</textarea>
+                    <label class="fg-label">Descripción</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 form-group fg-float m-t-0 m-b-0">
+                <label class="nombre-campo">Peso</label>
+                <div class="input-group">
+                    <div class="fg-line">
+                        @Html.EditorFor(model => model.Peso, new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                    <span class="input-group-addon last" style="padding-left:12px!important">
+                        gr
+                    </span>
+                </div>
+            </div>
+
+            <div class="col-md-6 form-group fg-float m-t-0 m-b-0">
+                <label class="nombre-campo">Medidas</label>
+                <div class="input-group">
+                    <div class="fg-line">
+                        @Html.EditorFor(model => model.Medidas, new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                    <span class="input-group-addon last" style="padding-left:12px!important">
+                        cm
+                    </span>
+                </div>
+            </div>
+
+            <div class="col-md-6 form-group fg-float m-t-0 m-b-0">
+                <label class="nombre-campo">Tiempo de cocción</label>
+                <div class="input-group">
+                    <div class="fg-line">
+                        @Html.EditorFor(model => model.TiempoDeCoccion, new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                    <span class="input-group-addon last" style="padding-left:12px!important">
+                        min
+                    </span>
+                </div>
+            </div>
+
+            <div class="col-md-6 form-group fg-float m-t-0 m-b-0">
+                <label class="nombre-campo">Temperatura de cocción</label>
+                <div class="input-group">
+                    <div class="fg-line">
+                        @Html.EditorFor(model => model.TemperaturaDeCoccion, new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                    <span class="input-group-addon last" style="padding-left:12px!important">
+                        °c
+                    </span>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 form-group fg-float m-t-25 m-b-0">
+                <div class="fg-line">
+                    @Html.TextAreaFor(model => model.Ingredientes, new { rows = 5, @class = "form-control" })
+                    <label class="fg-label">Ingredientes</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 form-group fg-float m-t-25 m-b-0">
+                <div class="radio m-b-15">
+                    <label>
+                        @Html.RadioButtonFor(m => m.NivelRecomendado, DanzFloor.Web.Models.Enum.NivelRecomendado.SinRecomendar)
+                        <i class="input-helper"></i>
+                        Sin Recomendar 
+                    </label>
+                </div>
+                <div class="radio m-b-15">
+                    <label>
+                        @Html.RadioButtonFor(m => m.NivelRecomendado, DanzFloor.Web.Models.Enum.NivelRecomendado.ForzarRecomendar)
+                        <i class="input-helper"></i>
+                        Forzar Recomendar
+                    </label>
+                </div>
+                <div class="radio m-b-15">
+                    <label>
+                        @Html.RadioButtonFor(m => m.NivelRecomendado, DanzFloor.Web.Models.Enum.NivelRecomendado.ExcluirRecomendados)
+                        <i class="input-helper"></i>
+                        Excluir de Recomendados
+                    </label>
+                </div>
+            </div>
+        </div>
+
+
+            <button type="submit" class="btn btn-float bgm-blue m-btn waves-effect waves-circle waves-float"><i class="zmdi zmdi-check"></i></button>
+    </div>
+
+</div>
+
+
+@Html.Partial("_FileComponent", Model.FileComponentViewModel)
+        }
+
+<script type="text/javascript">
+    var diaEntregaId = '@(Model.Id)';
+
+    $('#deleteProducto').click(function () {
+        swal({
+            title: "¿Está seguro de que desea eliminar el Producto?",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Sí",
+            cancelButtonText: "No",
+            closeOnConfirm: false
+        }, function () {
+            $.ajax({
+                dataType: 'json',
+                type: 'GET',
+                url: window.location.origin + '/Producto/delete/' + diaEntregaId,
+                success: function (result) {
+                    swal("¡Eliminado!", "El Producto fue eliminado.", "success");
+                    window.location.assign(window.location.origin + "/producto");
+                },
+                error: function (error) {
+                    swal("¡Error!", "El Producto no fue eliminado.", "error");
+                }
+            });
+        });
+    });
+</script>

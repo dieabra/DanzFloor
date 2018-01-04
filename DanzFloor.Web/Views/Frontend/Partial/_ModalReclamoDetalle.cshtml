@@ -1,0 +1,85 @@
+﻿@using DanzFloor.Web.Models
+
+@model DanzFloor.Web.Models.ViewModels.TicketViewModel
+
+@* Modal Nuevo Reclamo *@
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close general-title" data-dismiss="modal" aria-label="Close">Cerrar <i class="font24 pe-va pe-7s-close-circle"></i></button>
+        </div>
+        <div class="modal-body">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <h3 class="text-center margintop10">@TipoTicket.ObtenerNombreDetalleTicket(Model.TipoTicketId)</h3>
+                    </div>
+                    <div class="col-xs-12 margintop40">
+                            <p class="general-title">Código</p>
+                            @(Model.Numero.ToString().Substring((Model.Numero.ToString().Length - 5), 5))
+                        <div class="margintop30">
+                            <p class="general-title">Detalle</p>
+                            @Model.MensajeActividad
+                        </div>
+                        <div class="margintop30">
+                            <p class="general-title">Documentación adjuntada</p>
+
+                            <div class="table-responsive no-border">
+                                <table class="table table-condensed table-modal-nuevo-reclamo">
+                                    @*<thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Nombre</th>
+                                        </tr>
+                                    </thead>*@
+                                    <tbody>
+                                        @foreach (var archivo in Model.Archivos)
+                                        {
+                                            <tr>
+                                                <td><div class="ticket-thumbnail-container"><img class="ticket-thumbnail" imagen-extension src="" nombre="@archivo.Id" contenido="@archivo.Contenido" /></div></td>
+                                                <td>@archivo.Nombre</td>
+                                            </tr>
+                                        }
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            <script type="text/javascript">
+
+                                var IconoAdjuntos = function () {
+                                    $('[imagen-extension]').each(function (index) {
+                                        var contenido = $(this).attr('contenido');
+                                        var file_name_string = $(this).attr('nombre');
+
+                                        var file_name_array = file_name_string.split(".");
+                                        //var file_extension = file_name_array[file_name_array.length - 1];
+                                        //file_extension = file_extension.toLowerCase();
+                                        var file_extension = ExtensionArchivo;
+
+                                        if (file_extension == 'jpg' || file_extension == 'jpeg' || file_extension == 'png' || file_extension == 'gif' || contenido == 'jpg' || contenido == 'jpeg' || contenido == 'png' || contenido == 'gif')
+                                            $(this).attr('src', location.origin + '/Archivo/ObtenerImagenPorId/' + file_name_string);
+                                        //$(this).attr('src', location.origin + '/Archivo/ObtenerImagen?name=' + file_name_string + '&height=128&width=128')
+                                        else
+                                            $(this).attr('src', '/assets/fileType/' + file_extension + '.png')
+                                    });
+                                }
+                                $(document).ready(function () {
+                                    IconoAdjuntos();
+                                });
+                            </script>
+
+                        </div>
+
+                        <div class="row margintop30">
+                            <div class="col-sm-6 col-sm-offset-3">
+                                <a class="btn btn-default btn-block" data-dismiss="modal">Cerrar</a>
+                            </div>
+                        </div>
+                        <div class="margintop20 visible-xs"></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

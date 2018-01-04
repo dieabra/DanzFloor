@@ -1,0 +1,295 @@
+﻿@model DanzFloor.Web.Models.ViewModels.PedidoIndexViewModel
+@using DanzFloor.Web.Models.Dominio;
+@using DanzFloor.Web.Models
+@using DanzFloor.Web.Models.Enum;
+@using System.Globalization
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@using (Html.BeginForm("Buscar", "Pedido", FormMethod.Post))
+{
+<div class="card z-depth-4">
+    <div class="card-header">
+        <h2>
+            Buscador de Pedidos
+        </h2>
+        <ul class="actions">
+            <li>
+                <a btn-buscar="buscar" style="cursor:pointer">
+                    <i class="zmdi zmdi-search"></i>
+                </a>
+            </li>
+            <li>
+                <a href="/Pedido">
+                    <i class="zmdi zmdi-close-circle-o"></i>
+                </a>
+            </li>
+            @*<li>
+                <a btn-buscar="buscar" class="btn btn-default btn-icon waves-effect waves-circle waves-float right m-r-10"><i class="zmdi zmdi-search"></i></a>
+            </li>
+            <li>
+                <a href="/Pedido" class="btn btn-default btn-icon waves-effect waves-circle waves-float right m-r-10"><i class="zmdi zmdi-close-circle-o"></i></a>
+            </li>*@
+        </ul>
+        
+    </div>
+
+    <a href="/Pedido/Create" class="btn btn-float bgm-blue m-btn waves-effect waves-circle waves-float"><i class="zmdi zmdi-plus"></i></a>
+
+    <div class="card-body card-padding">
+        <div class="row">
+            <div class="col-md-3 form-group m-b-5">
+                <label class="nombre-campo">Estado</label>
+                <div class="select fg-line">
+                    @if (User.IsInRole(RoleConst.LecturaPedidos))
+                    {
+                        <select id="InstanciaId" name="InstanciaId" class="chosen">
+                            @foreach (var item in Model.Instancias.Where(x => x == InstanciaPedido.Pendiente))
+                            {
+                                <option selected="selected" value="@((int)item)">@item.ToString()</option>
+                            }
+                        </select>
+                    }
+                    else
+                    {
+                        <select id="InstanciaId" name="InstanciaId" class="chosen">
+                            @foreach (var item in Model.Instancias)
+                            {
+                                <option @(item == Model.InstanciaId ? "selected='selected'" : "") value="@((int)item)">@item.ToString()</option>
+                            }
+                        </select>
+                    }
+                </div>
+            </div>
+
+            <div class="col-sm-9">
+                <label class="nombre-campo">Tags Cliente</label>
+                <div class="form-group fg-line">
+                    <select class="chosen" id="TagsClienteId" multiple="multiple" name="TagsClienteId" style="display: none;">
+                        @foreach (var item in Model.TagsCliente)
+                        {
+                            if (Model.TagsClienteId != null && Model.TagsClienteId.Contains(item.Id))
+                            {
+                                <option value="@item.Id" selected="selected">@item.Nombre</option>
+                            }
+                            else
+                            {
+                                <option value="@item.Id">@item.Nombre</option>
+                            }
+                        }
+                    </select>
+                </div>
+                @Html.ValidationMessageFor(model => model.TagsClienteId, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="col-md-3 form-group fg-float m-t-25 m-b-15">
+                <div class="fg-line">
+                    @Html.EditorFor(model => model.FechaProgramadaDesde, new { htmlAttributes = new { @class = "form-control input-sm date-picker" } })
+                    <label class="fg-label">Fecha programada desde</label>
+                </div>
+            </div>
+            <div class="col-md-3 form-group fg-float m-t-25 m-b-15">
+                <div class="fg-line">
+                    @Html.EditorFor(model => model.FechaProgramadaHasta, new { htmlAttributes = new { @class = "form-control input-sm date-picker" } })
+                    <label class="fg-label">Fecha programada hasta</label>
+                </div>
+            </div>
+
+            <div class="col-md-3 form-group fg-float m-t-25 m-b-15">
+                <div class="fg-line">
+                    @Html.EditorFor(model => model.FechaCreacionDesde, new { htmlAttributes = new { @class = "form-control input-sm date-picker" } })
+                    <label class="fg-label">Fecha creación desde</label>
+                </div>
+            </div>
+            <div class="col-md-3 form-group fg-float m-t-25 m-b-15">
+                <div class="fg-line">
+                    @Html.EditorFor(model => model.FechaCreacionHasta, new { htmlAttributes = new { @class = "form-control input-sm date-picker" } })
+                    <label class="fg-label">Fecha creación hasta</label>
+                </div>
+            </div>
+            <div class="col-md-6 form-group m-b-5">
+                <label class="nombre-campo">Cliente</label>
+                <div class="select fg-line">
+                    <select id="ClienteId" name="ClienteId" class="chosen ClienteId">
+                        <option value="@Guid.Empty"></option>
+                        @foreach (var item in Model.Clientes)
+                        {
+                            <option @(item.Id == Model.ClienteId ? "selected='selected'" : "") value="@item.Id">@item.NombreYRazonSocial</option>
+                        }
+                    </select>
+                </div>
+                @Html.ValidationMessageFor(model => model.ClienteId, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-6 form-group m-b-5">
+                <label class="nombre-campo">Punto de Entrega</label>
+                <div class="select fg-line">
+                    <select id="PuntoEntregaId" name="PuntoEntregaId" class="chosen" punto-entrega-select>
+                        <option value="@Guid.Empty"></option>
+                        @foreach (var puntoEntrega in Model.PuntosEntrega)
+                        {
+                            <option @(puntoEntrega.Id == Model.PuntoEntregaId ? "selected='selected'" : "") value="@puntoEntrega.Id">@puntoEntrega.NombreYZona</option>
+                        }
+                        @Html.ValidationMessageFor(model => model.PuntoEntregaId, "", new { @class = "text-danger" })
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="resultadoBusqueda" class="card">
+    <div class="card-header">
+        <h2>
+            Pedidos
+        </h2>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th data-column-id="Cliente">Vendedor</th>
+                    <th data-column-id="Cliente">Cliente</th>
+                    <th data-column-id="Fecha Programada">Fecha Creación</th>
+                    <th data-column-id="Fecha Programada">Fecha Programada</th>
+                    <th data-column-id="PuntoEntrega">Punto de Entrega</th>
+                    <th data-column-id="commands" data-formatter="commands" data-sortable="false">
+                        Comandos
+                    </th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in (List<Pedido>)Model.Resultado)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Vendedor.NombreYApellido)
+                        </td>
+                        <td>
+                            @(item.Cliente.NombreYRazonSocial)
+                        </td>
+                        <td>
+                            @item.FechaCreacion.ToString("dd/MM/yyyy", CultureInfo.CreateSpecificCulture("es-MX"))
+                        </td>
+                        <td>
+                            @item.FechaProgramada.ToString("dd/MM/yyyy", CultureInfo.CreateSpecificCulture("es-MX"))
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PuntoEntrega.Nombre)
+                        </td>
+                        <td>
+                            @if (User.IsInRole(RoleConst.Administrador) || 
+                                User.IsInRole(RoleConst.AdministradorPedido)  || 
+                                User.IsInRole(RoleConst.AdministradorVendedor) )
+                            {
+                                if (item.Instancia == InstanciaPedido.Pendiente ||
+                                    item.Instancia == InstanciaPedido.GratisEnAprobacion ||
+                                    item.Instancia == InstanciaPedido.Inicial)
+                                {
+                                    <a class="btn btn-icon command-edit waves-effect waves-circle" href="/Pedido/Edit/@item.Id"><span class="zmdi zmdi-edit"></span></a>
+                                }
+                                else if (!item.EsGratis)
+                                {
+                                    <a href="/Pedido/Create/?pedidoIdBase=@item.Id" class="btn btn-icon command-edit waves-effect waves-circle"><span class="zmdi zmdi-refresh-alt"></span></a>
+                                }
+                                if (User.IsInRole(RoleConst.Administrador) ||
+                                    User.IsInRole(RoleConst.AutorizadorPedidos))
+                                {
+                                    if (item.Instancia == InstanciaPedido.GratisEnAprobacion)
+                                    {
+                                        <a pedido-aprobar="@item.Id" class="btn btn-icon command-edit waves-effect waves-circle"><span class="zmdi zmdi-check"></span></a>
+                                        <a pedido-rechazar="@item.Id" class="btn btn-icon command-edit waves-effect waves-circle"><span class="zmdi zmdi-close"></span></a>
+                                    }
+                                }
+                            }
+                            <a href="/Pedido/Detail/@item.Id" class="btn btn-icon waves-effect waves-circle"><span class="zmdi zmdi-eye"></span></a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+
+    @Html.Partial("_Paginador", Model)
+
+</div>
+}
+<script type="text/javascript">
+    $('[pedido-aprobar]').click(function () {
+        var pedidoId = $(this).attr('pedido-aprobar');
+
+        swal({
+            title: "¿Está seguro de que desea Aprobar el Pedido?",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Sí",
+            cancelButtonText: "No",
+            closeOnConfirm: false
+        }, function () {
+            $.ajax({
+                dataType: 'json',
+                type: 'GET',
+                url: window.location.origin + '/Pedido/Aprobar/' + pedidoId,
+                success: function (result) {
+                    swal("¡Aprobado!", "El Pedido fue aprobado.", "success");
+                },
+                error: function (error) {
+                    swal("¡Ups!", "Se ha tenido un inconveniente, contacte a su administrador.", "error");
+                }
+            });
+        });
+    });
+
+    $('[pedido-rechazar]').click(function () {
+        var pedidoId = $(this).attr('pedido-rechazar');
+
+        swal({
+            title: "¿Está seguro de que desea Rechazar el Pedido?",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Sí",
+            cancelButtonText: "No",
+            closeOnConfirm: false
+        }, function () {
+            $.ajax({
+                dataType: 'json',
+                type: 'GET',
+                url: window.location.origin + '/Pedido/Rechazar/' + pedidoId,
+                success: function (result) {
+                    swal("¡Rchazado!", "El Pedido se cambió al estado rechazado.", "success");
+                },
+                error: function (error) {
+                    swal("¡Ups!", "Se ha tenido un inconveniente, contacte a su administrador.", "error");
+                }
+            });
+        });
+    });
+</script>
+
+
+@if (Request.Params["Message"] == "Success")
+{
+    <script>
+        swal("Buen trabajo!", "El Pedido se ha sido actualizado", "success");
+    </script>
+}
+@if (Request.Params["Message"] == "Error")
+{
+    <script>
+        swal("No se realizo la modificación!", "El Pedido no ha sido actualizado", "error");
+    </script>
+}
+@if (Request.Params["Message"] == "DeleteUserSuccess")
+{
+    <script>
+        swal("Se elimino un Pedido", "", "warning");
+    </script>
+}

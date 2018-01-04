@@ -1,0 +1,59 @@
+﻿@model DanzFloor.Web.Models.ViewModels.TemaViewModel
+
+@{
+    ViewBag.Title = "Crear";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card z-depth-4">
+    <div class="card-header">
+        <h2>
+            Tema
+        </h2>
+    </div>
+
+    <div class="card-body card-padding">
+        @using (Html.BeginForm("Create", "Tema", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="row">
+
+                <div class="col-md-6 form-group fg-float m-t-30 m-b-0">
+                    <div class="fg-line">
+                        @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control input-sm" } })
+                        @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+                        <label class="fg-label">Nombre</label>
+                    </div>
+                </div>
+
+                <div class="col-sm-6 m-b-25 form-group">
+                    <p class="f-500 m-b-15 c-black">Artista</p>
+
+                    <select id="ArtistaId" class="chosen form-control" name="ArtistaId">
+                        <option value="@Guid.Empty">Seleccione...</option>
+                        @foreach (var item in Model.Artistas)
+                        {
+                            <option @(item.Id == Model.ArtistaId ? "selected='selected'" : "") value="@item.Id">
+                                @item.Nombre
+                            </option>
+                        }
+                    </select>
+                    @Html.ValidationMessageFor(model => model.ArtistaId, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="col-md-12 form-group fg-float m-t-25 m-b-0">
+                    <div class="fg-line">
+                        @Html.EditorFor(model => model.SpotifyLink, new { htmlAttributes = new { @class = "form-control input-sm" } })
+                        @Html.ValidationMessageFor(model => model.SpotifyLink, "", new { @class = "text-danger" })
+                        <label class="fg-label">Spotify Link</label>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-float bgm-blue m-btn waves-effect waves-circle waves-float"><i class="zmdi zmdi-check"></i></button>
+        }
+    </div>
+
+</div>

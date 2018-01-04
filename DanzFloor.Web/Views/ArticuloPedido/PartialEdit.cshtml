@@ -1,0 +1,55 @@
+﻿@model DanzFloor.Web.Models.ViewModels.ArticuloPedidoViewModel
+
+@using (Html.BeginForm("Edit/" + Model.Id, "ArticuloPedido", FormMethod.Post))
+{
+<div class="modal-body">
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(x => x.PedidoId)
+        <div class="row">
+            <div class="col-md-6 form-group fg-float m-t-25 m-b-0">
+                <label>Artículo</label>
+                <div class="fg-line">
+                    <select class="chosen" id="ArticuloSelected" name="ArticuloSelected" style="display: none;">
+                        @if (Model.ListaArticulos != null)
+                        {
+                            foreach (var itemArticulo in Model.ListaArticulos)
+                            {
+                                if (Model.Articulo != null && Model.Articulo.Id == itemArticulo.Id)
+                                {
+                                    <option value="@itemArticulo.Id" selected="selected">@itemArticulo.Nombre</option>
+                                }
+                                else
+                                {
+                                    <option value="@itemArticulo.Id">@itemArticulo.Nombre</option>
+                                }
+                            }
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-6 form-group fg-float m-t-25 m-b-0">
+                <div class="fg-line">
+                    @Html.EditorFor(model => model.Cantidad, new { htmlAttributes = new { @class = "form-control input-sm" } })
+                    @Html.ValidationMessageFor(model => model.Cantidad, "", new { @class = "text-danger" })
+                    @Html.LabelFor(model => model.Cantidad, new { @class = "fg-label" })
+                </div>
+            </div>
+        </div>
+</div>
+<div class="modal-footer">
+    <button type="submit" id="btnGuardar" class="btn btn-link ">Guardar</button>
+    <button type="button" class="btn btn-link" data-dismiss="modal">
+        Cerrar
+    </button>
+</div>
+    }
+
+<script type="text/javascript">
+$('#Cantidad').change(function(){
+    if ($('#Cantidad').val() == "" || $('#Cantidad').val() == "0")
+        $('#btnGuardar').prop('disabled', true);
+    else
+        $('#btnGuardar').prop('disabled', false);
+});
+</script>

@@ -1,0 +1,36 @@
+.register-header{
+	.back-button{
+		&.show-back-button{
+			display: inline-block;
+			font-family: 'Roboto';
+			font-weight: 300;
+		}
+	}
+	.img-navbar-heart{
+	    max-width: 33px;
+	    margin: none;
+	    position: absolute;
+	    display: block;
+	    top: 52%;
+	    left: 50%;
+	    transform: translate(-50%, -52%);
+	}
+}
+
+.btn-register{
+	background-color: #F8AED0;
+}
+
+.list-ios{
+	&.list-no-margin{
+		margin-bottom: 0;
+	}
+}
+
+.button-ios{
+	&.btn-register{
+		&.activated{
+			background-color: #f58bbc;
+		}
+	}
+}

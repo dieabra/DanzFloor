@@ -1,0 +1,138 @@
+﻿@using DanzFloor.Web.Models.ViewModels.Frontend
+@using DanzFloor.Web.Models
+@using System.Globalization
+
+@model EditarPedidoViewModel
+@{
+    ViewBag.Title = "Repetir pedido";
+    Layout = "~/Views/Shared/_LayoutFront.cshtml";
+}
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+            <!-- Mensaje cuando no hay artículos en la tabla -->
+            <div class="message-empty @(Model.PedidoInicial.Articulos.Any() ? "hide" : "") ">
+                <i class="pe-7s-shopbag"></i>
+                <h3>Tu carrito de compras esta vacío.</h3>
+                <h4>Te invitamos a que pases y conozcas nuestros panes</h4>
+                <a href="/Frontend" class="btn btn-primary btn-lg">Hacé tu pedido</a>
+            </div>
+
+
+
+
+            <section class="@(Model.PedidoInicial.Articulos.Any() ? "" : "hide")">
+                <div class="text-center margintop30">
+                    <div class="margintop60 clear hidden-xs"></div>
+                    <h3>Resumen de pedido</h3>
+                </div>
+
+                <!-- Partial Tabla resumen artículos -->
+                @Html.Partial("~/Views/Frontend/Partial/_ItemTablaArticulo.cshtml", Model.PedidoEditar)
+
+                <hr class="full-xs visible-xs" />
+                <div class="row precio-total" precio-final-compra>
+                    <!-- Partial precio final de compra -->
+                    @Html.Partial("~/Views/Frontend/Partial/_PrecioFinalCompra.cshtml", Model.PedidoEditar)
+                </div>
+
+                <div class="clearfix"></div>
+
+                <div class="row delivery-date">
+                    <div class="col-sm-6">
+                        <!-- Partial punto de entrega -->
+                        @Html.Partial("~/Views/Frontend/Partial/_PuntoDeEntrega.cshtml", Model)
+                    </div>
+                    <div class="col-sm-6">
+                        <!-- Partial dia de entrega -->
+                        @Html.Partial("~/Views/Frontend/Partial/_DiaDeEntrega.cshtml", Model.PedidoEditar)
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-6 hidden-xs">
+                       <div class="bb-line"></div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="bb-line"></div>
+                    </div>
+                </div>
+
+                <div class="row recommendations @(Model.Recomendados.Count() == 0 ? "hide" : "")">
+                    <div class="col-xs-12">
+                        <div class="text-center">
+                            <div class="title-recommend brandonMd">Te recomendamos que pruebes</div>
+                            <div class="row">
+                                @foreach (var item in Model.Recomendados)
+                                {
+                                    <div class="col-sm-6 col-md-4">
+                                        <div class="product-item relative">
+                                            <a href="/Frontend/DetalleArticulo/@item.Id" class="img-box">
+                                                <img src="@Archivo.ObtenerUrlArchivo(item.Producto.Archivos, TipoEntidadConst.PRODUCTO, "Imagen Principal")" class="img-responsive img-producto-categoria" alt="Foto de Categoría">
+                                            </a>
+                                            <div class="footer-product">
+                                                <a href="/Frontend/DetalleArticulo/@item.Id" class="h5 title-product show">@item.Producto.Nombre</a>
+                                                <a agregar-articulo="@item.Id" class="btn btn-primary btn-sm btn-outlined">Añadir</a>
+                                            </div>
+                                            @*<a href="/Frontend/DetalleArticulo/@item.Id"><i class="pe-7s-info"></i></a>*@
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="margintop60 hidden-xs"></div>
+                <hr class="margintop30 full-xs @(Model.Recomendados.Count() == 0 ? "hide" : "")">
+
+                <div class="row margintop60">
+                    <div class="col-xs-12">
+                        <div class="text-center">
+                            <a href="/Frontend/ConfirmarCompra/@Model.PedidoInicial.Id" class="btn btn-primary btn-lg">Confirmar compra</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="margintop30 hidden-xs"></div>
+
+            </section>
+
+        </div>
+    </div>
+</div>
+
+
+<hr class="divider-line footer-line">
+
+@Html.Partial("~/Views/Frontend/Partial/_ModalModificarItemCarrito.cshtml")
+
+@if (Request.QueryString["ErrorFecha"] == "True")
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            swal({
+                title: "No es posible generar el pedido para la fehca " +
+                    "@Model.PedidoInicial.FechaProgramada.Day de " +
+                    "@Model.PedidoInicial.FechaProgramada.ToString("MMMM", CultureInfo.CreateSpecificCulture("es-MX")) de " +
+                    "@Model.PedidoInicial.FechaProgramada.Year",
+                text: "Debo modificar la fecha de entrega",
+                icon: "success",
+                timer: 5000
+            });
+        });
+    </script>
+}
+else if (Request.QueryString["ErrorCantidad"] == "True")
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            swal({
+                title: "Mímimo no superado",
+                text: "Debe ingresar un mínimo de 2 unidades en total.",
+                icon: "success",
+                timer: 5000
+            });
+        });
+    </script>
+}

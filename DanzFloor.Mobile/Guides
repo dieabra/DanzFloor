@@ -1,0 +1,134 @@
+Google Play Store:
+    Al subir la aplicacion al playstore, la vuelve a firmar, por lo que cambia el SHA1
+    Importante para Google Login!
+    entrar en el google play store console -> seccion Release Management -> App Signing -> Esta el actual
+    Crear en developper console Google -> Credential OAuth -> Android -> SHA1 que recuperamos recién
+
+Facebook:
+    https://ionicframework.com/docs/native/facebook/
+    https://ionicthemes.com/tutorials/about/ionic2-facebook-login#step3
+
+    Para la key, hay que bajarse openssl y seguir las intrucciones de:
+    https://stackoverflow.com/questions/5306009/facebook-android-generate-key-hash
+
+    En mi máquina lo que tuve que hacer fue copiar el debug.txt del keystore al directorio de openssl/bin y desde ahi correr los comandos
+
+    El App_Id lo saco de Fb el nombre tambien
+    ionic cordova plugin add cordova-plugin-facebook4 --variable APP_ID="512859328903997" --variable APP_NAME="DanzFloor"
+    npm install --save @ionic-native/facebook
+Google
+    https://github.com/EddyVerbruggen/cordova-plugin-googleplus
+
+    https://developers.google.com/drive/android/auth -->  Esto tiene que ser de Android
+
+    los ids utilizados son los web, no los de android
+
+    //cordova plugin add https://github.com/EddyVerbruggen/cordova-plugin-googleplus --save --variable REVERSED_CLIENT_ID=com.googleusercontent.apps.798083776747-irfipedjps0m8ghr3qdt2u9fo8npc74o
+    //cordova plugin add https://github.com/EddyVerbruggen/cordova-plugin-googleplus --save --variable REVERSED_CLIENT_ID=com.googleusercontent.apps.888160053125-ubbmdrn3eqp1gvl38g6h7hlnot11bsgc
+    cordova plugin add https://github.com/EddyVerbruggen/cordova-plugin-googleplus --save --variable REVERSED_CLIENT_ID=com.googleusercontent.apps.888160053125-7eqc8jagmolkhp2q23321g8n239ihpjj
+
+    Ver Google Play Store! 
+Instagram
+    Para ser SandBoxUser hay que entrar en Instagram Developer, arriba hay una seccion SandBox Invites
+
+    Para instagram, solo hay que usar npm intall --> Es todo a manopla
+
+    En el server (Mvc) me funcionó así:
+        <form method="post" action="https://api.instagram.com/oauth/access_token">
+            <!-- some input fields containing the values to post -->
+            <input type="hidden" name="client_id" value="f252312a6ad34ceb8dddfba997c3e96e" />
+            <input type="hidden" name="client_secret" value="7b7229c16a6348febf1b4d8a88b4bfb4" />
+            <input type="hidden" name="grant_type" value="authorization_code" />
+            <input type="hidden" name="redirect_uri" value="https://api.ionic.io/auth/integrations/instagram" />
+            <input type="hidden" name="code" value="1b3c1c2111f04a808e9e154ad2bcdc0e" />
+            <input type="submit" value="Post to other site" />
+        </form>
+
+FireBase
+    ServerKey: AAAAzsp254U:APA91bF05BF5CCyCA2mE74lVONABNukD2ScAJ0t15bAuHhZwfJ31riR77RMxHY48ZUE0UN8ZFCogbF9vVews73QQ5w4XhOuEhICTykJv5ydJS3TNI6c-2mWTYHejk7UxZqcw-9rkiVTa
+    Sender Id: 888160053125
+    OneSignal Id: Tincho Test : 769fb9a4-c8ae-4bba-9c7c-502e8f4346e7
+                  DanzFloor: ccbedeff-9936-4f74-a8b7-46dd91f206f2
+
+    Para DanzFloor hay que entrar en OneSignal, loguearse en google con apps@binit.com.ar, y autenticarse con Google
+    
+    https://www.sitepoint.com/push-notifications-in-your-ionic-app-with-onesignal/
+    https://www.ion-book.com/blog/ionic2/ionic2-and-onesignal/
+    https://ionicframework.com/docs/native/onesignal/
+
+Firmar Apk
+
+    ionic cordova build --release android --> Esto genera en pltforms/android/build/output/apk/ android-release-unsigned.apk
+
+    Copio en el root del Mobile el apk
+
+    Firmo: (Comando - keyStore - unsignead apk - Alias de Firma que esta en el keystore)
+    jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore DanzFloor-key.jks android-release-unsigned.apk DanzFloor
+
+    Alineo: (Comando - apk firmado - apk Alineado)
+    zipalign -v 1 android-release-unsigned.apk DanzFloor-signed.apk
+
+Firma Automatica Apk
+    En platforms/android crear dos archivos: debug-signing.properties y release-signing.properties
+    Pegar en ambos archivos:
+        # location of keystore El path al keystore (no se si el ../../ funciona, lo que tengo yo es el keysore dentro de platforms/android y directamente le pego a ese)
+        storeFile=../../DanzFloor-key.jks
+
+        # Key alias
+        keyAlias=DanzFloor
+
+        # Store password
+        storePassword=justB1N1T
+
+        # Key password
+        keyPassword=justB1N1T
+
+Version Apk 
+    en build.gradle
+        versionCode cdvVersionCode ?: Integer.parseInt("" + privateHelpers.extractIntFromManifest("versionCode")
+        tiene por defecto un + "0" --> sacarlo
+        comentar la linea: defaultConfig.versionCode += 8
+
+JwPlayer
+    En la web de jwplayer en la seccion Players->Manage descargar del player seleccionado "Cloud Player Library URL"
+    El js bajado guardarlo en src/assets/js
+    En Index.html:
+        <script src="assets/js/'js Bajado'.js"></script>
+        <script>jwplayer.key="Api key de JwPlayer";</script>
+    En la web seccion Videos->El que quiera -> Sources -> La que quiera->Direct Link
+    En el html que se quiera usar:
+          <div id="myMediaDiv"></div>
+    En el js que se quiera usar:
+        Importar el servicio media-player.service
+        this.service.loadMedia({
+                Title:"Footloose 2011-Fake ID Scene", // Cualquier titulo
+                Id:'3veM3kNJ', //Id del video de jwplayer
+                Location:'http://content.jwplatform.com/videos/3veM3kNJ-Laz5cgZK.mp4'//Direct Link
+            },false)
+        .then(p=>alert(':)'),p=>alert(':('));
+        
+
+MINIFICACION DE CSS Y JS (No es obfuscar, eso es otro proceso)
+    Instalar https://github.com/ionic-team/ionic-app-scripts con comando: npm install @ionic/app-scripts@latest --save
+    En package.json agregar: 
+
+     "config": {
+            "ionic_uglifyjs": "./config/uglifyjs.config.js",
+            "ionic_cleancss": "./config/cleancss.config.js"
+            }
+
+    Ya esta campeón, ahora cada build minifica ambas cosas (no obfusca el main.js)
+
+OBFUSCACION
+    Para obfuscar simplemente se le debe pedir al build que sea de producion con el método --prod
+    
+    Para Debug: ionic cordova build android --prod --debug
+    Para Release: ionic cordova build android --prod --release
+
+    NOTA: yo instalé primero el plugin del proceso de minificación, es recomendable hacer ese primero y despues este ya que
+          puede que alguno de los plugins que usa --prod como por ejemplo el uglify.js sean requeridos para ejecutarlo.
+
+IOS build
+    Comando: ionic cordova ios build --prod
+    Para Instagram en el login component en vez de _self, _blank
+    Para Google ->Desinstalar el plugin de google plus y volverlo a instalar con el REVERSED_CLIENT_ID que se baja de firebase para ios

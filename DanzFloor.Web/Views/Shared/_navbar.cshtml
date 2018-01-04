@@ -1,0 +1,164 @@
+﻿@using DanzFloor.Web.Models.ViewModels.Frontend
+
+@model FrontendViewModel
+
+<nav class="navbar navbar-default navbar-static-top hidden-xs">
+    <div class="container">
+        <div class="navbar-header">
+
+            <ul class="list-unstyled navbar-nav">
+                <li class="dropdown">
+                    <a href="/Frontend" class="navbar-brand dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                        <span>
+                            <span class="icon-bar-nav"></span>
+                            <span class="icon-bar-nav"></span>
+                            <span class="icon-bar-nav"></span>
+                        </span>
+                        Menú&nbsp;<span class="hidden-sm">Principal</span>
+                    </a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="/Frontend/Favoritos"><i class="pe-va pe-7s-like"></i> Mis Favoritos</a></li>
+                        <li><a href="/Frontend/Tickets?tipoTicketId=6D634BB3-EC59-A209-A349-39E2569CA068"><i class="pe-va pe-7s-pen"></i> Solicitudes</a></li>
+                        <li><a href="/Frontend/Tickets"><i class="pe-va pe-7s-pen"></i> Reclamos</a></li>
+                        <li><a href="/Frontend/MiPerfil"><i class="pe-va pe-7s-user"></i> Configuración</a></li>
+                        <li><a href="/Cuenta/logoff"><i class="pe-va pe-7s-close-circle"></i> Salir del sistema</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+       
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#" class="buscar-articulos"><span class="hidden-xs hidden-sm hidden-md">Buscar</span><i class="pe-7s-search pe-va"></i></a>
+                </li>
+                <li><a href="/Frontend/MiPerfil"><i class="pe-7s-user pe-va"></i></a></li>
+            </ul>
+        </div>
+
+    </div>
+    <a href="/Frontend"><img src="~/assets/Danzfloor/img/headphone-icon.png" class="logo-navbar" alt="Logo Danzfloor" style="height: 100px;"></a>
+</nav>
+
+
+<nav class="navbar navbar-default navbar-fixed-top visible-xs">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-2">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+
+            <a href="/Frontend/Checkout" class="visible-xs pull-right item-nav-xs">
+                <span class="hidden-xs hidden-sm hidden-md">Comprar</span>
+                <i class="pe-7s-cart pe-va">
+                </i>
+            </a>
+
+            <div class="pull-right visible-xs item-nav-xs">
+                <a class="buscar-articulos"><i class="pe-7s-search pe-va"></i></a>
+            </div>
+        </div>
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
+            <ul class="nav navbar-nav">
+                <li><a href="/Frontend"><i class="pe-va pe-7s-home"></i> Inicio</a></li>
+                <li><a href="/Frontend/RepetirPedido"><i class="pe-va pe-7s-refresh-2"></i> Repetir Pedido</a></li>
+                <li><a href="/Frontend/RepetirPedido"><i class="pe-va pe-7s-shopbag"></i> Historial de Pedidos</a></li>
+                <li><a href="/Frontend/Favoritos"><i class="pe-va pe-7s-like"></i> Mis Favoritos</a></li>
+                @*@if (Model.PedidoInicial.UsuarioCliente.EsAdministrador)
+                {
+                    <li><a href="/Frontend/CuentaCorriente?pagesize=1000"><i class="pe-va pe-7s-cash"></i> Cuenta Corriente</a></li>
+                }*@
+                <li><a href="/Frontend/Tickets?tipoTicketId=6D634BB3-EC59-A209-A349-39E2569CA068"><i class="pe-va pe-7s-pen"></i> Solicitudes</a></li>
+                <li><a href="/Frontend/Tickets"><i class="pe-va pe-7s-pen"></i> Reclamos</a></li>
+                <li><a href="/Frontend/MiPerfil"><i class="pe-va pe-7s-user"></i> Configuración</a></li>
+                <li><a href="/Cuenta/logoff"><i class="pe-va pe-7s-close-circle"></i> Salir del sistema</a></li>
+            </ul>
+        </div>
+    </div>
+    <a href="/Frontend"><img src="~/assets/SdP/Frontend/img/id-sdp.png" class="logo-navbar" alt="Logo Sapore Di Pane"></a>
+</nav>
+
+<div class="search-box">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <a href="#" buscar-articulos class="btn btn-link"><i class="pe-7s-search"></i></a>
+                <input id="search-input" buscar-criterio type="search" name="search" value="" placeholder="Buscar en Sapore Di Pane" autofocus />
+                <a type="button" href="#" buscar-articulos class="btn btn-primary btn-outlined hidden-xs">Buscar</a>
+                <a type="button" href="#" buscar-articulos class="btn btn-link visible-xs search-xs"><i class="pe-7s-angle-right"></i></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Pantalla landscape -->
+<div class="landscape-screen">
+    <i class="pe-7s-phone"></i>
+    <div class="landscape-info">
+        <h3>Para una correcta visualización del contenido rote su teléfono celular en posición vertical</h3>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('[buscar-criterio]').keyup(function (e) {
+            var q = $(this).val();
+            var url = '/Frontend/ResultadoBusqueda?q=' + q;
+
+            if (e.keyCode == 13) {
+                location.href = url;
+            }
+
+            $('[buscar-articulos]').attr('href', url ) ;
+        });
+
+        $('[buscar-criterio-mobile]').keyup(function (e) {
+            var q = $(this).val();
+            var url = '/Frontend/ResultadoBusqueda?q=' + q;
+
+            if (e.keyCode == 13) {
+                location.href = url;
+            }
+
+            $('[buscar-articulos-mobile]').attr('href', url);
+        });
+        //$('[buscar-articulos]').click(function () {
+        //    var q = $('[buscar-criterio]').val();
+
+        //    location.href = '/Frontend/ResultadoBusqueda?q=' + q;
+        //});
+        //$('[buscar-articulos-mobile]').click(function () {
+        //    var q = $('[buscar-criterio-mobile]').val();
+
+        //    location.href = '/Frontend/ResultadoBusqueda?q=' + q;
+        //});
+    });
+</script>
+
+<script>
+    $('.navbar.hidden-xs .buscar-articulos').click(function () {
+        $('.search-box').toggleClass('active');
+        $('#search-input').focus();
+        $('body').toggleClass('active-search');
+    })
+
+    $('.navbar.visible-xs .buscar-articulos').click(function () {
+        $('.search-box').toggleClass('active');
+        $('body').toggleClass('active-search');
+    })
+</script>
+
+<script>
+    $('.dropdown.categorias').click(function () {
+        $('.dropdown.categorias a i').toggleClass('rotate');
+    })
+
+    $(document).click(function () {
+        $('.dropdown.categorias a i').removeClass('rotate');
+    });
+</script>

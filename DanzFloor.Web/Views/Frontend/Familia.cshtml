@@ -1,0 +1,90 @@
+﻿@using DanzFloor.Web.Models
+
+@model DanzFloor.Web.Models.ViewModels.FamiliaFrontViewModel
+@{
+    ViewBag.Title = "Bienvenido";
+    Layout = "~/Views/Shared/_LayoutFront.cshtml";
+}
+<nav class="navbar navbar-default navbar-justify navbar-secondary hidden-xs">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                @foreach (var item in Model.Familias)
+                {
+                    <li class="@(item.Id == Model.Familia.Id ? "active" : "")"><a href="/Frontend/Familia/@item.Id"><img src="@Archivo.ObtenerUrlArchivo(item.Archivos, TipoEntidadConst.FAMILIA, "Logo Negro")" alt=""></a></li>
+                }
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="sdp-familia-hero" style="background-image: url('@Archivo.ObtenerUrlArchivo(Model.Familia.Archivos, TipoEntidadConst.FAMILIA, "Imagen de fondo")')">
+    <div class="gradient"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="text-center margintop40">
+                    <img src="@Archivo.ObtenerUrlArchivo(Model.Familia.Archivos, TipoEntidadConst.FAMILIA, "Logo Blanco")" class="img-responsive" alt="Logo Dolce Sapore">
+                    <p class="title-hero hidden-xs">@Model.Familia.Titulo</p>
+                    <div class="subtitle-hero hidden-xs">@Model.Familia.Descripcion</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        @foreach (var item in Model.Articulos)
+        {
+            <div class="col-xs-12 col-sm-6 col-md-4">
+                <div class="product-item relative">
+                    <a href="/Frontend/DetalleArticulo/@item.Id" class="img-box">
+                        <img src="@Archivo.ObtenerUrlArchivo(item.Producto.Archivos, TipoEntidadConst.PRODUCTO, "Imagen Principal")" class="img-responsive img-producto-categoria" alt="Foto de Categoría">
+                    </a>
+                    <div class="footer-product">
+                        <a href="/Frontend/DetalleArticulo/@item.Id" class="h5 title-product show">@item.Producto.Nombre</a>
+                        <a @(Model.PedidoInicial.VerModalMultiplePuntoEntrega ? "punto-entrega-elegir" : "agregar-articulo")="@item.Id" class="btn btn-primary btn-sm btn-outlined">Añadir</a>
+                    </div>
+                    @*<a href="/Frontend/DetalleArticulo/@item.Id"><i class="pe-7s-info"></i></a>*@
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<nav class="navbar navbar-default navbar-justify navbar-categories-bottom navbar-secondary hidden-xs">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                @foreach (var item in Model.Familias)
+                {
+                    <li class="@(item.Id == Model.Familia.Id ? "active" : "")">
+                        <a href="/Frontend/Familia/@item.Id">
+                            <img src="@Archivo.ObtenerUrlArchivo(item.Archivos, TipoEntidadConst.FAMILIA, "Logo Negro")" alt="">
+                        </a>
+                        <div class="arrow-up"></div>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<hr class="visible-xs divider-line footer-line" />

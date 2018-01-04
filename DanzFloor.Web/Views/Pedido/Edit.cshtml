@@ -1,0 +1,343 @@
+﻿@using DanzFloor.Web.Models.ViewModels;
+@using DanzFloor.Web.Models.Constantes
+@using System.Globalization
+@model PedidoViewModel
+
+@{
+    ViewBag.Title = "Editar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var fecha = new DateTime();
+    var subtotal = Model.ArticulosPedido.Sum(x => (x.Precio * x.Cantidad));
+    var iva = (Convert.ToDouble(Model.Cliente.IVA) * subtotal / 100);
+    var iibb = (Convert.ToDouble(Model.Cliente.IIBB) * subtotal / 100);
+}
+
+<div class="card z-depth-4">
+    <div class="card-header">
+        <ul class="actions">
+            <li>
+                <a id="deletePedido">
+                    <i class="zmdi zmdi-delete" style="cursor: pointer;"></i>
+                </a>
+            </li>
+        </ul>
+        <h2>
+            Editar Pedido
+        </h2>
+    </div>
+
+    <div class="card-body card-padding">
+        @using (Html.BeginForm("Edit", "Pedido", FormMethod.Post, new { @class= "formulario-pedido"}))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(false,"",new { @class = "text-danger" })
+            @*@Html.ValidationSummary(true, "", new { @class = "text-danger" })*@
+            @Html.HiddenFor(m => m.EsGratis)
+
+            <div class="row">
+                <div class="col-sm-6 m-b-25">
+                    <p class="f-500 m-b-15 c-black">Cliente</p>
+
+                    <select caller-method-change="/PuntoEntrega/ObtenerPorFiltro" caller-parameter-name="ClienteId"
+                            class="chosen" id="ClienteSelected" name="ClienteSelected" style="display: none;">
+                        <option></option>
+                        @foreach (var item in Model.ListaClientes)
+                        {
+                            <option @(item.Id == Model.ClienteSelected ? @"selected='selected'" : "") value="@item.Id">@item.NombreYRazonSocial</option>
+                        }
+                    </select>
+
+                    @Html.ValidationMessageFor(model => model.Cliente, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="col-sm-6 m-b-25">
+                    <p class="f-500 m-b-15 c-black">Puntos de Entrega</p>
+
+                    <select carga-fecha-onchange caller-method-change="/Cuenta/ObtenerPorFiltro" caller-parameter-name="PuntoEntregaId" caller-control="usuario-cliente"
+                            class="chosen" punto-entrega-select id="PuntoEntregaSelected" name="PuntoEntregaSelected" style="display: none;">
+                        <option></option>
+                        @foreach (var item in Model.ListaPuntosEntrega)
+                        {
+                            <option @(item.Id == Model.PuntoEntregaSelected ? "selected='selected'" : "") value="@item.Id">@item.NombreYDireccion</option>
+                        }
+                    </select>
+                    @Html.ValidationMessageFor(model => model.PuntoEntrega, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="col-sm-6 m-b-25">
+                    <p class="f-500 m-b-15 c-black">Usuario Cliente</p>
+
+                    <select class="chosen" id="UsuarioClienteSelected" usuario-cliente usuario-pedido name="UsuarioClienteSelected" style="display: none;">
+                        @foreach (var item in Model.ListaUsuariosCliente)
+                        {
+                            <option @(item.Id == Model.UsuarioClienteSelected ? "selected='selected'" : "") value="@item.Id">@(item.Apellido == null ? item.Nombre : item.NombreYCliente)</option>
+                        }
+                        <option @(UsuarioClienteOtro.Id == Model.UsuarioClienteSelected ? "selected='selected'" : "") value="@UsuarioClienteOtro.Id">@UsuarioClienteOtro.Nombre</option>
+                    </select>
+                    @Html.ValidationMessageFor(model => model.UsuarioCliente, "", new { @class = "text-danger" })
+
+                </div>
+                <div class="col-sm-6 m-b-25">
+                    <p class="f-500 m-b-15 c-black">Fecha Programada</p>
+                    <div class="fg-line dtp-container">
+                        <select id="FechaProgramada" name="FechaProgramada" class="form-control" fecha-entrega>
+                            @if (!Model.FechasHabilitadas.Any(x => x.ToString("d", CultureInfo.CreateSpecificCulture("es-MX")) == Model.FechaProgramada))
+                            {
+                                fecha = @Model.FechaProgramada.CustomParse().Date;
+                                <option value="@Model.FechaProgramada" selected>
+                                    @fecha.Day de @fecha.ToString("MMMM", CultureInfo.CreateSpecificCulture("es-MX")) de @fecha.Year
+                                </option>
+                            }
+                            @foreach (var item in Model.FechasHabilitadas)
+                            {
+                                <option value="@item.ToShortDateString()"
+                                        @(Model.FechaProgramada.CustomParse().Date == item.Date ? "selected" : "")>
+                                    @item.Day de @item.ToString("MMMM", CultureInfo.CreateSpecificCulture("es-MX")) de @item.Year
+                                </option>
+                            }
+                        </select>
+                        @Html.ValidationMessageFor(model => model.FechaProgramada, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <a id="submit" class="btn btn-float bgm-blue m-btn waves-effect waves-circle waves-float"><i class="zmdi zmdi-check"></i></a>
+
+        }
+
+
+    </div>
+</div>
+
+<div class="card z-depth-4">
+    <div class="card-header">
+        <h2>
+            Productos del Pedido
+        </h2>
+
+        <a href="#modalWider" data-toggle="modal" class="actions btn btn-primary btn-icon waves-effect waves-circle waves-float right"><i class="zmdi zmdi-plus"></i></a>
+    </div>
+
+    <div class="card-body card-padding">
+
+        <div class="row">
+            <div class="table-responsive">
+
+                <table id="data-table-basic-articuloPedido" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th data-column-id="Id" data-visible="false" data-searchable="false">
+                                Id
+                            </th>
+                            <th data-column-id="Articulo">Artículo</th>
+                            <th data-column-id="Cantidad">Cantidad</th>
+                            @if (Model.EsGratis)
+                            {
+                                <th data-column-id="ArticuloGratis">Artículo Gratis</th>
+                            }
+                            else
+                            {
+                                <th data-column-id="Precio">Precio</th>
+                            }
+                            <th data-column-id="commands" data-formatter="commands" data-sortable="false">
+                                Comandos
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var item in Model.ArticulosPedido)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Id)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Articulo.Nombre)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Cantidad)
+                                </td>
+                                @if (Model.EsGratis)
+                                {
+                                    <td>
+                                        Sí
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Precio)
+                                    </td>
+                                }
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="row">
+            @if (Model.ArticulosPedido.Count() > 0 && !Model.EsGratis)
+            {
+                <div class="col-sm-1">
+                        <p class="f-500 c-black">Subtotal:</p>
+                </div>
+                <div class="col-sm-11">
+                    <p class="f-500 c-black">$@subtotal.VistaPrecio()</p>
+                </div>
+                <div class="col-sm-1">
+                    <p class="f-500  c-black">IVA:</p>
+                </div>
+                <div class="col-sm-11">
+                    <p class="f-500  c-black">$@iva.VistaPrecio()</p>
+                </div>
+                <div class="col-sm-1">
+                    <p class="f-500  c-black">IIBB:</p>
+                </div>
+                <div class="col-sm-11">
+                    <p class="f-500  c-black">$@iibb.VistaPrecio()</p>
+                </div>
+                <div class="col-sm-1">
+                    <p class="f-500 c-black">Total:</p>
+                </div>
+                <div class="col-sm-11">
+                    <p class="f-500 c-black">$@Model.MontoTotal.VistaPrecio()</p>
+                </div>
+                <div class="col-ms-12 p-l-15">
+                    <small>Monto total con iva, sujeto a modificaciones.</small>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalWider" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Nuevo Artículo de Pedido</h4>
+            </div>
+            @Html.Partial("~/Views/ArticuloPedido/PartialCreate.cshtml", new ArticuloPedidoViewModel(Model.Id, Model.Cliente.Id))
+        </div>
+    </div>
+</div>
+@foreach (var item in Model.ArticulosPedido)
+{
+    <div class="modal fade" id="modalWider_@item.Id" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Editar Artículo de Pedido</h4>
+                </div>
+                @Html.Partial("~/Views/ArticuloPedido/PartialEdit.cshtml", new ArticuloPedidoViewModel(item, Model.Cliente.Id))
+            </div>
+        </div>
+    </div>
+}
+<script src="~/Scripts/CallerService.js"></script>
+<script src="~/Scripts/BootgridArticuloPedido.js"></script>
+
+@if (Model.AgregarOtro)
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#modalWider').modal('show');
+        });
+    </script>
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('[carga-fecha-onchange]').change(function () {
+            var puntoEntregaId = $(this).find('option:selected').val();
+
+            var select = $('[fecha-entrega]');
+            select.find('option').remove();
+
+            $.ajax({
+                dataType: 'json',
+                type: 'GET',
+                url: core + '/PuntoEntrega/ObtenerFechasEntrega/' + puntoEntregaId,
+                success: function (resultado) {
+                    var fechas = resultado.Mensaje;
+
+                    if (fechas.length > 0) {
+                        for (var i = 0; i < fechas.length; i++) {
+                            select.append('<option value=' + fechas[i].FechaValor + '>' + fechas[i].FechaDescripcion + '</option>');
+                        }
+
+                    }
+
+                    select.trigger("chosen:updated");
+                },
+                error: function (ex) {
+                    console.log(ex)
+                },
+            });
+        });
+
+    });
+
+    $('#submit').click(function () {
+        var fechaProgramada = $('#FechaProgramada').val();
+
+        if (fechaProgramada == null) {
+            $('.formulario-pedido').submit();
+            return;
+        }
+
+        $.ajax({
+            dataType: 'json',
+            type: 'GET',
+            url: core + '/DiaNoLaborable/VerificarFechaProgramada?fechaProgramada=' + fechaProgramada,
+            success: function (data) {
+                if (data.Mensaje.EsDiaNoLaborable) {
+                    swal({
+                        title: data.Mensaje.Mensaje,
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#DD6B55",
+                        confirmButtonText: "Continuar",
+                        cancelButtonText: "Cancelar",
+                        closeOnConfirm: true
+                    }, function () {
+                        $('.formulario-pedido').submit();
+                    })
+                }
+                else
+                    $('.formulario-pedido').submit();
+            },
+            error: function () {
+                callerMethodChangeInServer = false;
+            },
+        });
+    });
+
+    var pedidoId = '@(Model.Id)';
+
+
+    $('#deletePedido').click(function () {
+        swal({
+            title: "¿Está seguro de que desea eliminar el Pedido?",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Sí",
+            cancelButtonText: "No",
+            closeOnConfirm: false
+        }, function () {
+            $.ajax({
+                dataType: 'json',
+                type: 'GET',
+                url: window.location.origin + '/Pedido/delete/' + pedidoId,
+                success: function (result) {
+                    swal("¡Eliminado!", "El Pedido fue eliminado.", "success");
+                    window.location.assign(window.location.origin + "/Pedido");
+                },
+                error: function (error) {
+                    swal("¡Error!", "El Pedido no fue eliminado.", "error");
+                }
+            });
+        });
+    });
+</script>

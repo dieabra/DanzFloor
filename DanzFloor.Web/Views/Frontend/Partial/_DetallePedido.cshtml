@@ -1,0 +1,58 @@
+﻿@using DanzFloor.Web.Models.Dominio
+
+@model Pedido
+
+<div class="datos-pedido">
+    <div class="row">
+        <div class="col-xs-4 col-sm-6">
+            <div class="item-box">
+                <p class="general-title text-right-left">FECHA DE PEDIDO</p>
+            </div>
+        </div>
+        <div class="col-xs-6 col-sm-6">
+            <div class="item-box">
+                <p class="descripcion-item-box">@Model.FechaProgramada.ToString("dd/MM/yyyy")</p>
+            </div>
+        </div>
+    </div>
+    <div class="row datos-pedido-box">
+        <div class="col-xs-4 col-sm-6">
+            <div class="item-box">
+                <p class="general-title text-right-left">ESTADO</p>
+            </div>
+        </div>
+        <div class="col-xs-6 col-sm-6">
+            <div class="item-box">
+                <p class="label label-default font10 brandon">@Model.Instancia.ToString()</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- POR DEFINICIÓN SE ELIMINA EL CAMPO FUENTE -->
+    @*<div class="row">
+        <div class="col-sm-6">
+            <div class="item-box">
+                <p class="item ">FUENTE</p>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="item-box">
+                <p class="descripcion-item-box">Realizado por Internet TODO</p>
+            </div>
+        </div>
+    </div>*@
+
+    <!-- ESTE DATO SE OBTENDRÁ EN EL DESARROLLO DE LA SECCIÓN LOGÍSTICA -->
+    @*<div class="row">
+        <div class="col-sm-6">
+            <div class="item-box">
+                <p class="item pedido">NUMERO DE PEDIDO</p>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="item-box">
+                <p class="descripcion-item-box">8888888888</p>
+            </div>
+        </div>
+    </div>*@
+</div>	

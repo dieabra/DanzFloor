@@ -1,0 +1,72 @@
+<ion-content class="bg-login">
+  
+  <img src="assets/img/CH47_logoMain@3x.png" class="logo-DanzFloor-login" alt="Logo DanzFloor">  
+
+  <div padding *ngIf="mostrarLogIn == true">
+    <div class="box-login-content">
+      <button (click)="loginI()" class="btn-login instagram" color="light" ion-button large full>
+        <div class="social-line"></div>
+        <ion-icon class="pull-left icon-inst fa fa-instagram"></ion-icon>
+        Ingresá con Instagram
+        <ion-icon name="ios-arrow-forward-outline" class="pull-right"></ion-icon>
+      </button>
+
+      <button (click)="loginF()" class="btn-login facebook" ion-button large full>
+        <div class="social-line"></div>
+        <ion-icon name="logo-facebook" class="pull-left fa fa-facebook"></ion-icon>
+        Ingresá con Facebook
+        <ion-icon name="ios-arrow-forward-outline" class="pull-right"></ion-icon>
+      </button>
+
+      <button (click)="loginG()" class="btn-login google" color="danger" ion-button large full>
+        <div class="social-line"></div>
+        <ion-icon name="logo-google" class="pull-left"></ion-icon>
+        Ingresá con Google
+        <ion-icon name="ios-arrow-forward-outline" class="pull-right"></ion-icon>
+      </button>
+
+      <button (click)="login()" class="btn-login user" ion-button large full>
+        <div class="social-line"></div>
+        <ion-icon name="ios-exit-outline" class="pull-left"></ion-icon>
+        Ingresá con tu Usuario
+        <ion-icon name="ios-arrow-forward-outline" class="pull-right"></ion-icon>
+      </button>
+
+      <button (click)="loginDiego()" class="btn-login" ion-button large full>
+        <div class="social-line"></div>
+        <ion-icon name="ios-exit-outline" class="pull-left"></ion-icon>
+        Ingresá Diego
+        <ion-icon name="ios-arrow-forward-outline" class="pull-right"></ion-icon>
+      </button>
+      
+     <!--  <button (click)="login()" class="btn-login robotoBd user" ion-button large full>
+        <div class="social-line"></div>
+        <ion-icon name="ios-exit-outline" class="pull-left"></ion-icon>
+        Ingresá con tu Usuario
+        <ion-icon name="ios-arrow-forward-outline" class="pull-right"></ion-icon>
+      </button> -->
+      
+      <hr class="divider-line">
+      
+      <button (click)="registro()" class="btn-login register" ion-button large full clear round>
+        <span class="pull-left">Registrate con tu email</span>
+        <ion-icon name="ios-arrow-forward-outline" class="pull-right"></ion-icon>
+      </button>
+    </div>
+    
+    <div class="absolute-footer">
+      <ion-grid class="grid-login">
+        <ion-row>
+          <ion-col col-8>
+            <p class="terms"> {{signalId}} By clicking "Sign in", you agree to our
+            Terms of Service and Privacy Notice.</p>
+          </ion-col>
+          <ion-col offset-1 col-3>
+            <!-- <img src="assets/img/CH47_logoFooter@3x.png" class="logo-47-street" alt="47 Street"> -->
+          </ion-col>
+        </ion-row>  
+      </ion-grid>
+    </div>
+  </div>
+  
+</ion-content>

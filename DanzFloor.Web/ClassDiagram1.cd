@@ -1,0 +1,245 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="DanzFloor.Web.Models.Entidad" Collapsed="true">
+    <Position X="30.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAiAAAAIAABAAAAAAAAgAAEAAAAAIAAAACAAAAAAAA=</HashCode>
+      <FileName>Models\Dominio\_Entidad.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="DanzFloor.Web.Models.EntidadComparer" Collapsed="true">
+    <Position X="63.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAgAAAAAAAAAAAAIAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Dominio\_Entidad.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="DanzFloor.Web.Models.EntidadConArchivo" Collapsed="true">
+    <Position X="23" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAgAAAA=</HashCode>
+      <FileName>Models\Dominio\_EntidadConArchivo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DanzFloor.Web.Models.Persona" Collapsed="true">
+    <Position X="23" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAACAAAAAEkAAAAgAAAAEAgAAAAAAAAkgAAAA=</HashCode>
+      <FileName>Models\Dominio\_Persona.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DanzFloor.Web.Models.Administrativo" Collapsed="true">
+    <Position X="20.75" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Dominio\Administrativo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DanzFloor.Web.Models.Archivo" Collapsed="true">
+    <Position X="52.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAEBBAAAAIAAAAAAAAAAAABA=</HashCode>
+      <FileName>Models\Dominio\Archivo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DanzFloor.Web.Models.ArchivoConfiguracion" Collapsed="true">
+    <Position X="0.5" Y="1.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>ABAEAAAAAwAAAAAAAAABAAAAAAAAAAAAAAAAAAIAAAA=</HashCode>
+      <FileName>Models\Dominio\ArchivoConfiguracion.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DanzFloor.Web.Models.Colaborador" Collapsed="true">
+    <Position X="21.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAIAgCAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Dominio\Colaborador.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DanzFloor.Web.Models.GrupoTag" Collapsed="true">
+    <Position X="34.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAACAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Dominio\GrupoTag.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DanzFloor.Web.Models.Sexo" Collapsed="true">
+    <Position X="45.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Dominio\Sexo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DanzFloor.Web.Models.SubtipoTicket" Collapsed="true">
+    <Position X="47.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAIAAwAAAgA=</HashCode>
+      <FileName>Models\Dominio\SubtipoTicket.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DanzFloor.Web.Models.TipoEntidad" Collapsed="true">
+    <Position X="54.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Dominio\TipoEntidad.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DanzFloor.Web.Models.TipoTicket" Collapsed="true">
+    <Position X="2.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAQAAAAA=</HashCode>
+      <FileName>Models\Dominio\TipoTicket.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DanzFloor.Web.Models.TransaccionBejerman" Collapsed="true">
+    <Position X="7.25" Y="1.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAA=</HashCode>
+      <FileName>Models\Dominio\TransaccionBejerman.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DanzFloor.Web.Models.TransaccionSdP" Collapsed="true">
+    <Position X="36.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAA=</HashCode>
+      <FileName>Models\Dominio\TransaccionSdP.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DanzFloor.Web.Models.UsuarioCliente" Collapsed="true">
+    <Position X="25.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAAAAABAACACAAAAACAAAAAAAIAAAAAAAAAA=</HashCode>
+      <FileName>Models\Dominio\UsuarioCliente.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DanzFloor.Web.Models.Vendedor" Collapsed="true">
+    <Position X="23" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAA=</HashCode>
+      <FileName>Models\Dominio\Vendedor.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DanzFloor.Web.Models.VersionMobile" Collapsed="true">
+    <Position X="56.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAACAAAAAACAAAAAAAAAAAAAAEA=</HashCode>
+      <FileName>Models\Dominio\VersionMobile.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DanzFloor.Web.Models.Dominio.Area" Collapsed="true">
+    <Position X="5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQA=</HashCode>
+      <FileName>Models\Dominio\Area.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="DanzFloor.Web.Models.Dominio.Articulo" Collapsed="true">
+    <Position X="18.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAAAAAAAAASAAAAAAAAAAAgBAAAAAAIAAAAQg=</HashCode>
+      <FileName>Models\Dominio\Articulo.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="DanzFloor.Web.Models.Dominio.ArticuloPedido" Collapsed="true">
+    <Position X="38.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEIAAEAAAAAAAEACAAAAAAQAAAAgBAAAAAAAAAAAQg=</HashCode>
+      <FileName>Models\Dominio\ArticuloPedido.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="DanzFloor.Web.Models.Dominio.Cliente" Collapsed="true">
+    <Position X="27.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIEIACAAACAAAAAACAAAAAAAAACAgFABAAgAAgAAAhg=</HashCode>
+      <FileName>Models\Dominio\Cliente.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="DanzFloor.Web.Models.Dominio.DiaEntrega" Collapsed="true">
+    <Position X="50" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAgAAAQAAAIAAgAAIABAACAAAAAEAAAAAIAAAAAgA=</HashCode>
+      <FileName>Models\Dominio\DiaEntrega.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DanzFloor.Web.Models.Dominio.DiaNoLaborable" Collapsed="true">
+    <Position X="59" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Dominio\DiaNoLaboral.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DanzFloor.Web.Models.Dominio.Familia" Collapsed="true">
+    <Position X="14" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAASAAAAAABAAAAAAAAAAAAAAAAABA=</HashCode>
+      <FileName>Models\Dominio\Familia.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DanzFloor.Web.Models.Dominio.ListaPrecio" Collapsed="true">
+    <Position X="9.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEIAAAAAAAAAAAACACAAAAQAAAAgBAAAAAAAAAAAQg=</HashCode>
+      <FileName>Models\Dominio\ListaPrecio.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="DanzFloor.Web.Models.Dominio.Pedido" Collapsed="true">
+    <Position X="41" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAUIAUAAAAAAABAACICABAIAAAAggBAAACGyEAAAAQg=</HashCode>
+      <FileName>Models\Dominio\Pedido.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="DanzFloor.Web.Models.Dominio.Producto" Collapsed="true">
+    <Position X="29.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAABAAAAAAAAAAEADAAAAAEICAAAIAAAAgQA=</HashCode>
+      <FileName>Models\Dominio\Producto.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="DanzFloor.Web.Models.Dominio.PuntoEntrega" Collapsed="true">
+    <Position X="32" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIIAAAAEAAAAgACCCBAAAAAAACgBAAAAAAAAAAEgg=</HashCode>
+      <FileName>Models\Dominio\PuntoEntrega.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="DanzFloor.Web.Models.Dominio.Tag" Collapsed="true">
+    <Position X="61.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Dominio\Tag.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DanzFloor.Web.Models.Dominio.Ticket" Collapsed="true">
+    <Position X="16.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEQAQCAAAAAAAEACACABAEAAAAAAAAAAgEAGQAFAA0=</HashCode>
+      <FileName>Models\Dominio\Ticket.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DanzFloor.Web.Models.Dominio.TicketActividad" Collapsed="true">
+    <Position X="11.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAACAAAAAAAACAAAAAAAAABIAAAAAAAAAESAAAAE=</HashCode>
+      <FileName>Models\Dominio\TicketActividad.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DanzFloor.Web.Models.Dominio.Zona" Collapsed="true">
+    <Position X="43.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Dominio\Zona.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

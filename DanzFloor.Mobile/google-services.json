@@ -1,0 +1,118 @@
+{
+  "project_info": {
+    "project_number": "888160053125",
+    "firebase_url": "https://channel-mobile-8b38e.firebaseio.com",
+    "project_id": "channel-mobile-8b38e",
+    "storage_bucket": "channel-mobile-8b38e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:888160053125:android:e3bad91372d125e3",
+        "android_client_info": {
+          "package_name": "com.channel.mobile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "888160053125-7eqc8jagmolkhp2q23321g8n239ihpjj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDD6hzVH-gg18TNHRcFMhNg6aYoHa6Xl40"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:888160053125:android:e2c29a63f3690dcd",
+        "android_client_info": {
+          "package_name": "ar.com.binit.fortyseven.channel.mobile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "888160053125-juo2nmr8shiubc2eejifdd39urag4ckl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ar.com.binit.fortyseven.channel.mobile",
+            "certificate_hash": "d929a2aa3ad6ef6a05800e899b9164c3d40c8679"
+          }
+        },
+        {
+          "client_id": "888160053125-uko6gunt9tras0df9cnuq0f1gvuvd7he.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ar.com.binit.fortyseven.channel.mobile",
+            "certificate_hash": "1f5a9a1e8beb7a14d9adace5e36a8db7d1c4e521"
+          }
+        },
+        {
+          "client_id": "888160053125-rehhncd6i0q7cau0svrf9s3rlo7r8c2q.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ar.com.binit.fortyseven.channel.mobile",
+            "certificate_hash": "5d69d9bc4d03c11eaceee4608db9bd94a05d0a7f"
+          }
+        },
+        {
+          "client_id": "888160053125-5bmdjas74efivfckf7iqu2ienb84hd4u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ar.com.binit.fortyseven.channel.mobile",
+            "certificate_hash": "efac7b8366978f61899d2149d0299341733b40ea"
+          }
+        },
+        {
+          "client_id": "888160053125-7eqc8jagmolkhp2q23321g8n239ihpjj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDD6hzVH-gg18TNHRcFMhNg6aYoHa6Xl40"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "888160053125-7eqc8jagmolkhp2q23321g8n239ihpjj.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "888160053125-sdagibl354u9qme3l9sqk06jo47i666a.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "ar.com.binit.fortyseven.channel.mobile",
+                "app_store_id": "1253562373"
+              }
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

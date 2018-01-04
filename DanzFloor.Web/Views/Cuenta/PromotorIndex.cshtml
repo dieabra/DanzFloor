@@ -1,0 +1,65 @@
+﻿@using DanzFloor.Web.Models;
+@using System.Linq;
+@model  List<Persona>
+@{
+    ViewBag.Title = "Busqueda de Usuarios";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card z-depth-4">
+    <div class="card-header">
+        <h2>
+            Usuarios Clientes
+        </h2>
+    </div>
+
+     <a  href="/Cuenta/Register"  class="btn btn-float bgm-blue m-btn waves-effect waves-circle waves-float"><i class="zmdi zmdi-plus"></i></a>
+
+
+    <div class="table-responsive">
+        <table id="data-table-basic" class="table table-striped">
+            <thead>
+                <tr>
+                    <th data-column-id="Id" data-visible="false" data-searchable="false">Id</th>
+                    <th data-column-id="Nombre">Nombre</th>
+                    <th data-column-id="Email">Email</th>
+                    <th data-column-id="commands" data-formatter="commands" data-sortable="false">
+                        Comandos
+                    </th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var usuario in Model)
+                {
+                    <tr>
+                        <td>@usuario.Id</td>
+                        <td>@usuario.NombreYApellido</td>
+                        <td>@usuario.Email</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+@section Scripts {
+    @if (Request.Params["Message"] == "UpdateUserSuccess")
+    {
+        <script>
+            swal("Buen trabajo!", "El Usuario ha sido actualizado", "success");
+        </script>
+    }
+    @if (Request.Params["Message"] == "UpdateUserError")
+    {
+        <script>
+            swal("No se realizo la modificación!", "El Usuario no ha sido actualizado", "error");
+        </script>
+    }
+    @if (Request.Params["Message"] == "DeleteUserSuccess")
+    {
+        <script>
+            swal("Se elimino un perfil", "", "warning");
+        </script>
+    }
+    
+}

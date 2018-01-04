@@ -1,0 +1,164 @@
+// Estilos para el background del login
+.bg-login{
+	background-image: url('../assets/img/CH47_bg_login@3x.jpg');
+	background-size: cover;
+	background-position: center center;
+}
+
+ion-icon{
+	color: #000;
+}
+
+// Estilos para el logo de DanzFloor corazon
+.logo-DanzFloor-login{
+	max-width: 45%;
+	display: block;
+	margin: 65px auto 40px;
+}
+
+// Estilos para los botones del login
+.btn-login{
+	position: relative;
+	border-radius: 0;
+	color: #fff;
+	font-size: 17px;
+	text-transform: none;
+	font-family: 'Roboto';
+	font-weight: 500;
+	margin-bottom: 7px;
+	.social-line{
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: 48px;
+		width: 1px;
+		background-color: rgba(0, 0, 0, 0.2);
+	}
+	.button-inner{
+		-webkit-justify-content: start;
+	    -ms-flex-pack: start;
+	    justify-content: flex-start;
+	    margin-left: 50px;
+	    font-weight: bold;
+	}
+
+	ion-icon{
+		position: absolute;
+		left: 0;
+		color: #fff;
+		width: 48px;
+		top: 50%;
+    	transform: translateY(-50%);
+		&:last-child{
+			color: rgba(255,255,255,0.5);
+			position: absolute;
+			right: 0;
+			left: auto;
+		}
+	}
+
+	&.instagram{
+		color: #000;
+		.icon-inst{
+			color: #ef8f9c;
+		}
+		.fa{
+			&.fa-instagram{
+				font-size: 21px;
+			}
+		}
+		ion-icon{
+			&:last-child{
+				color: rgba(0,0,0,0.5);
+			}
+		}
+	}
+	&.google{
+		background-color: #db3236;
+	}
+	&.facebook{
+		background-color: #3b5998;
+	}
+	&.user{
+		background-color: rgba(0,0,0,0.4);
+	}
+	&.register{
+		padding-left: 0;
+		color: rgba(255,255,255,0.5);
+	}
+}
+
+.btn-login{
+	&.register{
+		.button-inner{
+			margin-left: 0;
+		}
+	}
+}
+
+
+.bg-user-login{
+	background-color: rgba(0,0,0,0.6);
+	padding: 10px;
+	.list-ios{
+		margin-bottom: 12px;
+	}
+	.button{
+		background-color: #F8AED0;
+	}
+}
+
+hr.divider-line{
+	margin: 20px 0 0;
+	height: 1px;
+	background-color: rgba(255,255,255,0.3);
+}
+
+.box-login-content{
+	margin-bottom: 20px;
+}
+
+// Estilos para el footer
+
+ion-grid.grid-login{
+	margin-top: 0;
+	padding: 0;	
+	.row{
+		margin-left: 0;
+		margin-right: 0;
+		.terms{
+			color: rgba(255,255,255,0.5);
+			margin: 0;
+		}		
+		.col{
+			padding: 0;
+		}
+	}
+	&.register{
+		.terms{
+			color: #ccc;
+			margin: 0;
+		}	
+	}
+}
+
+
+/*.absolute-footer{
+	padding: 0 !important;	
+}	
+*/
+@media (min-height: 730px) {
+	&.absolute-footer{
+		position: absolute;
+		/*width: 100%;*/
+		bottom: 10px;	
+		left: 0;	
+		padding: 16px !important;
+	}
+}
+
+@media (min-height: 640px) {
+	.height-responsive{
+	    margin-top: 70px;
+	}
+}

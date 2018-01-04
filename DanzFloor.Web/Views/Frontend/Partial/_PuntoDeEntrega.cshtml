@@ -1,0 +1,19 @@
+﻿@using DanzFloor.Web.Models.ViewModels
+
+@model FrontendVewModel
+
+<div class="info-entrega no-line">
+    <div class="text-center">
+        <h4>Punto de entrega</h4>
+        <div class="punto-de-entrega-box">
+            <i class="pe-2x pe-7s-map-marker"></i>
+            <p class="company-name">@Model.PedidoInicial.PuntoEntrega.Nombre</p>
+            <p class="company-address">@Model.PedidoInicial.PuntoEntrega.Direccion</p>
+            <p class="company-address">@Model.PedidoInicial.PuntoEntrega.Localidad</p>
+            @if (Model.PuntosEntregaUsuarioActual().Count() > 1)
+            {
+                <a punto-entrega-elegir class="btn btn-default btn-sm margintop15">Elegir</a>
+            }
+        </div>
+    </div>
+</div>

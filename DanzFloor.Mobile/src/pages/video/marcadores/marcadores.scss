@@ -1,0 +1,23 @@
+.no-bookmarks{
+	margin: auto;
+	text-align: center;
+	.box-icon{
+		border: 2px solid #000;
+	    border-radius: 50%;
+	    height: 80px;
+	    width: 80px;
+	    margin: 0 auto;
+	    margin-top: 50px;
+	    position: relative;
+	}
+	ion-icon{
+	    position: absolute;
+	    top: 50%;
+	    left: 50%;
+	    transform: translate(-50%, -50%);
+	    font-size: 5rem;
+	}
+	.no-bookmarks-text{
+		padding: 0 60px 60px;
+	}
+}

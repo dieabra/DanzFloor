@@ -1,0 +1,26 @@
+<ion-header class="register-header">
+  <ion-navbar color="light">
+<!--     <ion-title>Registrate</ion-title> -->
+    <img src="assets/img/47CH_logoNavbar.png" class="img-navbar-heart" alt="Logo 47 Street Corazon">
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="profile-page">
+  
+  <ion-list class="list-no-margin">
+    <ion-item>
+      <ion-label floating>Usuario</ion-label>
+      <ion-input [(ngModel)]="loginModel.Email" type="text"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Contraseña</ion-label>
+      <ion-input [(ngModel)]="loginModel.Password" type="password"></ion-input>
+    </ion-item>
+  </ion-list> 
+
+  <div padding>
+    <button class="btn-register robotoMd"  (click)="login()" ion-button color="primary" block>Ingresar</button> 
+  </div>
+  
+</ion-content>

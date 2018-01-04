@@ -1,0 +1,41 @@
+﻿@using DanzFloor.Web.Models.ViewModels.Frontend
+@using DanzFloor.Web.Models
+
+@model DetallePedidoViewModel
+@if (Model.Pedido.Instancia == DanzFloor.Web.Models.Enum.InstanciaPedido.Facturado)
+{
+    <hr class="visible-xs" />
+    <div class="col-sm-6">
+        <div class="pedido-acciones">
+            @*<a href="#">
+                    <i class="pe-7s-download"></i>
+                    <span class="general-title">DESCARGAR FACTURA</span>
+                </a>
+                <a href="#">
+                    <i class="pe-7s-download"></i>
+                    <span class="general-title">DESCARGAR DETALLE DE COMPRA</span>
+                </a>*@
+            @*<a href="#">
+                    <i class="pe-7s-download"></i>
+                    <span>DESCARGAR REMITO</span>
+                </a>
+                <a href="#">
+                    <i class="pe-7s-download"></i>
+                    <span>DESCARGAR RECIBO</span>
+                </a>*@
+
+            <a abrir-repetir-pedido="@Model.Pedido.Id" class="btn btn-primary">Repetir Pedido</a>
+        </div>
+    </div>
+}
+else if (Model.Pedido.UsuarioCliente != null && 
+    Model.Pedido.UsuarioCliente.Id == Model.PedidoInicial.UsuarioCliente.Id &&
+    Model.Pedido.Instancia == DanzFloor.Web.Models.Enum.InstanciaPedido.Pendiente)
+{
+    <hr class="visible-xs" />
+    <div class="col-sm-6">
+        <div class="pedido-acciones">
+            <a abrir-modificar-pedido="@Model.Pedido.Id" class="btn btn-primary">Modificar Pedido</a>
+        </div>
+    </div>
+}

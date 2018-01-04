@@ -1,0 +1,381 @@
+﻿@using DanzFloor.Web.Models.Dominio
+@using DanzFloor.Web.Models
+
+@{
+    var Model = ViewBag.Pedido as Pedido;
+    var Recomendados = ViewBag.Recomendados;
+    var subtotal = Model.Articulos.Sum(x => (x.Precio * x.Cantidad));
+    var iva = (Convert.ToDouble(Model.Cliente.IVA) * subtotal / 100);
+    var iibb = (Convert.ToDouble(Model.Cliente.IIBB) * subtotal / 100);
+
+    Layout = null;
+}
+
+To: @ViewBag.To
+From: do-not-reply@sapore-di-pane.com.ar
+Subject: Confirmación de compra
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+    <!-- This is a simple example template that you can edit to create your own custom templates -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!-- Facebook sharing information tags -->
+    <title>Sapore Di Pane</title>
+    <link rel="shortcut icon" type="image/png" href="http://pos-sdp.binit.cloud/assets/SdP/Frontend/img/id-sapore.png" />
+    <style type="text/css">
+        /* NOTE: CSS should be inlined to avoid having it stripped in certain email clients like GMail.
+        MailChimp automatically inlines CSS for you or you can use this tool: http://beaker.mailchimp.com/inline-css. */
+
+        /* Client-specific Styles */
+        #outlook a {
+            padding: 0;
+        }
+        /* Force Outlook to provide a "view in browser" button. */
+        body {
+            width: 100% !important;
+        }
+        /* Force Hotmail to display emails at full width */
+        body {
+            -webkit-text-size-adjust: none;
+        }
+        /* Prevent Webkit platforms from changing default text sizes. */
+
+        /* Reset Styles */
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        img {
+            border: none;
+            font-size: 14px;
+            font-weight: bold;
+            height: auto;
+            line-height: 100%;
+            outline: none;
+            text-decoration: none;
+            text-transform: capitalize;
+        }
+
+        #backgroundTable {
+            height: 100% !important;
+            margin: 0;
+            padding: 0;
+            width: 100% !important;
+        }
+    </style>
+</head>
+
+
+
+
+
+<body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0" offset="0" style="background-color:#FFF;border:0px none; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;">
+    <table class="" border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" style="padding:0px;margin:0px 0 0; background-color: #fff;">
+        <tbody>
+            <tr>
+                <td align="center" valign="top">
+                    <table id="" border="0" cellpadding="0" cellspacing="0" width="560" style="background-color: #fff; padding: 0 15px;">
+                        <tr>
+                            <td>
+                                <table id="" border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #fff;">
+                                    <tbody>
+                                        <tr>
+                                            <td width="110" align="left" valign="bottom" style="padding: 15px 0;">
+                                                <a href="http://www.sapore-di-pane.com.ar/" target="_blank"><img src="http://pos-sdp.binit.cloud/assets/SdP/Frontend/img/id-sapore.png" width="110" border="0" /></a>
+                                            </td>
+                                            <td align="right" valign="bottom">
+                                                <p style="font-size: 18px; font-weight: 500;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;">Confirmación de pedido</p>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style="border-bottom:1px solid #ddd;"></td>
+                        </tr>
+
+                        <tr>
+                            <td style="color:#505050;font-size:15px;line-height:135%;text-align:left; padding: 30px 0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;">
+                                <div>
+                                    Hola @ViewBag.Nombre, gracias por su compra.
+                                    @*<br /><br />
+                                    Recibirá un nuevo correo con la confirmación de la facturación de su pedido. Recuerde que puede seguir el proceso de su pedido ingresando a su cuenta en la tienda.
+                                    <br /><br />
+                                    Si necesita obtener más información, no dude en ponerse en contacto con nosotros.
+                                    <br /><br />
+                                    Le deseamos que disfrute su pan y esperamos volver a verle muy pronto en  @System.Configuration.ConfigurationManager.AppSettings["Core"]*@
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <table class="" border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" style="margin:0px 0 0; background-color:#fff;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;">
+                                    <tbody>
+                                        <tr>
+                                            <td valign="bottom" style="padding: 16px 0;">
+                                                <div style="font-weight: 600;font-size: 16px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif; margin: 0;">Detalles de su pedido</div>
+                                            </td>
+                                            @*<td align="right" valign="bottom">
+                                                <p style="font-size: 14px; font-weight: 300;">Orden <span style="font-weight: 500; color: #c1a17d;">#12346578</span></p>
+                                            </td>*@
+                                        </tr>
+                                        <tr>
+                                            <td colspan="3" style="border-bottom:1px solid #ddd;" border="1">
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td colspan="2" style="padding: 10px;"></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td width="50%">
+                                                <table class="" border="0" cellpadding="0" cellspacing="0" height="100%" width="263" style="background-color:#fff; padding: 15px 0; border: 1px solid #ccc;">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td style="width: 65px;text-align: center;margin:auto;">
+                                                                <img src="http://tienda.sapore-di-pane.com.ar/assets/SdP/Frontend/img/Email/marker-map.png" />
+                                                            </td>
+                                                            <td>
+                                                                <div style="font-size: 14px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;">
+                                                                    <div style="margin: 0; font-weight: 600;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;">@Model.PuntoEntrega.Nombre</div>
+                                                                    <div style="margin: 0; margin-top: 2px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;">@Model.PuntoEntrega.Direccion</div>
+                                                                    <div style="margin: 0; margin-top: 2px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif; font-size: 12px; color: #aaa; font-weight: 300;">@Model.PuntoEntrega.Localidad</div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </td>
+
+                                            <td style="padding: 7px;"></td>
+
+                                            <td>
+                                                <table class="" border="0" cellpadding="0" cellspacing="0" height="100%" width="263" style="background-color:#fff;padding: 15px 0; border: 1px solid #ccc;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td style="width: 65px;text-align: center;margin:auto;">
+                                                                <img src="http://tienda.sapore-di-pane.com.ar/assets/SdP/Frontend/img/Email/clock.png" />
+                                                            </td>
+                                                            <td>
+                                                                <div height="1" bgcolor="#ffffff" style="font-size: 6px; line-height: 6px;">&nbsp;</div>
+                                                                <div style="font-size: 14px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;">
+                                                                    <p style="margin: 0; font-weight: 600;font-size: 16px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;">@Model.FechaProgramada.ToShortDateString()</p>
+                                                                    <span style="margin: 0; margin-top: 3px; color: #aaa; text-transform: uppercase; font-weight: 300;font-size: 12px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;">Fecha de entrega</span>
+                                                                </div>
+                                                                <div height="1" bgcolor="#ffffff" style="font-size: 6px; line-height: 6px;">&nbsp;</div>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="2" style="padding: 5px;"></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <table class="" border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" style="background-color:#fff;border: 1px solid #ccc;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;">
+                                    <tbody>
+
+                                        @foreach (var item in Model.Articulos)
+                                          {
+
+                                              <tr>
+                                                  <td valign="center" align="center" width="70" height="50" style="padding: 8px 10px;">
+                                                      <img src="@Archivo.ObtenerUrlArchivo(item.Articulo.Producto.Archivos, TipoEntidadConst.PRODUCTO, "Imagen Principal", true)" border="0" style="max-width: 70px; height: 50px;" height="50" width="70" />
+                                                  </td> 
+
+                                                  <td valign="center" style="font-size: 14px;font-weight: normal;text-transform: uppercase;padding-left: 5px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;">
+                                                     @item.Articulo.Producto.Nombre<br />
+                                                      <div style="margin-top: 3px;font-weight: 300;font-size: 12px;text-transform: uppercase;color: #888;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;"><span style="color: #000;">@item.Cantidad Caja/s</span> x $@item.Precio x @item.Articulo.CantidadUnidades</div>
+                                                  </td>
+
+                                                  <td align="right" valign="center" style="font-size: 16px;font-weight: normal;padding-right: 15px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;" width="145">
+                                                      $@((item.Precio * item.Cantidad).VistaPrecio())
+                                                  </td>
+                                              </tr>
+                                              <tr>
+                                                  <td colspan="3" style="border-bottom:1px solid #eee;"></td>
+                                              </tr>                                               
+
+                                        }
+
+                                        <tr>
+                                            <td colspan="3">
+                                                <table class="" border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" style="background-color:#fafafa;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td valign="center" align="center" width="50%">
+                                                                <table cellspacing="0" cellpadding="0">
+                                                                    <tr>
+                                                                        <td align="center" width="162" height="44" bgcolor="#c1a17d" style="-webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; color: #ffffff; display: block;">
+                                                                            <a href="@ViewBag.Link" style="line-height: 44px; text-decoration: none; color: #fff;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;font-size: 15px;font-weight: 600;">REVISAR PEDIDO</a>                                                                        
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>                                                                
+                                                            </td>
+                                                            <td width="50%">
+                                                                <table class="" border="0" cellpadding="0" cellspacing="0" height="100%" width="100%">
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td valign="center" align="right" style="padding: 15px 0 0;font-weight: 400;font-size: 12px;text-transform: uppercase;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;">
+                                                                                Subtotal<br />
+                                                                            </td>
+                                                                            <td valign="center" align="right" style="font-size: 12px;font-weight: 500; padding: 15px 15px 0 0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;">
+                                                                                $@subtotal.VistaPrecio()
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td valign="center" align="right" style="padding-top: 5px;font-weight: 400;font-size: 12px;text-transform: uppercase;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;">
+                                                                                IVA<br />
+                                                                            </td>
+                                                                            <td valign="center" align="right" style="font-size: 12px;font-weight: normal; padding: 5px 15px 0 0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;">
+                                                                                $@iva.VistaPrecio()
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td valign="center" align="right" style="padding-top: 5px;font-weight: 400;font-size: 12px;text-transform: uppercase;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;">
+                                                                                IIBB<br />
+                                                                            </td>
+                                                                            <td valign="center" align="right" style="font-size: 12px;font-weight: normal; padding: 5px 15px 0 0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;">
+                                                                                $@iibb.VistaPrecio()
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td valign="bottom" align="right" style="padding: 15px 0;font-weight: 400;font-size: 12px;color: #000;text-transform: uppercase;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;">
+                                                                                Total<br />
+                                                                            </td>
+                                                                            <td valign="bottom" align="right" style="font-size: 16px;font-weight: 600; padding:15px 15px 15px 0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;">
+                                                                                $@Model.MontoTotal.VistaPrecio()
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style="padding-top: 10px;"></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <table class="" border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" style="padding:15px;border: 1px solid #ddd;background-color:#fff;font-size: 14px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;">
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <div style="font-weight: 600;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;">Observaciones a tener en cuenta</div>
+                                                <div style="padding-top: 8px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;">
+                                                    •&nbsp;&nbsp;&nbsp;Recibirá un nuevo correo informándole la facturación de su pedido <br />
+                                                    •&nbsp;&nbsp;&nbsp;Recuerde que puede seguir el proceso de su pedido ingresando a su cuenta en la tienda. <br />
+                                                    •&nbsp;&nbsp;&nbsp;En caso de que su pedido sufra modificaciones, será contactado por Sapore Di Pane para informarle de los mismos. <br />
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style="padding-top: 30px;"></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <div style="line-height: 1.5;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;">
+                                    Esperamos verlo pronto nuevamente. <br />
+                                    <a href="http://www.sapore-di-pane.com.ar" style="text-decoration: none; color: #c1a17d;font-weight: 500;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;">Sapore Di Pane</a>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style="border-bottom:1px solid #ddd; padding: 15px;"></td>
+                        </tr>                        
+
+                        <tr>
+                            <td>
+                                <table class="" border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" style="padding:30px 0; background-color:#fff;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;">
+                                    <tbody>
+                                        <tr style="text-align: center;">
+                                            <td colspan="3" style="font-size: 20px;letter-spacing: 0.05em;color: #c1a17d;font-weight: 600;text-align: center;text-transform: uppercase;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;">
+                                                Clientes que compraron este item también llevaron
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            @foreach (var item in Recomendados)
+                                            {
+                                                    <td width="146" valign="top" style="padding:15px;font-size: 13px; font-weight: normal; margin-top: 10px;text-align: center;text-transform: uppercase;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;">
+                                                        <div style="height: 140px;">
+                                                            <img src="@Archivo.ObtenerUrlArchivo(item.Producto.Archivos, TipoEntidadConst.PRODUCTO, "Imagen Principal", true)" width="146" border="0" />
+                                                        </div>
+                                                        <div style="margin-top: 5px;">@item.Producto.Nombre</div>
+                                                    </td>                                                   
+                                            }
+                                        </tr>
+
+                                        <tr>
+                                            @foreach (var item in Recomendados)
+                                             {
+                                                 <td valign="top" align="center">
+                                                     <table cellspacing="0" cellpadding="0">
+                                                         <tr>
+                                                             <td align="center" width="57" height="30" bgcolor="#c1a17d" style="-webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; color: #ffffff; display: block; text-align: center;margin: auto;">
+                                                                 <a href="@(System.Configuration.ConfigurationManager.AppSettings["Core"] + "/Fronted/DetalleArticulo/" + item.Id)" style="line-height: 30px; text-decoration: none; color: #fff;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;font-size: 13px;font-weight: 600;">VER</a>
+                                                             </td>
+                                                         </tr>
+                                                     </table>
+                                                 </td>                                                
+                                             }
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                       
+                        <tr>
+                            <td style="border-bottom:1px solid #ddd;"></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center; padding: 30px 0;">
+                                <img src="http://tienda.sapore-di-pane.com.ar/assets/SdP/Frontend/img/id-sdp.png" width="35%" border="0" style="max-width: 35%;" />
+                                <p style="font-weight: 300;font-size: 10px;color: #b2b2b2;line-height: 1.3;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;">
+                                    <span>© 2017 Sapore Di Pane. Todos los derechos reservados.</span>
+                                </p>
+                            </td>
+                        </tr>
+
+                    </table> 
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <!-- // End Footer \\ -->
+</body>
+</html>
+
+

@@ -1,0 +1,121 @@
+﻿@model DanzFloor.Web.Models.ViewModels.SubtipoTicketViewModel
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card z-depth-4">
+    <div class="card-header">
+        <h2>
+            Tipo de ticket
+        </h2>
+    </div>
+
+    <div class="card-body card-padding">
+        @using (Html.BeginForm("Create", "SubtipoTicket", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="row">
+                <div class="col-md-6 form-group fg-float m-t-25 m-b-0">
+                    <div class="fg-line">
+                        @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control input-sm" } })
+                        @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+                        @Html.LabelFor(model => model.Nombre, new { @class = "fg-label" })
+                    </div>
+                </div>
+
+                <div class="col-md-6 form-group  m-b-20">
+                    @Html.LabelFor(model => model.AreaId, htmlAttributes: new { @class = "nombre-campo" })
+                    <div class="select fg-line">
+                        <select id="AreaId" name="AreaId" class="form-control">
+                            <option value="@Guid.Empty">Seleccione...</option>
+                            @foreach (var area in Model.Areas)
+                            {
+                                if (Model.AreaId != null && Model.AreaId == area.Id)
+                                {
+                                    <option selected="selected" value="@(area.Id)">@area.Nombre</option>
+                                }
+                                else
+                                {
+                                    <option value="@(area.Id)">@area.Nombre</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    @Html.ValidationMessageFor(model => model.AreaId, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-sm-12 m-b-20">
+                    <div class="toggle-switch toggle-switch-demo" data-ts-color="red">
+                        <label for="ConAlerta" class="ts-label">Desencadenar Alerta</label>
+                        <input @(Model.ConAlerta ? "checked='checked'" : "") data-val="true" 
+                               data-val-required="The Es administrador field is required." 
+                               id="ConAlerta" name="ConAlerta" type="checkbox" value="true" hidden="hidden" chk-alerta>
+                        <label for="ConAlerta" class="ts-helper"></label>
+                    </div>
+                </div>
+
+                <section campos-alerta>
+
+                    <div class="col-md-4 form-group fg-float m-t-25 m-b-20">
+                        <div class="fg-line">
+                            <input type="text" class="form-control input-sm" add-mail-input />
+                            <label class="fg-label">Ingrese un mail</label>
+                        </div>
+                    </div>
+                    <div class="col-md-2 form-group fg-float m-t-25 m-b-20">
+                        <div class="fg-line">
+                            <a class="btn btn-default" add-mail-a>Agregar</a>
+                        </div>
+                    </div>
+                    <div class="col-md-6 form-group m-b-20">
+                        <label class="nombre-campo">Mails a reportar</label>
+                        <div class="select fg-line">
+                            <select id="Mails" name="Mails" multiple="multiple" class="chosen" add-mail-chosen>
+                                @if (Model.Mails != null)
+                            {
+                            foreach (var mail in Model.Mails)
+                            {
+                                        <option selected="selected" value="@mail">@mail</option>
+                            }
+                            }
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 form-group fg-float m-t-25 m-b-20">
+                        <div class="fg-line">
+                            <input type="text" class="form-control input-sm" add-telefono-input />
+                            <label class="fg-label">Ingrese un Telefono</label>
+                        </div>
+                    </div>
+                    <div class="col-md-2 form-group fg-float m-t-25 m-b-20">
+                        <div class="fg-line">
+                            <a class="btn btn-default" add-telefono-a>Agregar</a>
+                        </div>
+                    </div>
+                    <div class="col-md-6 form-group m-b-5">
+                        <label class="nombre-campo">Telefonos a reportar</label>
+                        <div class="select fg-line">
+                            <select id="Telefonos" name="Telefonos" multiple="multiple" class="chosen" add-telefono-chosen>
+                                @if (Model.Telefonos != null)
+                            {
+                                foreach (var telefono in Model.Telefonos)
+                                {
+                                        <option selected="selected" value="@telefono">@telefono</option>
+                                }
+                            }
+                            </select>
+                        </div>
+                    </div>
+
+                </section>
+            </div>
+
+                <button type="submit" class="btn btn-float bgm-blue m-btn waves-effect waves-circle waves-float"><i class="zmdi zmdi-check"></i></button>
+        }
+    </div>
+</div>
+<script src="~/Scripts/SubtipoTicketController.js"></script>

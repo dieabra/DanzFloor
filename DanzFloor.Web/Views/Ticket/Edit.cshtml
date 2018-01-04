@@ -1,0 +1,300 @@
+﻿@model  DanzFloor.Web.Models.ViewModels.TicketViewModel
+@using DanzFloor.Web.Models;
+@using DanzFloor.Web.Models.Enum;
+@{
+    ViewBag.Title = "Editar Ticket";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm("Edit", "Ticket", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(m => m.ArchivosId)
+    @Html.HiddenFor(m => m.TipoTicketId)
+
+    <div class="container container-alt">
+        <div class="messages card ">
+            <div class="col-md-12" style="background: rgba(238, 238, 238, 0.4);">
+                <header>
+                    <div class="mbh-user clearfix">
+                        <img src="~/assets/SdP/img/usuario-generico.jpg" alt=""/>
+                        <div class="p-t-5">@(Model.Creador is UsuarioCliente ? ((UsuarioCliente)Model.Creador).NombreYCliente : Model.Creador.NombreYApellido)</div>
+                    </div>
+
+                    <ul class="actions hidden-xs">
+                        <li>
+                            @if (Model.TipoTicketId != Guid.Empty)
+                            {
+                                <div class="p-t-5 p-r-25">Tipo: @Model.TiposTicket.First(x => x.Id == Model.TipoTicketId).Nombre</div> 
+                            }
+                        </li>
+                    </ul>
+                    <ul class="actions hidden-lg hidden-md hidden-sm">
+                        <li>
+                            <a switch-panel class="btn btn-default btn-icon waves-effect waves-circle waves-float right m-r-10 p-t-0">
+                                <i class="zmdi zmdi-camera-switch" style="font-size: 25px"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </header>
+            </div>
+            <div class="m-sidebar hidden-xs">
+
+                <div class="list-group c-overflow">
+
+                    <div class="col-md-12 form-group fg-float m-t-25 m-b-15">
+                        <div class="fg-line">
+                            @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control input-sm" } })
+                            @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+                            <label class="fg-label">Asunto</label>
+                        </div>
+                    </div>
+                    <div class="col-md-12 form-group m-b-5">
+                        <label class="nombre-campo">Area</label>
+                        <div class="select fg-line">
+                            <select id="AreaId" name="AreaId" class="chosen AreaId">
+                                <option value="@Guid.Empty"></option>
+                                @foreach (var area in Model.Areas)
+                                {
+                                    <option @(area.Id == Model.AreaId ? "selected='selected'" : "") value="@area.Id">@area.Nombre</option>
+                                }
+
+                            </select>
+                        </div>
+                        @Html.ValidationMessageFor(model => model.AreaId, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-12 form-group m-b-5">
+                        <label class="nombre-campo">Subtipo de ticket</label>
+                        <div class="select fg-line">
+                            <select id="SubtipoTicketId" name="SubtipoTicketId" class="chosen" subtipo-ticket>
+                                <option value="@Guid.Empty">Seleccione...</option>
+                                @foreach (var item in Model.SubtiposTicket)
+                                {
+                                    <option @(item.Id == Model.SubtipoTicketId ? "selected='selected'" : "") value="@item.Id">@item.Nombre</option>
+                                }
+
+                            </select>
+                        </div>
+                        @Html.ValidationMessageFor(model => model.SubtipoTicketId, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-12 form-group m-b-5">
+                        <label class="nombre-campo">Responsable</label>
+                        <div class="select fg-line">
+                            <select id="ResponsableId" name="ResponsableId" class="chosen" responsable-ticket>
+                                <option value="@Guid.Empty"></option>
+                                @foreach (var item in Model.Responsables)
+                                {
+                                    <option @(item.Id == Model.ResponsableId ? "selected='selected'" : "") value="@item.Id">@item.NombreYApellido</option>
+                                }
+                            </select>
+                        </div>
+                        @Html.ValidationMessageFor(model => model.ResponsableId, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-12 form-group m-b-5">
+                        <label class="nombre-campo">Estado</label>
+                        <div class="select fg-line">
+                            <select id="EstadoId" name="EstadoId" class="chosen">
+                                @foreach (var item in Model.Estados)
+                                {
+                                    <option @(item == Model.EstadoId ? "selected='selected'" : "") value="@((int)item)">@item.ToString()</option>
+                                }
+                            </select>
+                        </div>
+                        @Html.ValidationMessageFor(model => model.ResponsableId, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-12 form-group m-b-5">
+                        <label class="nombre-campo">Cliente</label>
+                        <div class="select fg-line">
+                            <select id="ClienteId" name="ClienteId" class="chosen ClienteId">
+                                <option value="@Guid.Empty"></option>
+                                @foreach (var item in Model.Clientes)
+                                {
+                                    <option @(item.Id == Model.ClienteId ? "selected='selected'" : "") value="@item.Id">@item.NombreYRazonSocial</option>
+                                }
+                            </select>
+                        </div>
+                        @Html.ValidationMessageFor(model => model.ClienteId, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-12 form-group m-b-5">
+                        <label class="nombre-campo">Usuario Cliente</label>
+                        <div class="select fg-line">
+                            <select id="UsuarioClienteId" name="UsuarioClienteId" class="chosen" usuario-cliente>
+                                <option value="@Guid.Empty"></option>
+                                @foreach (var usuarioCliente in Model.UsuariosClientes)
+                                {
+                                    <option @(usuarioCliente.Id == Model.UsuarioClienteId ? "selected='selected'" : "") value="@usuarioCliente.Id">@usuarioCliente.NombreYCliente</option>
+                                }
+                            </select>
+                        </div>
+                        @Html.ValidationMessageFor(model => model.UsuarioClienteId, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-12 form-group m-b-5">
+                        <label class="nombre-campo">Punto de Entrega</label>
+                        <div class="select fg-line">
+                            <select id="PuntoEntregaId" name="PuntoEntregaId" class="chosen" punto-entrega-select>
+                                <option value="@Guid.Empty"></option>
+                                @foreach (var puntoEntrega in Model.PuntosEntrega)
+                                {
+                                    <option @(puntoEntrega.Id == Model.PuntoEntregaId ? "selected='selected'" : "") value="@puntoEntrega.Id">@puntoEntrega.NombreYZona</option>
+                                }
+                                @Html.ValidationMessageFor(model => model.PuntoEntregaId, "", new { @class = "text-danger" })
+                            </select>
+                        </div>
+                        @Html.ValidationMessageFor(model => model.PuntoEntregaId, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-12 form-group m-b-5">
+                        <label class="nombre-campo">Pedido</label>
+                        <div class="select fg-line">
+                            <select id="PedidoId" name="PedidoId" class="chosen" pedido-ticket>
+                                <option value="@Guid.Empty"></option>
+                                @foreach (var pedido in Model.Pedidos)
+                                {
+                                    <option @(pedido.Id == Model.PedidoId ? "selected='selected'" : "") value="@pedido.Id">@pedido.NombreCompuesto</option>
+                                }
+                                @Html.ValidationMessageFor(model => model.PedidoId, "", new { @class = "text-danger" })
+                            </select>
+                        </div>
+                        @if (Guid.Empty != Model.PedidoId)
+                        {
+                            <div>
+                                <br />
+                                <a class="btn btn-default" href="/Pedido/Detail/@Model.PedidoId" target="_blank">Ver Pedido</a>
+                                <br />
+                            </div>
+                        }
+                    </div>
+                    <div class="col-md-12 form-group m-b-5" style="min-height:340px">
+                        <label class="nombre-campo">Artículo</label>
+                        <div class="select fg-line">
+                            <select id="ArticulosId" name="ArticulosId" multiple="multiple" class="chosen ArticuloId" articulo-ticket>
+                                @foreach (var articulo in Model.ListaArticulos)
+                                {
+                                    <option @(Model.ArticulosId.Contains(articulo.Id) ? "selected='selected'" : "") value="@articulo.Id">@articulo.Nombre</option>
+                                }
+
+                            </select>
+                        </div>
+                        @Html.ValidationMessageFor(model => model.ArticulosId, "", new { @class = "text-danger" })
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="m-body ">
+
+                <div class="mb-list">
+
+                    <div class="mbl-messages c-overflow">
+
+                        @foreach (var item in Model.Actividades)
+                        {
+                            <div class="mblm-item mblm-item-@(item.Creador.Email == System.Web.HttpContext.Current.User.Identity.Name ? "right" : "left")">
+                                <div>
+                                    @item.Comentario
+                                </div>
+                                <small>
+                                    @foreach (var archivo in item.Archivos)
+                                    {
+                                        <a href="/archivo/ObtenerArchivo/@archivo.Id" target="_blank">
+                                            <img class="ticket-thumbnail" imagen-actividad nombre="@archivo.Id" contenido="@archivo.Contenido" />
+                                        </a>
+                                    }
+                                </small>
+                                <small>
+                                    @Html.DisplayFor(modelItem => item.Creador.NombreYApellido) -
+                                    @item.FechaCreacion.DiferenciaActual()
+                                    @if (item.ModificaEstado)
+                                    {
+                                        @Html.Raw(" - a estado ")
+                                        @EstadoTicketHelper.ObtenerDescripcion(item.EstadoTicketId)
+                                    }
+                                    @if (item.ModificaResponsable)
+                                    {
+                                        @Html.Raw(" - al responsable ")
+                                        @item.Responsable.NombreYApellido
+                                    }
+                                    @if (item.ModificaSubtipoTicket)
+                                    {
+                                        @Html.Raw(" - al subtipo ")
+                                        @item.SubtipoTicket.Nombre
+                                    }
+                                    @if (item.ModificaArea)
+                                    {
+                                        @Html.Raw(" - al area ")
+                                        @item.Area.Nombre
+                                    }
+                                </small>
+                                @Html.HiddenFor(model => item.Creador)
+                            </div>
+                        }
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="mbl-compose">
+                @Html.ValidationMessageFor(model => model.MensajeActividad, "", new { @class = "text-danger", @style = "position: absolute; top: 0px;"})
+                <textarea id="MensajeActividad" name="MensajeActividad" class="form-control ticket-msj" placeholder="Escriba el contenido del mensaje..." rows="1"></textarea>
+            </div>
+
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-float bgm-blue m-btn waves-effect waves-circle waves-float"><i class="zmdi zmdi-check"></i></button>
+}
+
+<script type="text/javascript">
+
+
+    var ObtenerSrcArchivosActividad = function () {
+        $('[imagen-actividad]').each(function (index) {
+            var contenido = $(this).attr('contenido');
+            var file_name_string = $(this).attr('nombre');
+
+            var file_name_array = file_name_string.split(".");
+            var file_extension = ExtensionArchivo;
+
+            if (file_extension == 'jpg' || file_extension == 'jpeg' || file_extension == 'png' || file_extension == 'gif' || contenido == 'jpg' || contenido == 'jpeg' || contenido == 'png' || contenido == 'gif')
+                $(this).attr('src', location.origin + '/Archivo/ObtenerImagenPorId/' + file_name_string);
+            else
+                $(this).attr('src', '/assets/fileType/' + file_extension + '.png')
+        });
+    }
+
+    $(document).ready(function () {
+        ObtenerSrcArchivosActividad();
+
+        $('[switch-panel]').click(function () {
+            var sidebar = $('.m-sidebar');
+            var body = $('.m-body');
+            var card = $('.card');
+            var comentario = $('.mbl-compose');
+
+            sidebar.removeClass('hidden-xs');
+
+            if (body.hasClass('hide')) {
+                card.addClass('animated flipInY');
+
+                body.removeClass('hide');
+                comentario.removeClass('hide');
+                sidebar.addClass('hide');
+            } else {
+                card.addClass('animated flipInY');
+
+                body.addClass('hide');
+                comentario.addClass('hide');
+                sidebar.removeClass('hide');
+            }
+
+            setTimeout(function () {
+                card.removeClass('animated flipInY');
+            }, 1200);
+        });
+    })
+</script>
+
+<script src="~/Scripts/TicketController.js"></script>
+
+@Html.Partial("_FileComponent", Model.FileComponentViewModel)

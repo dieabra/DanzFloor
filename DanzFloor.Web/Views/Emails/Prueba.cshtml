@@ -1,0 +1,152 @@
+﻿@using DanzFloor.Web.Models.Dominio;
+@using DanzFloor.Web.Models;
+@using System;
+
+
+@{
+    Layout = null;
+}
+
+To: @ViewBag.To
+From: do-not-reply@sapore-di-pane.com.ar
+Subject: Confirmación de compra
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+    <!-- This is a simple example template that you can edit to create your own custom templates -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!-- Facebook sharing information tags -->
+    <title>Sapore Di Pane</title>
+    <link rel="shortcut icon" type="image/png" href="http://pos-sdp.binit.cloud/assets/SdP/Frontend/img/id-sapore.png" />
+    <style type="text/css">
+        /* NOTE: CSS should be inlined to avoid having it stripped in certain email clients like GMail.
+        MailChimp automatically inlines CSS for you or you can use this tool: http://beaker.mailchimp.com/inline-css. */
+
+        /* Client-specific Styles */
+        #outlook a {
+            padding: 0;
+        }
+        /* Force Outlook to provide a "view in browser" button. */
+        body {
+            width: 100% !important;
+        }
+        /* Force Hotmail to display emails at full width */
+        body {
+            -webkit-text-size-adjust: none;
+        }
+        /* Prevent Webkit platforms from changing default text sizes. */
+
+        /* Reset Styles */
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        img {
+            border: none;
+            font-size: 14px;
+            font-weight: bold;
+            height: auto;
+            line-height: 100%;
+            outline: none;
+            text-decoration: none;
+            text-transform: capitalize;
+        }
+
+        #backgroundTable {
+            height: 100% !important;
+            margin: 0;
+            padding: 0;
+            width: 100% !important;
+        }
+    </style>
+</head>
+
+
+
+
+
+<body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0" offset="0" style="background-color:#FFF;border:0px none;">
+    <table class="" border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" style="padding:30px 0 10px;margin:0px 0 0; background-color: gray">
+        <tbody>
+            <tr>
+                <td align="center" valign="top">
+                    <table id="" border="0" cellpadding="0" cellspacing="0" width="560" style="background-color: #fff">
+                        <tr>
+                            <td>
+                                <div style="text-align: center; padding: 25px 0;">
+                                    <a href="http://www.sapore-di-pane.com.ar/" target="_blank"><img src="http://pos-sdp.binit.cloud/assets/SdP/Frontend/img/id-sapore.png" width="120" border="0" /></a>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div style="font-family:Georgia, Helvetica, Arial,sans-serif;color:#ffffff;font-size:30px;line-height:1.2;text-align:center;margin:0px 0 0px 0px; width:560px; padding:10px; background-image: url('http://pos-sdp.binit.cloud/assets/SdP/Frontend/img/bg02.jpg');background-size: cover; background-position: center center; padding: 95px 0;">
+                                    CONFIRMACION DE PEDIDO
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div style="font-family:Arial, Georgia, sans-serif;color:#505050;font-size:16px;line-height:120%;text-align:left;margin:0 0 30px 0; padding: 45px 15px 25px;">
+                                    <table class="table table-checkout">
+                                        <thead>
+                                            <tr>
+                                                <th></th>
+                                                <th>ARTÍCULO</th>
+                                                <th>PRECIO UNITARIO</th>
+                                                <th>UNIDADES POR CAJA</th>
+                                                <th>CANTIDAD</th>
+                                                <th>TOTAL</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in ViewBag.Pedido.Articulos)
+            {
+                                                <tr>
+                                                    <td><img src="@Archivo.ObtenerUrlArchivo(item.Articulo.Producto.Archivos, TipoEntidadConst.PRODUCTO, "Imagen Principal")" /></td>
+                                                    <td class="h5">@item.Articulo.Producto.Nombre</td>
+                                                    <td class="td-checkout">$@((item.Precio / item.Articulo.CantidadUnidades))</td>
+                                                    <td checkout-item-unidades=checkout-item-unidades class="item-quantity td-checkout">@item.Articulo.CantidadUnidades</td>
+                                                    <td class="td-checkout"><span checkout-item-unidades=checkout-item-unidades>@item.Cantidad</span> cajas</td>
+                                                    <td class="td-checkout">$@((item.Precio * item.Cantidad))</td>
+                                                    <td>
+                                                        <a remover-articulo="@item.Articulo.Id" remover-cantidad="@item.Cantidad"><i class="pe-7s-close-circle"></i></a>
+                                                        <a editar-articulo="@item.Articulo.Id"><i class="pe-7s-note"></i></a>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center;">
+                                <a href="@ViewBag.Link" style="padding: 9px 30px 8PX;font-size: 12px;letter-spacing: 0.05em;background-color: transparent;color: #c1a17d;border: 1px solid #c1a17d;text-decoration: none;border-radius: 3px; font-family: Arial; font-weight: bold; display: inline-block; margin-top: 10px; width: 112px;">REVISAR PEDIDO</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <hr style="margin: 70px 0 40px;">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center; padding-bottom: 30px;">
+                                <img src="http://pos-sdp.binit.cloud/assets/SdP/Frontend/img/id-sdp.png" width="100%" border="0" style="max-width: 35%;" />
+                                <p style="margin: 14px 0 0;font-weight: 500;font-size: 12px;color: #b2b2b2;font-family: Georgia;">© 2017 Sapore Di Pane. Todos los derechos reservados.</p>
+                            </td>
+                        </tr>
+
+                    </table>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <!-- // End Footer \\ -->
+</body>
+</html>
+
+

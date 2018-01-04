@@ -1,0 +1,55 @@
+<ion-header>
+  <ion-navbar color="light">
+    <ion-title>Perfil</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content>
+
+  <ion-item class="profile-item">
+    <ion-avatar item-start class="avatar-profile">
+      <div class="loading-avatar">
+        <img src="https://openclipart.org/image/2400px/svg_to_png/211821/matt-icons_preferences-desktop-personal.png" />
+      </div>
+    </ion-avatar>
+
+    <h2 class="truncate">Leo binit</h2>
+    <p class="truncate">username</p>
+
+    <ion-avatar item-right>
+      <button ion-button round small light class="button-transparent btn-edit">EDITAR</button>
+    </ion-avatar>
+  </ion-item>
+
+  
+  <!-- <div class="cuenta">
+    <div id="scroll">
+      <div class="scroll-item-box" (click)="itemTappedEpisodio(episodio)" text-center *ngFor="let programa of programas">
+        <div id="scroll-item">
+          <img [src]="ObtenerImagenProgramaPrincipal(programa.FotoPortada)">
+        </div>
+        <p>{{programa.Nombre}}</p>
+      </div>
+    </div>
+  </div> -->
+
+  <ion-list class="margintop50">
+    <ion-item-divider>Información</ion-item-divider>
+    <ion-item>Sobre DanzFloor <ion-icon name="ios-arrow-forward" item-end></ion-icon></ion-item>
+    <ion-item>Términos y Condiciones <ion-icon name="ios-arrow-forward" item-end></ion-icon></ion-item>
+    <ion-item>Contacto <ion-icon name="ios-arrow-forward" item-end></ion-icon></ion-item>
+  </ion-list>
+
+  <ion-list class="list-profile">
+    <ion-item-divider>Administración de cuenta</ion-item-divider>
+    <ion-item>Editar Perfil <ion-icon name="ios-arrow-forward" item-end></ion-icon></ion-item>
+    <ion-item (click)="salir()" class="no-icon">Salir <ion-icon name="ios-exit-outline" item-end></ion-icon></ion-item>
+  </ion-list>
+     
+</ion-content>
+
+
+<ion-item-group>
+   
+  </ion-item-group>

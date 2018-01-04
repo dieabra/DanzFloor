@@ -1,0 +1,87 @@
+﻿@using DanzFloor.Web.Models.ViewModels.Frontend
+@using DanzFloor.Web.Models
+
+
+@model FrontendTicketViewModel
+@{
+    var tiposTicket = TipoTicket.ObtenerListaPorSeccion(Model.Ticket.TiposTicket, Model.TipoTicketId);
+}
+
+@* Modal Nuevo Reclamo *@
+<div class="modal fade modal-nuevo-reclamo modal-delivery-point" id="modal-nuevo-reclamo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close general-title" data-dismiss="modal" aria-label="Close">Cerrar <i class="font24 pe-va pe-7s-close-circle"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <h3 class="text-center margintop10">@TipoTicket.ObtenerNombreNuevoTicket(Model.TipoTicketId)</h3>
+                        </div>
+                        <div class="col-xs-12 margintop30">
+                            <p class="general-title @(tiposTicket.Count() < 2 ? "hide" : "")">Tipo de ticket</p>
+                            @foreach (var item in tiposTicket)
+                            {
+                                <div class="radio @(tiposTicket.Count() < 2 ? "hide" : "")">
+                                    <label>
+                                        <input tipos-ticket type="radio" name="tiporeclamo" id="facturacion" value="@item.Id" @(item == tiposTicket.First() ? "checked" : "")>
+                                        @item.Nombre
+                                    </label>
+                                </div>
+                            }
+                            <div class="margintop30">
+                                <p class="general-title">Detalle</p>
+                                <textarea reclamo-comentario class="form-control" id="num-pedido" placeholder="Ingrese sus observaciones" rows="3"></textarea>
+                            </div>
+                            <div class="margintop30">
+                                <p class="general-title">Adjuntar documentación</p>
+                                @Html.Partial("_FileComponentFront", Model.Ticket.FileComponentViewModel)
+                            </div>
+
+                            <div class="row margintop30">
+                                <div class="col-sm-6">
+                                    <a reclamo-nuevo class="btn btn-primary btn-block margintop10">Enviar</a>
+                                </div>
+                                <div class="col-sm-6">
+                                    <a class="btn btn-default btn-block margintop10" data-dismiss="modal">Cancelar</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $('[reclamo-nuevo]').click(function () {
+
+        var tipoTicketId = $('input:radio[name=tiporeclamo]:checked').val();
+        var comentario = $('[reclamo-comentario]').val();
+        var archivosId = $('#ArchivosId').val();
+
+        var expreg = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+
+        if (expreg.test(tipoTicketId))
+        {
+            alert("La matrícula es correcta");
+            return;
+        }
+
+        $.ajax({
+            dataType: 'json',
+            type: 'GET',
+            url: core + '/Frontend/NuevoReclamo?tipoTicketId=' + tipoTicketId + '&comentario=' + comentario + '&archivosId=' + archivosId,
+            success: function (result) {
+                location.reload();
+            },
+            error: function (ex) {
+                console.log(JSON.stringify(ex));
+            },
+        });
+
+    });
+</script>

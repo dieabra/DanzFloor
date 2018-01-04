@@ -1,0 +1,141 @@
+﻿@using DanzFloor.Web.Models
+@using Microsoft.Owin.Security
+@model LoginViewModel
+@{
+    var loginProviders = Context.GetOwinContext().Authentication.GetExternalAuthenticationTypes();
+    string returnUrl = null;
+    ViewBag.Title = "Log in";
+    Layout = "~/Views/Shared/_LayoutBaseFront.cshtml";
+
+}
+
+<style>
+
+.navbar {
+    min-height: 0px !important;
+}
+    .navbar .navbar-nav > li > a{
+        padding-bottom:0px !important;
+        padding-top:0px !important;
+    }
+</style>
+
+<div class="login-content">
+    @*<div class="login-cellphones-box">
+        <img src="~/assets/CH47strap/img/CH47_Devices_Mockup_v01.png" class="img-responsive img-cell-login" alt="Alternate Text" />
+    </div>*@
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="row">
+                <div class="col-sm-6 col-sm-offset-6">
+                    <h4 class="black robotoLt">Registrate para ser un Clubber y estar al día en las fiestas de electrónica</h4>
+                    <div class="button-social">
+                        <a href="@ViewBag.urlInstagramRedirect" class="btn btn-default center-block btn-login instagram">
+                            <div class="button-inner">
+                                <ion-icon class="fa fa-instagram"></ion-icon>
+                                <span class="btn-text">Ingresar con Instagram</span>
+                                <ion-icon class="ion-ios-arrow-forward-outline"></ion-icon>
+                                <div class="divider-line"></div>
+                            </div>
+                        </a>
+                        <a href="@ViewBag.urlFacebookRedirect" class="btn btn-default center-block btn-login facebook">
+                            <div class="button-inner">
+                                <ion-icon class="fa fa-facebook"></ion-icon>
+                                <span class="btn-text">Ingresar con Facebook</span>
+                                <ion-icon class="ion-ios-arrow-forward-outline"></ion-icon>
+                                <div class="divider-line"></div>
+                            </div>
+                        </a>
+                        <a href="@ViewBag.urlSpotifyRedirect" class="btn btn-default center-block btn-login facebook">
+                            <div class="button-inner">
+                                <ion-icon class="fa fa-spotify"></ion-icon>
+                                <span class="btn-text">Ingresar con Spotify</span>
+                                <ion-icon class="ion-ios-arrow-forward-outline"></ion-icon>
+                                <div class="divider-line"></div>
+                            </div>
+                        </a>
+                        @foreach(AuthenticationDescription p in loginProviders)
+                        {
+                                using (Html.BeginForm("ExternalLogin", "Cuenta", new { ReturnUrl = returnUrl }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <button type="submit" class="btn btn-default btn-block btn-login google" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" title="Log in using your @p.Caption account">
+                                        <div class="button-inner">
+                                            <ion-icon class="@(p.AuthenticationType == "Google" ? "fa fa-google" : "fa fa-facebook")"></ion-icon>
+                                            <span class="btn-text">@(p.AuthenticationType == "Google" ? "Ingresar con Google" : "Ingresar con Facebook")</span>
+                                            <ion-icon class="fa fa-arrow-right"></ion-icon>
+                                            <div class="divider-line"></div>
+                                        </div>
+                                    </button>
+                                }
+                        }
+                        <button class="btn btn-default btn-block btn-login user" data-toggle="modal" data-target="#myModal">
+                            <div class="button-inner">
+                                <ion-icon class="ion-ios-exit-outline"></ion-icon>
+                                <span class="btn-text">Ingresar con tu usuario</span>
+                                <ion-icon class="ion-ios-arrow-forward-outline"></ion-icon>
+                                <div class="divider-line"></div>
+                            </div>
+                        </button>
+                        <a href="@Url.Action("Registrar","Frontend")" class="btn btn-link btn-block btn-login register">
+                            <div class="button-inner">
+                                <span class="btn-text">O registrate con tu email</span>
+                                <ion-icon class="ion-ios-arrow-forward-outline"></ion-icon>
+                            </div>
+                        </a>
+                    </div>
+                    <hr class="login-hr" />
+                    <div class="policy-box">
+                        <p class="font12">By signing up, you agree to our Terms of Service and Privacy Policy</p>
+                    </div>
+                    <div class="margintop40 text-center">
+                        <p class="font20 white">Descargá la App.</p>
+                        <div class="store-buttons">
+                            <a href="#">
+                                <img src="~/assets/CH47strap/img/geton_Google.png" class="img-responsive" alt="google Play" />
+                            </a>
+                            <a href="#">
+                                <img src="~/assets/CH47strap/img/geton_appstore.png" class="img-responsive" alt="App Store" />
+                            </a>
+                        </div>
+                    </div>
+                    <div class="margintop40">
+                        <div class="policy-box">
+                            <p class="clearmargin font11">(*) The Apple and Google Play logos are trademarks of their respective owners.</p>
+                            <p class="clearmargin font11">Copyright 2017 47 Channel. Todos los derechos reservados.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <p class="modal-title font18 RobotoLt" id="myModalLabel">Ingresá con tu usuario</p>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("Login", "Cuenta", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { role = "form" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Usuario" })
+                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Contraseña" })
+                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                    </div>
+
+                    <button type="submit" class="btn btn-lg btn-primary">Ingresar</button>
+                    <a href="@Url.Action("ForgotPassword","Cuenta")" class="font12 pull-right gray4 margintop15">¿Olvido su contraseña?</a>
+                }
+            </div>
+        </div>
+    </div>
+</div>

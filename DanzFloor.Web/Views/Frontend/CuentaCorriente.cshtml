@@ -1,0 +1,161 @@
+﻿@using DanzFloor.Web.Models.ViewModels.Frontend
+@using DanzFloor.Web.Models.Dominio
+
+@model CuentaCorrienteViewModel
+@{
+    ViewBag.Title = "Repetir pedido";
+    Layout = "~/Views/Shared/_LayoutFront.cshtml";
+    double consolidado = 0;
+    var cuentaCorriente = new List<CuentaCorriente>();
+    double saldo = 0;
+    
+}
+
+<div class="container">
+    <div class="row">
+            <div class="col-sm-10 col-sm-offset-1">
+                <div class="text-center margintop60">
+
+                    <div class="text-center margintop30">
+                        <div class="margintop60 hidden-xs"></div>
+                        <h3>Cuenta Corriente</h3>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="container-info-pedido reclamo">
+                                <div class="row">
+                                    <div class="col-sm-8">
+                                        <div class="datos-pedido">
+                                            @if (Model.PedidoInicial.Cliente.Vendedor != null)
+                                            {
+                                                <div class="row @(Model.PedidoInicial.Cliente.Vendedor.BejermanId == "0001" ? "hide" : "") ">
+                                                    <div class="col-xs-4 col-sm-3">
+                                                        <div class="item-box">
+                                                            <p class="general-title text-right-left">Representante</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-8 col-sm-9">
+                                                        <div class="item-box">
+                                                            <p class="descripcion-item-box">@Model.PedidoInicial.Cliente.Vendedor.Nombre</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                            <div class="row datos-pedido-box">
+                                                <div class="col-xs-4 col-sm-3">
+                                                    <div class="item-box">
+                                                        <p class="general-title text-right-left">Cliente</p>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xs-8 col-sm-9">
+                                                    <div class="item-box">
+                                                        <p class="descripcion-item-box">@Model.PedidoInicial.Cliente.Nombre</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row datos-pedido-box">
+                                                <div class="col-xs-4 col-sm-3">
+                                                    <div class="item-box">
+                                                        <p class="general-title text-right-left">Razón Social</p>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xs-8 col-sm-9">
+                                                    <div class="item-box">
+                                                        <p class="descripcion-item-box">@Model.PedidoInicial.Cliente.RazonSocial</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="pedido-acciones">
+                                            <a href="/Frontend/Tickets?tipoTicketId=1CB92C89-C0D2-4F0C-5254-39E2A3670D32" class="btn btn-primary hidden-xs btn-add-reclamo">Informe Cobranza</a>
+                                            <div class="visible-xs">
+                                                <a href="/Frontend/Tickets?tipoTicketId=1CB92C89-C0D2-4F0C-5254-39E2A3670D32" class="btn btn-primary btn-sm btn-add-reclamo">Informe Cobranza</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                        <hr class="margintop40">
+
+                    <div class="consolidado">
+                        <p>$@Model.Consolidado.VistaPrecio()</p>
+                        <p class="title">Consolidado</p>
+                    </div>
+
+                    <hr class="margintop30">
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="box-desglose text-center">
+                                <p>
+                                    $@Model.AVencer.VistaPrecio()
+                                </p>
+                                <p class="title">A vencer</p>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="box-desglose text-center">
+                                <p class=" vencido">
+                                    $@Model.Vencido.VistaPrecio()
+                                </p>
+                                <p class="title title-vencido">Vencido</p>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+
+                <div class="table-responsive @(((List<CuentaCorrienteItemViewModel>)Model.Resultado).Count() > 0 ? "" : "hide")">
+                    <table class="table table-cuenta">
+                        <thead>
+                            <tr>
+                                <th>Detalle</th>
+                                <th>Fecha</th>
+                                <th>Concepto</th>
+                                <th>Importe</th>
+                                <th>Consolidado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in ((List<CuentaCorrienteItemViewModel>)Model.Resultado).OrderByDescending(x => x.Posicion))
+                            {
+                                if (item.ItemCuentaCorriente.Importe == 0)
+                                {
+                                    continue;
+                                }
+                                <tr>
+                                    <td><i class="pe-7s-copy-file"></i></td>
+                                    <td>@item.ItemCuentaCorriente.FechaEmision.ToShortDateString()</td>
+                                    <td>Movimiento</td>
+                                    <td>@(item.ItemCuentaCorriente.Importe < 0 ? "(" + item.ItemCuentaCorriente.Importe.VistaPrecio() + ")" : item.ItemCuentaCorriente.Importe.VistaPrecio())</td>
+                                    <td>@item.Saldo.VistaPrecio()</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="paddingtop20">
+                    <p class="font12">La actualización de la información puede demorar hasta 48 Hs hábiles.</p>
+                </div>
+            </div>
+        </div>
+</div>
+
+<hr class="divider-line footer-line">
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('[punto-entrega-change]').change(function () {
+            var puntoEntregaId = $(this).find(":selected").val();
+            var url = core + "/Frontend/CuentaCorriente/?puntoEntregaId=" + puntoEntregaId;
+            location.href = url;
+        });
+    });
+</script>

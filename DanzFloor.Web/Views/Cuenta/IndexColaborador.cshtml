@@ -1,0 +1,62 @@
+﻿@model IEnumerable<DanzFloor.Web.Models.Dominio.Usuarios.Colaborador>
+
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card">
+    <div class="card-header">
+        <h2>
+            Colaboradores
+        </h2>
+    </div>
+
+    <a href="@Url.Action("CreateColaborador")" class="btn btn-float bgm-blue m-btn waves-effect waves-circle waves-float"><i class="zmdi zmdi-plus"></i></a>
+    <div class="table-responsive">
+        <table id="data-table-basic-colaborador" class="table table-striped">
+            <thead>
+                <tr>
+                    <th data-column-id="Id" data-visible="false" data-searchable="false">
+                        @Html.DisplayNameFor(model => model.Id)
+                    </th>
+                    <th data-column-id="NombreApellido" data-visible="false" data-searchable="false">NombreApellido </th>
+                    <th data-column-id="Nombre">@Html.DisplayNameFor(model => model.Nombre)</th>
+                    <th data-column-id="Apellido">@Html.DisplayNameFor(model => model.Apellido)</th>
+                    <th data-column-id="FechaNacimiento">@Html.DisplayNameFor(model => model.FechaNacimiento)</th>
+                    <th data-column-id="commands" data-formatter="commands" data-sortable="false">
+                        Comandos
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Id)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NombreYApellido)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Nombre)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Apellido)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FechaNacimiento)
+                        </td>
+
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script src="~/Scripts/BootgridColaborador.js"></script>

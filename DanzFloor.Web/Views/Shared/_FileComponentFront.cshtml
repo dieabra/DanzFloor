@@ -1,0 +1,218 @@
+﻿@model DanzFloor.Web.Models.ViewModels.FileComponentViewModel
+
+<input type="hidden" id="ArchivosId" name="ArchivosId" />
+
+@Scripts.Render("~/bundles/dropzonescripts")
+
+<script type="text/javascript">
+
+    var ArchivosId = "";
+    var ExtensionArchivo = "";
+    var NombreArchivo = "";
+
+    //File Upload response from the server
+    Dropzone.options.dropzoneForm = {
+        init: function () {
+            this.on("complete", function (data) {
+                //res.Message devolución de mensajes dropzone
+                var res = JSON.parse(data.xhr.responseText);
+                NombreArchivo = data.name;
+                ExtensionArchivo = data.type.split('/')[1];
+                ArchivosId = res.Message;
+            });
+        }
+    };
+
+    var removerArchivo = function () {
+        var idEliminar = $(this).attr('id');
+
+        $('[name=ArchivosId]').each(function () {
+            var array = $(this).val().split(';');
+            var index = array.indexOf(idEliminar);
+
+            if (index > -1) {
+                array.splice(index, 1);
+                $(this).val(array.join(';'));
+            }
+        });
+
+        $(this).parent().parent().remove();
+    }
+
+    var mandarImagenAlFormulario = function (event) {
+        if (ArchivosId != "") {
+            var archivosId = $('[name=ArchivosId]').val();
+
+            if (archivosId != "")
+                archivosId = archivosId + ';';
+
+            $('#tbody' + event.data.configuracionId)
+                .append('<tr>' +
+                '<td><div class="ticket-thumbnail-container"><img class="ticket-thumbnail" imagen-extension src="" nombre="' + ArchivosId + '" /></div></td>' +
+                '<td class="truncate">' + NombreArchivo + '</td>' +
+                '<td>' +
+                '<a id="' + ArchivosId + '" eliminar-archivo class="btn btn-xs btn-default"><i class="pe-7s-close"></i></a>' +
+                '<a nombre="' + ArchivosId + '" target="_blank" descargar-archivo class="btn btn-xs btn-default hidden"><i class="pe-7s-download"></i></a>' +
+                '</td>' +
+                '</tr>');
+
+
+            $('[name=ArchivosId]').each(function () {
+                $(this).val(archivosId + ArchivosId)
+            });
+
+            $('[eliminar-archivo]').on('click', removerArchivo);
+
+            cerrarModalImagen(event, true);
+        }
+        else
+            swal('Debe esperar que finalice la carga.');
+
+        ObtenerIconoArchivo();
+        ObtenerHrefDescargarArchivos();
+    };
+
+    var limpiarValores = function () {
+        ArchivosId = "";
+        NombreArchivo = "";
+    };
+
+    var cerrarModalImagen = function (event) {
+        $('.modal-backdrop').hide();
+        $('div.dz-image-preview').remove();
+        limpiarValores();
+    };
+
+    var validarControl = function () {
+        limpiarValores();
+        var configuracion = JSON.parse($(this).attr('configuracion'));
+        var valido = true;
+        var mensaje = '';
+
+        if (!configuracion.EsCargaMultiple) {
+            // Se contabilizan las rows de la tabla en cada pestaña.
+            // length debe superar a 1 porque contabiliza el tr del thead
+            if ($(this).parent().find('tr').length > 1) {
+                valido = false;
+                mensaje = 'Solo se permite la carga de un archivo.';
+            }
+        }
+
+        if (valido)
+            $('#modalDefault' + configuracion.Id).toggle();
+        else
+            swal(mensaje);
+    }
+
+    var ObtenerIconoArchivo = function () {
+        $('[imagen-extension]').each(function (index) {
+            var contenido = $(this).attr('contenido');
+            var file_name_string = $(this).attr('nombre');
+
+            var file_name_array = file_name_string.split(".");
+            //var file_extension = file_name_array[file_name_array.length - 1];
+            //file_extension = file_extension.toLowerCase();
+            var file_extension = ExtensionArchivo;
+
+            if (file_extension == 'jpg' || file_extension == 'jpeg' || file_extension == 'png' || file_extension == 'gif' || contenido == 'jpg' || contenido == 'jpeg' || contenido == 'png' || contenido == 'gif')
+                $(this).attr('src', location.origin + '/Archivo/ObtenerImagenPorId/' + file_name_string);
+            //$(this).attr('src', location.origin + '/Archivo/ObtenerImagen?name=' + file_name_string + '&height=128&width=128')
+            else
+                $(this).attr('src', '/assets/fileType/' + file_extension + '.png')
+        });
+    }
+
+    var ObtenerHrefDescargarArchivos = function () {
+        $('[descargar-archivo]').each(function (index) {
+            var file_name_string = $(this).attr('nombre');
+
+            $(this).attr('href', location.origin + '/Archivo/ObtenerImagen?name=' + file_name_string);
+        });
+    }
+
+    $(document).ready(function () {
+        $('[eliminar-archivo]').on('click', removerArchivo);
+        $('[abrir-modal]').on('click', validarControl);
+        ObtenerIconoArchivo();
+        ObtenerHrefDescargarArchivos();
+    });
+</script>
+
+@foreach (var configuracion in Model.Configuraciones)
+{
+    <div role="tabpanel" class="tab-pane animated @(configuracion == Model.Configuraciones.First() ? "active" : "")" id="@configuracion.Id">
+
+        <!-- MODALES -->
+        <!-- Modal Carga imagen -->
+        <div  id="modalDefault@(configuracion.Id)" style="display:none" >
+            <div class="panel panel-default">
+                <div class="panel-body bg-gray0">
+                    <form action="~/Archivo/Create?ArchivoConfiguracionId=@(configuracion.Id)" method="post" enctype="multipart/form-data" class="dropzone" id="dropzoneForm">
+                        <div class="fallback">
+                            <input name="file" type="file" multiple />
+                            <input type="submit" value="Upload" />
+                        </div>
+                    </form>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <button id="guardarImagen@(configuracion.Id)" type="button" class="btn btn-primary btn-sm btn-block">Guardar</button>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="margintop5 visible-xs"></div>
+                            <button id="cancelarImagen@(configuracion.Id)" type="button" class="btn btn-default btn-sm btn-block">Descartar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- END MODALES -->
+        <!-- CAMPO Y CARGA DE IMAGEN -->
+
+        <div class="hide">
+            <input type="text" name="ArchivosId" id="ArchivosId" />
+        </div>
+
+        <a configuracion="@(Newtonsoft.Json.JsonConvert.SerializeObject(configuracion))" abrir-modal class="btn btn-default btn-sm">Subir Archivo</a>
+
+        <div class="table-responsive no-border">
+            <table class="table table-condensed table-reclamos table-modal-nuevo-reclamo">
+                @*<thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Nombre</th>
+                        <th>Eliminar</th>
+                    </tr>
+                </thead>*@
+                <tbody id="tbody@(configuracion.Id)">
+                    @foreach (var archivo in Model.Archivos.Where(x => x.ArchivoConfiguracion.Id == configuracion.Id))
+                    {
+                        <tr>
+                            <td><div class="ticket-thumnail-container"><img class="ticket-thumbnail" imagen-extension src="" nombre="@archivo.Id" contenido="@archivo.Contenido" /></div></td>
+                            <td>@archivo.Nombre</td>
+                            <td>
+                                @if (!configuracion.NoEditable)
+                                {
+                                    <a id="@archivo.Id" eliminar-archivo class="btn btn-icon command-edit waves-effect waves-circle"><span class="pe-7s-close"></span></a>
+                                }
+                                <a nombre="@archivo.Nombre" target="_blank" descargar-archivo class="btn btn-icon command-edit"><span class="pe-7s-download"></span></a>
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+
+        <!-- END CAMPO Y CARGA DE IMAGEN -->
+
+
+        <script type="text/javascript">
+            var EsCargaMultiple = @(configuracion.EsCargaMultiple ? "true": "false");
+
+            $('#guardarImagen@(configuracion.Id)').click({configuracionId: '@(configuracion.Id)'}, mandarImagenAlFormulario);
+            $('#cancelarImagen@(configuracion.Id)').click({configuracionId: '@(configuracion.Id)'}, cerrarModalImagen);
+        </script>
+
+    </div>
+}

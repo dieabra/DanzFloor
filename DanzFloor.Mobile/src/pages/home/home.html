@@ -1,0 +1,7 @@
+<ion-tabs>
+    <ion-tab (ionSelect)='analitycsIndex();' tabIcon="md-home" tabTitle="Home" [root]="tabIndex" [tabBadge]="badgeValue1" tabBadgeStyle="secondary" class="tab-active"></ion-tab>
+    <ion-tab (ionSelect)="analitycsAgenda();" tabIcon="md-calendar" tabTitle="Agenda" [root]="tabAgenda" [tabBadge]="badgeValue2" tabBadgeStyle="danger"></ion-tab>
+	<ion-tab (ionSelect)='analitycsBusqueda();' tabIcon="md-search" tabTitle="Buscar" [root]="tabBusqueda" [tabBadge]="badgeValue3" tabBadgeStyle="secondary"></ion-tab>
+	<ion-tab (ionSelect)='analitycsArtistas();' tabIcon="md-star" tabTitle="Artistas" [root]="tabArtistas" [tabBadge]="badgeValue4" tabBadgeStyle="secondary"></ion-tab>
+	<ion-tab (ionSelect)='analitycsCuenta();' tabIcon="md-contact" tabTitle="Perfil" [root]="tabCuenta" [tabBadge]="badgeValue5" tabBadgeStyle="danger"></ion-tab>
+</ion-tabs>

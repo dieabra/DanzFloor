@@ -1,0 +1,121 @@
+<ion-header>
+  <ion-navbar color="light">
+  
+    <ion-title>
+     <ion-icon (click)="goBack()" name='md-arrow-round-back'></ion-icon> Programas
+    </ion-title>
+    <img src="assets/img/47CH_logoNavbar.png" class="img-navbar-heart" alt="Logo 47 Street Corazon">
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+	
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content
+      pullingIcon="arrow-dropdown"
+      pullingText="Refrescar"
+      refreshingSpinner="circles">
+    </ion-refresher-content>
+  </ion-refresher>
+
+    <!--  <div class="home-hello">
+        <img [src]="ObtenerImagen(canal.FotoPortada)">
+
+        <ion-fab right middle style="top:auto">
+            <button ion-fab color="primary"><ion-icon name="play"></ion-icon></button>
+        </ion-fab>
+    </div> -->
+    <ion-item class="profile-item">
+      <ion-avatar item-start>
+        <div class="loading-avatar">
+          <img [src]="ObtenerImagenProgramaPrincipal(programa.FotoPortada)">
+        </div>
+      </ion-avatar>
+      <h2 class="channel-title">{{programa.Nombre}}</h2>
+      <p class="channel-subtitle">{{programa.Nombre}}</p>
+
+      <ion-avatar item-right >
+<!--    <button (click)="seguirPrograma(video.Programa)" ion-button clear small color="{{color(video.Programa)}}" icon-right>
+          <ion-icon name='thumbs-up'></ion-icon>
+        </button> -->
+        <button ion-button round icon-right class="button-transparent btn-followers" (click)="seguirPrograma(programa)">
+          <span text-lowercase class="text-button">{{programa.Seguidores}}<br> <span class="followers">{{programa.Seguidores != 1 ? 'Seguidores' : 'Seguidor'}}</span></span>
+          <ion-icon *ngIf="!programa.EsFavorito" name='ios-star-outline'></ion-icon>
+          <ion-icon *ngIf="programa.EsFavorito" name='ios-star'></ion-icon>
+          <div class="divider-followers"></div>
+        </button>
+      </ion-avatar>
+    </ion-item>
+
+    <ion-item class="profile-item description-channel">
+      {{programa.Descripcion}}
+    </ion-item>
+
+    <hr class="divider-card">
+
+    <ion-card class="card-home" *ngFor="let episodio of programa.Episodios">
+      <ion-item>
+        <ion-avatar item-start>
+          <div class="loading-avatar">
+            <img [src]="ObtenerImagenPrograma(programa.FotoPortada)">
+          </div>
+        </ion-avatar>
+        <h5>{{programa.Nombre}}</h5>
+
+        <ion-avatar item-right>
+          <button  ion-button icon-only clear icon-right>
+            <button (click)="bookmark(episodio)" *ngIf="!episodio.Bookmark" ion-button icon-only clear>
+              <ion-icon name='ios-bookmark-outline'></ion-icon>
+            </button>
+            <button (click)="bookmark(episodio)" *ngIf="episodio.Bookmark" ion-button icon-only clear>
+              <ion-icon name='ios-bookmark' class="btn-active"></ion-icon>
+            </button>
+          </button>  
+        </ion-avatar>
+      </ion-item> 
+
+      <div class="loading-post">
+        <img (click)="itemTapped(episodio)" [src]="ObtenerImagen(episodio.Thumbnail)"/>
+        <ion-icon (click)="itemTapped(episodio)" name="ios-play-outline" class="center-center"></ion-icon>
+      </div>     
+        
+      <ion-grid class="card-padding">
+        <ion-row>
+          <ion-col center col-8 align-self-center>
+            <ion-note>
+              <span text-uppercase>{{episodio.Seccion}}</span> <span class="number-episode"></span>
+            </ion-note>
+          </ion-col>
+
+          <ion-col>
+            <button ion-button icon-only clear float-right class="btn-share" (click)="share(episodio)">
+              <ion-icon name="ios-send-outline"></ion-icon>
+            </button>
+
+            <div>
+              <button (click)="like(episodio)" *ngIf="episodio.Like" ion-button icon-only clear float-right>
+                <ion-icon name="heart" class="btn-active"></ion-icon>
+                <!-- {{video.CantidadLikes}} {{video.CantidadLikes == 1 ? 'Like' : 'Likes'}} -->
+              </button>
+              <button (click)="like(episodio)" *ngIf="!episodio.Like" ion-button icon-only clear float-right>
+                <ion-icon name="ios-heart-outline"></ion-icon>
+                <!-- {{video.CantidadLikes}} {{video.CantidadLikes == 1 ? 'Like' : 'Likes'}} -->
+              </button>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+      <ion-card-content (click)="itemTapped(video)">
+        <h2>{{episodio.Nombre}}</h2>
+        <p>{{episodio.Descripcion}}</p>
+         <!-- <p class="upload-time" text-uppercase>{{video.FechaPublicacion | mvcDatePipe}}</p> -->
+       <p class="upload-time" text-uppercase>{{episodio.PublicadoHace}}</p>
+      </ion-card-content>
+
+    </ion-card>
+
+    <ion-infinite-scroll (ionInfinite)="$event.waitFor(doInfinite())">
+     <ion-infinite-scroll-content></ion-infinite-scroll-content>
+   </ion-infinite-scroll>
+</ion-content>

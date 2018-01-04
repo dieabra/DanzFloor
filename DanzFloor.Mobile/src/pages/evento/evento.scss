@@ -1,0 +1,166 @@
+.dz-hero{
+    width: 100%;
+    background-color: #ccc;
+    padding: 50px 30px;
+    text-align: center;
+    position: relative;
+    
+    ion-icon{
+        font-size: 60px;
+    }
+
+    .btn-icon{
+        position: absolute;
+        bottom: -30px;
+        right: 20px;
+        height: 60px;
+        width: 60px;
+        border-radius: 50%;
+        z-index: 9999;
+        ion-icon[name="play"]{
+            color: #fff;
+            font-size: 2em;
+            padding-right: 0.3em; 
+        }
+    }
+    .btn-action{
+        position: absolute;
+        bottom: -30px;
+        left: 50%;
+        -webkit-transform: translateX(-50%);
+        transform: translateX(-50%);
+        z-index: 9999;
+        padding: 0 100px;
+        height: 50px;
+        font-size: 18px;     
+    }
+}
+
+.dz-venue-info{
+    padding: 20px 20px 20px 0;
+    border-bottom: 1px solid #dedede;
+    ion-list{
+        margin-bottom: 0;
+    }
+}
+
+.dz-section{
+    &.info{
+        padding: 0 20px 16px;
+        .dz-info{
+            font-size: 14px;
+            color: #aaa;
+            margin-bottom: 0;
+        }
+    }
+    ion-badge{
+        border-radius: 10em;
+        margin-left: 5px;
+    }
+}
+
+.horizontal-scroll{
+    .horizontal-scroll-wrapper{
+        ul{
+            li{
+                .square{
+                    ion-icon{
+                        &.center-center{
+                            position: absolute;
+                            top: 50%;
+                            left: 50%;
+                            transform: translate(-50%, -50%);
+                        }
+                    }                    
+                }                 
+            }             
+        }        
+    }    
+}
+
+.see-more-results{
+    margin-top: 10px;
+    padding: 0;
+    text-decoration: none;
+    text-transform: initial;
+    color: #000;
+    ion-icon{
+        margin-left: 5px;
+        border: 1px solid #000;
+        padding: 3px;
+        border-radius: 50%;
+        height: 20px;
+        width: 20px;
+        display: block;
+        font-size: 13px;
+    }
+}
+
+ion-list{
+    &.comentarios{
+        margin-top: 10px;
+        margin-bottom: 10px;
+        img{
+            background-color: #aaa;
+        }
+        .like{
+            margin: 0 5px;
+        }
+        .reply{
+            text-decoration: none;
+            color: #666;
+        }
+    }
+}
+
+.artist-photo{
+    height: 120px;
+    width: 120px;
+    border-radius: 50%;
+    overflow: hidden;
+    background-color: #fff;
+    margin: auto;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+.playlist-item{
+    .round-play{
+        height: 25px;
+        width: 25px;
+        border-radius: 50%;
+        overflow: hidden;
+        position: relative;
+        border: 1px solid #aaa;
+        float: left;
+        ion-icon{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            margin-left: 1px;
+            color: #000;
+            font-size: 14px;
+        }
+    }
+    span{
+        position: relative;
+        top: 2px;
+        left: 5px;
+    }
+}
+
+.dz-hero{    
+    .btn-action{
+        position: absolute;
+        bottom: -30px;
+        left: 50%;
+        -webkit-transform: translateX(-50%);
+        transform: translateX(-50%);
+        z-index: 9999;
+        padding: 0 100px;
+        height: 50px;
+        font-size: 18px;     
+    }
+}

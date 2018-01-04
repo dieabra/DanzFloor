@@ -1,0 +1,118 @@
+﻿@using DanzFloor.Web.Models.ViewModels.Frontend
+@using DanzFloor.Web.Models
+
+@model DetallePedidoViewModel
+@{
+    ViewBag.Title = "Repetir pedido";
+    Layout = "~/Views/Shared/_LayoutFront.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+            <div class="text-center margintop30">
+                <div class="hidden-xs margintop60"></div>
+                <h3>Detalle del pedido</h3>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="container-info-pedido">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                @Html.Partial("~/Views/Frontend/Partial/_DetallePedido.cshtml", Model.Pedido)
+                            </div>
+                                @Html.Partial("~/Views/Frontend/Partial/_AccionesPedido.cshtml", Model)
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr class="full-xs visible-xs" />
+
+            <div class="table-responsive margintop70 hidden-xs">
+                <table class="table table-checkout pedido">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>ARTÍCULO</th>
+                            <th>PRECIO UNITARIO</th>
+                            <th>UNIDADES POR CAJA</th>
+                            <th>CANTIDAD</th>
+                            <th>TOTAL</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Pedido.Articulos)
+                        {
+                            <tr>
+                                <td><img src="@Archivo.ObtenerUrlArchivo(item.Articulo.Producto.Archivos, TipoEntidadConst.PRODUCTO, "Imagen Principal")" alt="Foto de Categoría"></td>
+                                <td class="h5">@item.Articulo.Producto.Nombre</td>
+                                <td class="td-checkout">$@((item.Precio / item.Articulo.CantidadUnidades).VistaPrecio())</td>
+                                <td class="item-quantity td-checkout">@item.Articulo.CantidadUnidades</td>
+                                <td class="td-checkout">@item.Cantidad cajas</td>
+                                <td class="td-checkout">$@((item.Precio * item.Cantidad).VistaPrecio())</td>
+                            </tr>
+                        }
+                        
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="visible-xs item-tabla-articulo margintop20" item-tabla-articulo>
+                   @foreach (var item in Model.Pedido.Articulos)
+                   {
+                    <div class="row ita-row">
+                        <div class="col-xs-4">
+                            <img src="@Archivo.ObtenerUrlArchivo(item.Articulo.Producto.Archivos, TipoEntidadConst.PRODUCTO, "Imagen Principal")" alt="" class="img-responsive" />
+                        </div>
+                        <div class="col-xs-8 ita-data">
+                            <h5>@item.Articulo.Producto.Nombre</h5>
+                            <p class="cuenta general-title"><span class="black">@item.Cantidad caja/s</span> x $@item.Precio x @item.Articulo.CantidadUnidades</p>
+                            <div class="">
+                                <p class="precio-xs font20 brandonMd pull-right"> $@(item.Precio * item.Cantidad)</p>
+                            </div>
+
+                        </div>
+                    </div>
+                    <hr />
+                }
+            </div>
+
+            <hr class="full-xs visible-xs" />
+            <div class="row precio-total">
+                @Html.Partial("~/Views/Frontend/Partial/_PrecioFinalCompra.cshtml", Model.Pedido)               
+            </div>
+
+            <div class="clearfix"></div>
+
+            <hr class="hidden-xs margintop50" />
+
+            @if (Model.Pedido.Instancia == DanzFloor.Web.Models.Enum.InstanciaPedido.Facturado)
+            {
+            <div class="row margintop70">
+                <div class="col-xs-12">
+                    <div class="text-center">                        
+                        <a abrir-repetir-pedido="@Model.Pedido.Id" class="btn btn-primary btn-lg">Repetir pedido</a>
+                    </div>
+                </div>
+            </div>
+            }
+            else if (Model.Pedido.UsuarioCliente != null && 
+                Model.Pedido.UsuarioCliente.Id == Model.PedidoInicial.UsuarioCliente.Id &&
+                Model.Pedido.Instancia == DanzFloor.Web.Models.Enum.InstanciaPedido.Pendiente)
+            {
+                <div class="row margintop70">
+                    <div class="col-xs-12">
+                        <div class="text-center">
+                            <a abrir-modificar-pedido="@Model.Pedido.Id" class="btn btn-primary btn-lg">Modificar pedido</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<hr class="divider-line footer-line hidden-xs">
+
+@Html.Partial("~/Views/Shared/_ModalRepetirPedido.cshtml")
+@Html.Partial("~/Views/Frontend/Partial/_ModalModificarPedido.cshtml")

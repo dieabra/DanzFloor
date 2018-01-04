@@ -1,0 +1,355 @@
+﻿@using DanzFloor.Web.Models.ViewModels.Frontend
+@using System.Configuration
+@using DanzFloor.Web.Models
+
+@model DetalleArticuloViewModel
+@{
+    ViewBag.Title = "Repetir pedido";
+    Layout = "~/Views/Shared/_LayoutFront.cshtml";
+
+    var usosProducto = Archivo.ObtenerUrlArchivos(Model.Articulo.Producto.Archivos, TipoEntidadConst.PRODUCTO, "Usos del Producto", false, Model.PedidoInicial.Cliente.TagsCliente.Select(x => x.Id).ToList());
+}
+
+    <div class="container">
+        <div class="row item-detail-container flex">
+            <div class="col-sm-6 col-md-5 col-md-offset-1">
+                <div class="flex-header-product-detail">
+                    <ol class="breadcrumb">
+                        @*<a href="#"><i class="pe-va pe-7s-angle-left-circle"></i></a>*@
+                        <li><a href="#" class="category">Categorías</a></li>
+                        <li><a href="#">Productos</a></li>
+                    </ol>
+                    <a class="visible-xs">
+                        <div class="favourite">
+                            <div agregar-favorito="@Model.Articulo.Id" class="title-info-product general-title">
+                                <i like-sin style="@(!Model.PedidoInicial.UsuarioCliente.Favoritos.Any(x => x.Id == Model.Articulo.Id) ? "" : "display:none")" class="pe-va pe-7f-like "></i>
+                                <i like-con style="color: #c1a17d;@(Model.PedidoInicial.UsuarioCliente.Favoritos.Any(x => x.Id == Model.Articulo.Id) ? "" : "display:none")" class="pe-va pe-7f-like "></i>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="img-box-product visible-xs">
+                    <img src="@(Archivo.ObtenerUrlArchivo(Model.Articulo.Producto.Archivos, TipoEntidadConst.PRODUCTO, "Imagen Principal"))" class="img-responsive img-producto-categoria" alt="Foto de Categoría">
+                </div>
+                <a href="#" data-toggle="modal" data-target="#zoom-img" class="hidden-xs">
+                    <div class="img-box-product">
+                        <img src="@(Archivo.ObtenerUrlArchivo(Model.Articulo.Producto.Archivos, TipoEntidadConst.PRODUCTO, "Imagen Principal"))" class="img-responsive img-producto-categoria" alt="Foto de Categoría">
+                    </div>
+                    <p class="zoom general-title hidden-xs">Zoom <i class="pe-7s-search"></i></p>
+                </a>
+            </div>
+
+            <div class="col-sm-6 col-md-5 col-md-offset-1">
+                @Html.Partial("~/Views/Frontend/Partial/_AgregarFavorito.cshtml", Model)
+                <div class="info-product">
+                    <img src="@(Archivo.ObtenerUrlArchivo(Model.Articulo.Producto.Familia.Archivos, TipoEntidadConst.FAMILIA, "Logo Negro"))" class="img-responsive img-logo-category" alt="Imagen del logo de producto">
+                    <h3 class="title-product">@Model.Articulo.Producto.Nombre</h3>
+                    <div class="costo-product visible-xs clearfix">
+                        <p class="precio">$<span class="pesos">@(Math.Truncate(Model.PrecioArticulo))</span><span class="centavos"><sup>@Model.PrecioArticulo.ObtenerDecimales()</sup></span></p>
+                        <a @(Model.PedidoInicial.VerModalMultiplePuntoEntrega ? "punto-entrega-elegir" : "agregar-articulo")="@Model.Articulo.Id" class="btn btn-primary btn-add-to-cart"> Añadir</a>
+                    </div>
+                    <p class="description-product clearfix">@Model.Articulo.Producto.Descripcion</p>
+                </div>
+
+                <div class="costo-product hidden-xs">
+                    <p class="general-title title-info-product">Costo unitario</p>
+                    <p class="precio">$<span class="pesos">@(Math.Truncate(Model.PrecioArticulo))</span><span class="centavos"><sup>@Model.PrecioArticulo.ObtenerDecimales()</sup></span></p>
+                    <a @(Model.PedidoInicial.VerModalMultiplePuntoEntrega ? "punto-entrega-elegir" : "agregar-articulo")="@Model.Articulo.Id" class="btn btn-primary btn-add-to-cart" >Añadir</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row row-info">
+            <div class="col-sm-6 col-md-5 col-md-offset-1">
+                <div class="product-uses @(usosProducto.Any() ? "" : "hide")">
+                    <p class="general-title">
+                        Usos del producto
+                    </p>
+                    @foreach (var item in usosProducto)
+                    {
+                        <a href="#" class="product-uses-container" data-toggle="modal" data-target="#modal-uso-producto">
+                            <div class="product-uses-hover-img">
+                                <i class="pe-7s-camera"></i>
+                            </div>
+                            <div class="img-usos-producto">
+                                <img src="@item" class="img-responsive" alt="Foto de Categoría">
+                            </div>
+                        </a>
+                    }
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="ficha-tecnica visible-xs clearfix">
+                    <p class="general-title title-info-product">Ficha técnica</p>
+                    <table class="table">
+                        <tbody>
+                            <tr class="@(Model.Articulo.CantidadUnidades == 0 ? "hide" : "")">
+                                <td><i class="pe-7s-box1"></i></td>
+                                <td>Unidades por caja</td>
+                                <td>@(Model.Articulo.CantidadUnidades + "kg")</td>
+                            </tr>
+                            <tr class="@(string.IsNullOrEmpty(Model.Articulo.Producto.Peso) ? "hide" : "")">
+                                <td><i class="pe-7s-download"></i></td>
+                                <td>Peso</td>
+                                <td>@(Model.Articulo.Producto.Peso + "gr")</td>
+                            </tr>
+                            <tr class="@(string.IsNullOrEmpty(Model.Articulo.Producto.Medidas) ? "hide" : "")">
+                                <td><i class="pe-7s-expand1"></i></td>
+                                <td>Medidas</td>
+                                <td>@(Model.Articulo.Producto.Medidas + "cm")</td>
+                            </tr>
+                            <tr class="@(string.IsNullOrEmpty(Model.Articulo.Producto.TiempoDeCoccion) ? "hide" : "")">
+                                <td><i class="pe-7s-clock"></i></td>
+                                <td>Tiempo de cocción</td>
+                                <td>@(Model.Articulo.Producto.TiempoDeCoccion + "min")</td>
+                            </tr>
+                            @if (!string.IsNullOrEmpty(Model.Articulo.Producto.TemperaturaDeCoccion))
+                            {
+                                <tr>
+                                    <td><i class="pe-7s-edit"></i></td>
+                                    <td>Temperatura de cocción</td>
+                                    <td>@(Model.Articulo.Producto.TemperaturaDeCoccion + "º")</td>
+                                </tr> 
+                            }                    
+                        </tbody>
+                    </table>
+                    <a href="@(Archivo.ObtenerUrlDescargaArchivo(Model.Articulo.Producto.Archivos, TipoEntidadConst.PRODUCTO, "Ficha Técnica"))" target="_blank" class="download">
+                        <i class="pe-7s-cloud-download"></i>
+                        <span class="general-title">descargar ficha técnica en .pdf</span>
+                    </a>
+                </div>
+
+                <div class="ingredientes visible-xs margintop50 @(Model.Articulo.Producto.Ingredientes == "" ? "hide" : "")">
+                    <p class="general-title title-info-product">Ingredientes</p>
+                    <hr class="margintop0">
+                    <p class="clearmargin">@Model.Articulo.Producto.Ingredientes</p>
+                    <hr>
+                </div>
+
+                @if (Model.Recomendados.Any())
+                {
+                    <div class="recommends">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <p class="general-title hidden-xs"><span class="brandonBd primary">Sapore te recomienda que pruebes</span></p>
+                                <p class="general-title visible-xs text-center"><span class="brandonBd primary font16">Sapore te recomienda que pruebes</span></p>
+                            </div>
+
+                            <div class="col-xs-12">
+                                <div class="owl-carousel" id="carousel-product-detail">
+                                    <!-- Partial de los items del carrusel -->
+                                    @foreach (var item in Model.Recomendados)
+                                    {
+                                        <div class="recommendation-box">
+                                            <div class="recommendation-box-img">
+                                                <a href="/Frontend/DetalleArticulo/@item.Id" class="img-box">
+                                                    <img src="@Archivo.ObtenerUrlArchivo(item.Producto.Archivos, TipoEntidadConst.PRODUCTO, "Imagen Principal")" class="img-responsive" alt="Foto de Categoría">
+                                                </a>
+                                            </div>
+                                            <div class="recommendation-box-footer">
+                                                <a href="/Frontend/DetalleArticulo/@item.Id">
+                                                    <p class="h6">@item.Producto.Nombre</p>
+                                                </a>
+
+
+                                                <p class="h3 none">$ <span id="precio-producto">XX,XX</span></p>
+                                                <a @(Model.PedidoInicial.VerModalMultiplePuntoEntrega ? "punto-entrega-elegir" : "agregar-articulo")="@item.Id" class="btn btn-primary btn-sm btn-outlined">Añadir</a>
+                                            </div>
+                                            @*<a href="/Frontend/DetalleArticulo/@item.Id"><i class="pe-7s-info"></i></a>*@
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="col-sm-6 col-md-4 col-md-offset-1 hidden-xs">
+                <div class="ficha-tecnica clearfix">
+                    <p class="general-title title-info-product">Ficha técnica</p>
+                    <table class="table">
+                        <tbody>
+                            <tr class="@(Model.Articulo.CantidadUnidades == 0 ? "hide" : "")">
+                                <td><i class="pe-7s-box1"></i></td>
+                                <td>Unidades por caja</td>
+                                <td>@(Model.Articulo.CantidadUnidades)</td>
+                            </tr>
+                            @if (Model.Articulo.Producto.Peso != null)
+                            {
+                                <tr class="@(Model.Articulo.Producto.Peso == "" ? "hide" : "")">
+                                    <td><i class="pe-7s-download"></i></td>
+                                    <td>Peso</td>
+                                    <td>@(Model.Articulo.Producto.Peso + "gr")</td>
+                                </tr>
+                            }
+                            @if (Model.Articulo.Producto.Medidas != null)
+                            {
+                                <tr class="@(Model.Articulo.Producto.Medidas == "" ? "hide" : "")">
+                                    <td><i class="pe-7s-expand1"></i></td>
+                                    <td>Medidas</td>
+                                    <td>@(Model.Articulo.Producto.Medidas + "cm")</td>
+                                </tr>
+                            }
+                            @if (Model.Articulo.Producto.TiempoDeCoccion != null)
+                            {
+                                <tr class="@(Model.Articulo.Producto.TiempoDeCoccion == "" ? "hide" : "")">
+                                    <td><i class="pe-7s-clock"></i></td>
+                                    <td>Tiempo de cocción</td>
+                                    <td>@(Model.Articulo.Producto.TiempoDeCoccion + "min")</td>
+                                </tr>
+                            }
+                            @if (Model.Articulo.Producto.TemperaturaDeCoccion != null)
+                            {
+                                <tr class="@(Model.Articulo.Producto.TemperaturaDeCoccion == "" ? "hide" : "")">
+                                    <td><i class="pe-7s-edit"></i></td>
+                                    <td>Temperatura de cocción</td>
+                                    <td>@(Model.Articulo.Producto.TemperaturaDeCoccion + "º")</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    @if (Archivo.ObtenerUrlDescargaArchivo(Model.Articulo.Producto.Archivos, TipoEntidadConst.PRODUCTO, "Ficha Técnica") != "")
+                    {
+                        <a href="@(Archivo.ObtenerUrlDescargaArchivo(Model.Articulo.Producto.Archivos, TipoEntidadConst.PRODUCTO, "Ficha Técnica"))" target="_blank" class="download">
+                            <i class="pe-7s-cloud-download"></i>
+                            <span class="general-title">descargar ficha técnica en .pdf</span>
+                        </a>
+                    }
+                </div>
+
+                <div class="ingredientes hidden-xs margintop30 @(string.IsNullOrEmpty(Model.Articulo.Producto.Ingredientes) ? "hide" : "")">
+                    <p class="general-title title-info-product">Ingredientes</p>
+                    <hr class="margintop0">
+                    <p class="clearmargin">@Model.Articulo.Producto.Ingredientes</p>
+                </div>
+                <hr>
+            </div>
+        </div>
+    </div>
+
+    <hr class="divider-line footer-line marginbottom0">
+
+    <!-- Modal Zoom Imagen Foto -->
+    <div class="modal fade modal-zoom" tabindex="-1" role="dialog" id="zoom-img">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <img src="~/assets/SdP/Frontend/img/id-sapore.png" alt="Logo Sapore Di Pane">
+                    <button type="button" class="close general-title" data-dismiss="modal" aria-label="Close">Cerrar <i class="font24 pe-va pe-7s-close-circle"></i></button>
+                </div>
+                <div class="modal-body">
+                    <img src="@(Archivo.ObtenerUrlArchivo(Model.Articulo.Producto.Archivos, TipoEntidadConst.PRODUCTO, "Imagen Principal"))" class="img-responsive" alt="Foto de Producto">
+                </div>
+                <div class="modal-footer">
+                    <div class="row">
+                        <div class="col-sm-8">
+                            <div class="d-flex">
+                                <img src="~/assets/SdP/Frontend/img/id-levain.png" alt="">
+                                <h5 class="title-modal-zoom">@Model.Articulo.Producto.Nombre</h5>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="costo-product">
+                                <span class="general-title">Costo <br />unitario</span>
+                                <p class="precio">$@(Math.Truncate(Model.PrecioArticulo))<sup>@Model.PrecioArticulo.ObtenerDecimales()</sup></p>
+                                @if (Model.PedidoInicial.Cliente.Descuento != null)
+                                {
+                                    <p class="precio">$@Model.PrecioArticulo.AplicarPorcentual(Model.PedidoInicial.Cliente.Descuento.Value).VistaPrecio()<sup>@((Model.PrecioArticulo.AplicarPorcentual(Model.PedidoInicial.Cliente.Descuento.Value)).ObtenerDecimales())</sup></p>
+                                }
+                                @*<a @(Model.PedidoInicial.VerModalMultiplePuntoEntrega ? "punto-entrega-elegir" : "agregar-articulo" )="@Model.Articulo.Id" class="btn btn-primary">Añadir</a>*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Usos producto -->
+    <div class="modal fade modal-uses-product modal-zoom" tabindex="-1" role="dialog" id="modal-uso-producto">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close general-title" data-dismiss="modal" aria-label="Close">Cerrar <i class="font24 pe-va pe-7s-close-circle"></i></button>
+                </div>
+                <div class="modal-body">
+                    <div id="carousel-example-generic" class="carousel carousel-fade slide" data-ride="carousel" data-interval="false">
+                        <!-- Indicators -->
+                        @*<ol class="carousel-indicators">
+                            <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                            <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                            <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                        </ol>*@
+
+                        <!-- Wrapper for slides -->
+                        <div class="carousel-inner" role="listbox">
+                            @foreach (var item in usosProducto)
+                            {
+                                <div class="item">
+                                    <div class="item-box-img">
+                                        <img src="@item" alt="...">
+                                    </div>
+                                </div>
+                            }
+                        </div>
+
+                        <!-- Controls -->
+                        <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+                            <span class="pe-7f-angle-left"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+                            <span class="pe-7f-angle-right"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+<script>
+    $('.product-uses-container').click(function () {
+        $('.carousel .item:first-child').addClass('active');
+    })
+</script>
+
+<script>
+    jQuery.fn.ucwords = function () {
+        return this.each(function () {
+            var val = $(this).text(), newVal = '';
+            val = val.split(' ');
+
+            for (var c = 0; c < val.length; c++) {
+                newVal += val[c].substring(0, 1).toUpperCase() + val[c].substring(1, val[c].length) + (c + 1 == val.length ? '' : ' ');
+            }
+            $(this).text(newVal);
+        });
+    }
+
+    $('.company-name').ucwords();
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('[agregar-favorito]').click(function () {
+            articuloId = $(this).attr('agregar-favorito');
+            $('[like-sin]').toggle();
+            $('[like-con]').toggle();
+
+            $.ajax({
+                dataType: 'json',
+                type: 'GET',
+                url: core + '/Frontend/AgregarQuitarFavorito/?articuloId=' + articuloId,
+                success: function (data) {
+                },
+                error: function (ex) {
+                    console.log(ex)
+                },
+            });
+        });
+    });
+</script>

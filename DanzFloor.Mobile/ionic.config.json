@@ -1,0 +1,8 @@
+{
+  "name": "_DanzFloor.Mobile",
+  "app_id": "58cf8780",
+  "type": "ionic-angular",
+  "integrations": {
+    "cordova": {}
+  }
+}

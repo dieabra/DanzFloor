@@ -1,0 +1,35 @@
+﻿@using DanzFloor.Web.Models.ViewModels.Frontend
+
+@model CheckoutViewModel
+@{
+    ViewBag.Title = "Repetir pedido";
+    Layout = "~/Views/Shared/_LayoutFront.cshtml";
+}
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-10 col-sm-offset-1">
+            <div class="text-center margintop80">
+                <i class="pe-7s-check pe-5x primary"></i>
+                <h3 class="margintop30">Tu pedido ha sido realizado</h3>
+                <div class="info-pedido-box">
+                    <p class="font18">
+                        Recibirá un correo electrónico con el resumen de su pedido.
+                        Además, le notificaremos con un segundo correo cuando su factura esté disponible.
+                    </p>
+                    <p class="font18 margintop20">Si necesita obtener más información, no dude en ponerse en contacto con nosotros </p>
+                </div>
+
+                <div class="confirmation-actions">
+                    <div class="margintop40">
+                        <a href="/Frontend/DetallePedido/@ViewBag.pedidoConfirmadoId" class="btn btn-primary btn-outlined btn-checkout btn-block">Revisar Pedido</a>
+                    </div>
+                    <a href="/Frontend" class="btn btn-primary btn-checkout btn-block">Volver a la tienda</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr class="divider-line footer-line" />

@@ -1,0 +1,42 @@
+.calendario{
+    .dia{
+        display: flex;
+        justify-content: flex-start;
+        align-items: top;
+        padding: 16px;
+        
+        .fecha{
+            font-size: 18px;
+            text-align: center;
+            margin-right: 15px;
+        }
+        
+        .eventos{
+            width: 100%;
+            .eventos-fecha{
+                &:not(:first-child){
+                    margin-top: 10px;
+                }
+                .evento-item{
+                    height: 80px;
+                    padding: 15px;
+                    background-color: #ccc;
+                    position: relative;
+                    border-radius: 4px;
+                    .info-evento{
+                        position: absolute;
+                        bottom: 10px;
+                        left: 10px; 
+                        color: #fff;
+                        .nombre-evento, .lugar-evento{
+                            margin-bottom: 5px;
+                        }
+                    }
+                    &.destacado{
+                        height: 120px;
+                    }
+                }
+            }
+        }
+    }
+}

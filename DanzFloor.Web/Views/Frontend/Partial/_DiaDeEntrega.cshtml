@@ -1,0 +1,34 @@
+﻿@using DanzFloor.Web.Models.Dominio
+@using System.Globalization
+
+@model Pedido
+<div class="info-entrega">
+    <h4 class="text-center">Día de entrega</h4>
+    <div class="margintop30">
+        <div class="text-center">
+            <i class="text-center pe-2x pe-7s-clock"></i>
+        </div>
+        <div class="radio-box">
+            <div>
+                <div class="margintop20">
+                    <select class="form-control" fecha-pedido>
+                        @if (!Model.ObtenerFechasEntrega(21).Any(x => x.Date == Model.FechaProgramada.Date))
+                        {
+                            <option value="@(Model.FechaProgramada.Day + "|" + Model.FechaProgramada.Month + "|" + Model.FechaProgramada.Year)" selected>
+                                @Model.FechaProgramada.Day de @Model.FechaProgramada.ToString("MMMM", CultureInfo.CreateSpecificCulture("es-MX")) de @Model.FechaProgramada.Year
+                            </option>
+                        }
+                        @foreach (var item in Model.ObtenerFechasEntrega(21))
+                        {
+                            <option value="@(item.Day + "|" + item.Month + "|" + item.Year)"
+                                    @(Model.FechaProgramada.Date == item.Date ? "selected" : "")>
+                                @item.Day de @item.ToString("MMMM", CultureInfo.CreateSpecificCulture("es-MX")) de @item.Year
+                            </option>
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
+        @*<a href="#" class="btn btn-default btn-sm margintop15">Elegir</a>*@
+    </div>
+</div>

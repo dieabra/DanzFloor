@@ -1,0 +1,18 @@
+﻿@using DanzFloor.Web.Models.ViewModels.Frontend
+
+@model DetalleArticuloViewModel
+
+<a class="hidden-xs margintop30">
+    <div class="favourite">
+        <div agregar-favorito="@Model.Articulo.Id" class="title-info-product general-title">
+            <section like-sin style="@(!Model.PedidoInicial.UsuarioCliente.Favoritos.Any(x => x.Id == Model.Articulo.Id) ? "" : "display:none")" >
+                <i class="pe-va pe-7f-like "></i>
+                <span class="text-favourite">AGREGAR A MIS FAVORITOS</span>
+            </section>
+            <section like-con style="@(Model.PedidoInicial.UsuarioCliente.Favoritos.Any(x => x.Id == Model.Articulo.Id) ? "" : "display:none")" >
+                <i class="pe-va pe-7f-like " style="color: #c1a17d;"></i>
+                <span class="text-favourite">SACAR DE MIS FAVORITOS</span>
+            </section>
+        </div>
+    </div>
+</a>

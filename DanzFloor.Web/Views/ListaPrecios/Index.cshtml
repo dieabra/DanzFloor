@@ -1,0 +1,57 @@
+﻿@model IEnumerable<DanzFloor.Web.Models.ViewModels.ListaPreciosViewModel>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card z-depth-4">
+    <div class="card-header">
+        <h2>
+            Listas de Precios
+        </h2>
+    </div>
+
+    <a href="/ListaPrecios/Create" class="btn btn-float bgm-blue m-btn waves-effect waves-circle waves-float"><i class="zmdi zmdi-plus"></i></a>
+    <div class="table-responsive">
+        <table id="data-table-basic-listaPrecios" class="table table-striped">
+            <thead>
+                <tr>
+                    <th data-column-id="Id" data-visible="false" data-searchable="false">
+                        @Html.DisplayNameFor(model => model.Id)
+                    </th>
+                    <th data-column-id="Articulo">@Html.DisplayNameFor(model => model.Articulo)</th>
+                    <th data-column-id="Cliente">@Html.DisplayNameFor(model => model.Cliente)</th>
+                    <th data-column-id="Precio">@Html.DisplayNameFor(model => model.Precio)</th>
+                    <th data-column-id="commands" data-formatter="commands" data-sortable="false">
+                        Comandos
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Id)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Articulo.Nombre)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Cliente.Nombre)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Precio)
+                        </td>
+
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script src="~/Scripts/BootgridListaPrecios.js"></script>

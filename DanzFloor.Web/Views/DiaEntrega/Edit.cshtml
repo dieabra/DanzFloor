@@ -1,0 +1,117 @@
+﻿@model DanzFloor.Web.Models.ViewModels.DiaEntregaViewModel
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card z-depth-4">
+    <div class="card-header">
+        <ul class="actions">
+            <li>
+                <a id="deleteDiaEntrega">
+                    <i class="zmdi zmdi-delete" style="cursor: pointer;"></i>
+                </a>
+            </li>
+        </ul>
+        <h2>
+            Día de Entrega: @Model.Nombre
+        </h2>
+    </div>
+
+    <div class="card-body card-padding">
+        @using (Html.BeginForm("Edit", "DiaEntrega", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="row">
+                <div class="form-group fg-line">
+                    @Html.LabelFor(model => model.Nombre, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <br />
+                <br />
+                <label> Puntos de Entrega</label>
+                <div class="form-group fg-line">
+                    <select class="chosen" id="DiasSemanaSelected" multiple="multiple" name="DiasSemanaSelected" style="display: none;">
+                        @foreach (var item in Model.DiasSemana)
+                        {
+                            if (Model.DiasSemanaSelected != null && Model.DiasSemanaSelected.Contains(((int)item).ToString()))
+                            {
+                                <option value="@((int)item)" selected="selected">@item</option>
+                            }
+                            else
+                            {
+                                <option value="@((int)item)">@item</option>
+                            }
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6 m-b-20">
+                    <div class="input-group form-group">
+                        <span class="input-group-addon"><i class="zmdi zmdi-calendar"></i></span>
+                        <div class="dtp-container">
+                            <input id="HoraDesdeString" name="HoraDesdeString" type='text' class="form-control time-picker" value="@Model.HoraDesdeString"
+                                   placeholder="Desde...">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 m-b-20">
+                    <div class="input-group form-group">
+                        <span class="input-group-addon"><i class="zmdi zmdi-calendar"></i></span>
+                        <div class="dtp-container">
+                            <input id="HoraHastaString" name="HoraHastaString" type='text' class="form-control time-picker" value="@Model.HoraHastaString"
+                                   placeholder="Hasta...">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-float bgm-blue m-btn waves-effect waves-circle waves-float"><i class="zmdi zmdi-check"></i></button>
+        }
+    </div>
+
+</div>
+
+<div>
+
+</div>
+
+<script type="text/javascript">
+    var diaEntregaId = '@(Model.Id)';
+
+    $('#deleteDiaEntrega').click(function () {
+        swal({
+            title: "¿Está seguro de que desea eliminar el Día de Entrega?",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Sí",
+            cancelButtonText: "No",
+            closeOnConfirm: false
+        }, function () {
+            $.ajax({
+                dataType: 'json',
+                type: 'GET',
+                url: window.location.origin + '/diaEntrega/delete/' + diaEntregaId,
+                success: function (result) {
+                    swal("¡Eliminado!", "El día de entrega fue eliminado.", "success");
+                    window.location.assign(window.location.origin + "/diaEntrega");
+                },
+                error: function (error) {
+                    swal("¡Error!", "El día de entrega no fue eliminado.", "error");
+                }
+            });
+        });
+    });
+</script>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

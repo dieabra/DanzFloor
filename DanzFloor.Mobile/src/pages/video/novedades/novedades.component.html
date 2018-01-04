@@ -1,0 +1,89 @@
+<ion-header>
+  <ion-navbar color="light">
+    <ion-title>Lo último</ion-title>
+    <img src="assets/img/47CH_logoNavbar.png" class="img-navbar-heart" alt="Logo 47 Street Corazon">
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content class="novedades-page">
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content
+      pullingIcon="arrow-dropdown"
+      pullingText="Refrescar"
+      refreshingSpinner="circles">
+    </ion-refresher-content>
+  </ion-refresher>
+  <!-- <a onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fwww.infobae.com%2Famerica%2Fentretenimiento%2F2017%2F11%2F06%2Fel-impresionante-desnudo-total-de-emily-ratajkowski-en-instagram%2F','share_facebook','width=658,height=354,scrollbars=no');" tabindex="_tbidx_"> <div class="facebook tool first"><span>Share on Facebook</span><span class="fa fa-facebook-square"></span></div> </a> -->
+  <ion-card *ngFor="let video of episodios" class="card-home">
+    <ion-item>
+      <ion-avatar item-start (click)="itemTappedPrograma(video.Programa)">
+        <div class="loading-avatar">
+          <img [src]="ObtenerImagenPrograma(video.Programa.FotoPortada)">
+        </div>
+      </ion-avatar>
+      <h5>{{video.Programa.Nombre}}</h5>
+      <!-- <p>{{video.FechaPublicacion | mvcDatePipe}}</p> -->
+   <!--    <button (click)="seguirPrograma(video.Programa)" ion-button icon-only clear icon-right>
+        <ion-icon name="ios-bookmark-outline"></ion-icon>
+      </button> -->
+      <ion-avatar item-right>
+        <button ion-button icon-only clear icon-right>
+          <button  (click)="bookmark(video)" *ngIf="!video.Bookmark"   ion-button icon-only clear>
+            <ion-icon name='ios-bookmark-outline'></ion-icon>
+          </button>
+          <button (click)="bookmark(video)" *ngIf="video.Bookmark" ion-button icon-only clear>
+            <ion-icon name='ios-bookmark' class="btn-active"></ion-icon>
+          </button>
+        </button>  
+        <!-- <button (click)="seguirPrograma(video.Programa)" ion-button clear small color="{{color(video.Programa)}}" icon-right>
+          <ion-icon name='thumbs-up'></ion-icon>
+        </button> -->
+      </ion-avatar>
+    </ion-item>
+
+    <div class="loading-post">
+      <img [src]="ObtenerImagen(video.Thumbnail)" (click)="itemTapped(video)" />
+      <ion-icon (click)="itemTapped(video)"  name="ios-play-outline" class="center-center"></ion-icon>
+    </div>
+    
+    <ion-grid class="card-padding">
+      <ion-row>
+        <ion-col center col-8 align-self-center>
+          <ion-note>
+            <span text-uppercase>{{video.Seccion}}</span><span class="number-episode"></span>
+          </ion-note>
+        </ion-col>
+
+        <ion-col>
+          <button ion-button icon-only clear float-right (click)="share(video)" class="btn-share">
+            <ion-icon name="ios-send-outline"></ion-icon>
+          </button>
+
+          <div (click)="like(video)">
+            <button *ngIf="video.Like" ion-button icon-only clear float-right>
+              <ion-icon name="heart" class="btn-active"></ion-icon>
+              <!-- {{video.CantidadLikes}} {{video.CantidadLikes == 1 ? 'Like' : 'Likes'}} -->
+            </button>
+            <button *ngIf="!video.Like" ion-button icon-only clear float-right>
+              <ion-icon name="ios-heart-outline"></ion-icon>
+              <!-- {{video.CantidadLikes}} {{video.CantidadLikes == 1 ? 'Like' : 'Likes'}} -->
+            </button>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-card-content (click)="itemTapped(video)" >
+      <h2>{{video.Nombre}}</h2>
+      <p>{{video.Descripcion | truncate : 140}}</p>
+        <!-- <p class="upload-time" text-uppercase>{{video.FechaPublicacion | mvcDatePipe}}</p> -->
+       <p class="upload-time" text-uppercase>{{video.PublicadoHace}}</p>
+    </ion-card-content>
+
+  </ion-card>
+
+   <ion-infinite-scroll (ionInfinite)="$event.waitFor(doInfinite())">
+     <ion-infinite-scroll-content></ion-infinite-scroll-content>
+   </ion-infinite-scroll>
+</ion-content>

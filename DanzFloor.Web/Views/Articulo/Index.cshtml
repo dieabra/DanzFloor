@@ -1,0 +1,57 @@
+﻿@model IEnumerable<DanzFloor.Web.Models.ViewModels.ArticuloViewModel>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card z-depth-4">
+    <div class="card-header">
+        <h2>
+            Artículos
+        </h2>
+    </div>
+
+    <a href="/Articulo/Create" class="btn btn-float bgm-blue m-btn waves-effect waves-circle waves-float"><i class="zmdi zmdi-plus"></i></a>
+    <div class="table-responsive">
+        <table id="data-table-basic-articulo" class="table table-striped">
+            <thead>
+                <tr>
+                    <th data-column-id="Id" data-visible="false" data-searchable="false">
+                        @Html.DisplayNameFor(model => model.Id)
+                    </th>
+                    <th data-column-id="Nombre" data-width="40%">@Html.DisplayNameFor(model => model.Nombre)</th>
+                    <th data-column-id="Dia" data-width="10%">@Html.DisplayNameFor(model => model.CantidadUnidades)</th>
+                    <th data-column-id="Producto" data-width="30%">@Html.DisplayNameFor(model => model.Producto)</th>
+                    <th data-column-id="commands" data-width="20%" data-formatter="commands" data-sortable="false">
+                        Comandos
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Id)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Nombre)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CantidadUnidades)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Producto.Nombre)
+                        </td>
+
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script src="~/Scripts/BootgridArticulo.js"></script>

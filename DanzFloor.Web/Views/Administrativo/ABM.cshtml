@@ -1,0 +1,126 @@
+﻿@using System;
+@using System.Linq;
+@using System.Collections.Generic;
+@model DanzFloor.Web.Models.RegisterViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var i = 0;
+}
+
+<div class="block-header">
+    <h2>Usuarios</h2>
+</div>
+<div class="card z-depth-4">
+    <div class="card-header">
+        <h2>
+            @ViewBag.Title
+        </h2>
+        @if (Model.Id != Guid.Empty)
+        {
+            <ul class="actions">
+                <li class="dropdown">
+                    <a href="" data-toggle="dropdown">
+                        <i class="zmdi zmdi-more-vert"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-right">
+                        <li>
+                            <a style="cursor:pointer" id="btnRestaurarContrasena">Reestablecer contraseña</a>
+                        </li>
+
+                    </ul>
+                </li>
+            </ul>
+        }
+    </div>
+
+    <div class="card-body card-padding ">
+        @*@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { role = "form" }))*@
+        @using (Html.BeginForm())
+        {
+            @Html.HiddenFor(m => m.IdUsuarioApplicacion);
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary("", new { @class = "text-danger" })
+
+            <div class="form-group fg-line">
+                @Html.LabelFor(m => m.Email)
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control input-sm" })
+            </div>
+
+            <div class="form-group fg-line">
+                @Html.LabelFor(m => m.Name)
+                @Html.TextBoxFor(m => m.Name, new { @class = "form-control input-sm" })
+            </div>
+
+            <div class="form-group fg-line">
+                @Html.LabelFor(m => m.Lastname)
+                @Html.TextBoxFor(m => m.Lastname, new { @class = "form-control input-sm" })
+            </div>
+
+            <span class="glyphicon glyphicon-user" aria-hidden="true"> Perfiles</span>
+            <div class="form-group fg-line">
+                @Html.ListBoxFor(m => m.UserRolesSelected, new MultiSelectList(Model.Perfiles, "Value", "Text"), new { @class = "chosen" })
+
+            </div>
+
+            @*if (Model.ResetPassword)
+            {
+               
+                <div class="form-group fg-line">
+                    @Html.LabelFor(m => m.Password)
+                    @Html.PasswordFor(m => m.Password, new { @class = "form-control input-sm" })
+                </div>
+                <div class="form-group fg-line">
+                    @Html.LabelFor(m => m.ConfirmPassword)
+                    @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control input-sm" })
+                </div>
+            }*@                       
+            <button type="submit" class="btn btn-primary btn-sm m-t-10">Guardar</button>
+        }
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+    $("#btnRestaurarContrasena").click(function () {
+        var id = '@Model.Id';
+        swal({
+            title: "¿Está seguro de que desea restaurar la contraseña de este usuario?",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Sí",
+            cancelButtonText: "No",
+            closeOnConfirm: false
+        }, function () {
+            $.ajax({
+                dataType: 'json',
+                type: 'GET',
+                url: window.location.origin + '/Cuenta' + '/RestaurarContrasena/' + id,
+                success: function () {
+                    swal("¡Genial!", "La contraseña fue restaura, se ha enviado un email al usuario.", "success");
+                },
+                error: function (error) {
+                    swal("¡Error!", "La contraseña no ha podido ser restaurada", "error");
+                }
+            });
+        });
+    });
+
+</script>
+
+@section Scripts {
+    @if (!string.IsNullOrEmpty(Request.Params["result"]))
+    {
+        <script>
+            swal("Buen trabajo!", "El usuario ha sido registrado", "success");
+        </script>
+    }
+    @if (Request.Params["Message"] == "UpdateUserError")
+    {
+        <script>
+            swal("No se realizo la modificación.", "Revise los campos obligatorios del formulario.", "warning");
+        </script>
+    }
+
+}

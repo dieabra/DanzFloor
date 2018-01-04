@@ -1,0 +1,129 @@
+﻿@model DanzFloor.Web.Models.ViewModels.AreaViewModel
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card z-depth-4">
+    <div class="card-header">
+        <ul class="actions">
+            <li>
+                <a id="deleteArea">
+                    <i class="zmdi zmdi-delete" style="cursor: pointer;"></i>
+                </a>
+            </li>
+        </ul>
+        <h2>
+            Área
+        </h2>
+    </div>
+
+    <div class="card-body card-padding">
+        @using (Html.BeginForm("Edit", "Area", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="row">
+                <div class="card-body card-padding">
+                    <div class="col-md-12 form-group fg-float m-t-25 m-b-0">
+                        <div class="fg-line">
+                            @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control input-sm" } })
+                            @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+                            @Html.LabelFor(model => model.Nombre, new { @class = "fg-label" })
+                        </div>
+                    </div>
+                    <div class="col-md-12 form-group m-b-5">
+                        <div class="fg-line">
+                            @Html.LabelFor(model => model.Responsables, htmlAttributes: new { @class = "nombre-campo" })
+                            <div class="select fg-line">
+                                <select id="ResponsablesId" multiple="multiple" name="ResponsablesId" class="chosen ResponsablesId">
+                                    @foreach (var colaborador in Model.ListaColaboradores)
+                                    {
+                                        if (Model.ResponsablesId != null && Model.ResponsablesId.Contains(colaborador.Id))
+                                        {
+                                            <option selected="selected" value="@(colaborador.Id)">@colaborador.NombreYApellido</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@(colaborador.Id)">@colaborador.NombreYApellido</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                            @Html.ValidationMessageFor(model => model.ResponsablesId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-12 form-group m-b-5">
+                        <div class="fg-line">
+                            @Html.LabelFor(model => model.Colaboradores, htmlAttributes: new { @class = "nombre-campo" })
+                            <div class="select fg-line">
+                                <select id="ColaboradoresId" multiple="multiple" name="ColaboradoresId" class="chosen ColaboradorId">
+                                    @foreach (var colaborador in Model.ListaColaboradores)
+                                    {
+                                        if (Model.ColaboradoresId != null && Model.ColaboradoresId.Contains(colaborador.Id))
+                                        {
+                                            <option selected="selected" value="@(colaborador.Id)">@colaborador.NombreYApellido</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@(colaborador.Id)">@colaborador.NombreYApellido</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                            @Html.ValidationMessageFor(model => model.ColaboradoresId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-4 form-group m-b-5">
+                        <label class="nombre-campo">Estado</label>
+                        <div class="select fg-line">
+                            <select id="InstanciaId" name="InstanciaId" class="chosen">
+                                <option value="-1">Seleccione una opción...</option>
+                                @foreach (var item in Model.InstanciasGeneradorasTicket)
+                                {
+                                    <option @(item == Model.InstanciaId ? "selected='selected'" : "") value="@((int)item)">@item.ToString()</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-float bgm-blue m-btn waves-effect waves-circle waves-float"><i class="zmdi zmdi-check"></i></button>
+        }
+    </div>
+</div>
+
+<script type="text/javascript">
+    var AreaId = '@(Model.Id)';
+
+    $('#deleteArea').click(function () {
+        swal({
+            title: "¿Está seguro de que desea eliminar el área?",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Sí",
+            cancelButtonText: "No",
+            closeOnConfirm: false
+        }, function () {
+            $.ajax({
+                dataType: 'json',
+                type: 'GET',
+                url: window.location.origin + '/Area/delete/' + AreaId,
+                success: function (result) {
+                    swal("¡Eliminado!", "El área fue eliminada.", "success");
+                    window.location.assign(window.location.origin + "/Area");
+                },
+                error: function (error) {
+                    swal("¡Error!", "El área no fue eliminada.", "error");
+                }
+            });
+        });
+    });
+</script>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,0 +1,49 @@
+﻿@using DanzFloor.Web.Models
+@model LoginViewModel
+@{
+    ViewBag.Title = "Log in";
+    Layout = "~/Views/Shared/_LayoutBase.cshtml";
+
+}
+
+<div class="login-content" style="background-image: url('../../assets/SdP/img/backSapore-01.jpg');background-color: #e7dfd4;">
+    <div id="l-login" class="lc-block toggled">
+        <div class="lcb-form">
+            @using (Html.BeginForm("Login", "Admin", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="input-group m-b-20">
+                    <span class="input-group-addon"><i class="zmdi zmdi-account"></i></span>
+                    <div class="fg-line">
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="input-group m-b-20">
+                    <span class="input-group-addon"><i class="zmdi zmdi-male"></i></span>
+                    <div class="fg-line">
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div style="float:right">
+                    <a href="@Url.Action("ForgotPassword","Cuenta")" style="color:#2196F3!important; cursor:pointer">¿Olvidó su contraseña?</a>
+                </div>
+                @*<br />
+                    <div class="col-md-12" style="margin-top:15px">
+                        <a href="https://www.instagram.com/oauth/authorize/?client_id=c6c24aef3ec044b6b8c16dbf4bafc573&redirect_uri=http://localhost/Cuenta/ReturnFromInstagram&response_type=code" style="width:90%" class="btn bgm-pink waves-effect"><i class="zmdi zmdi-instagram"></i> Ingresar con Instagram</a>
+                        <a href="https://www.facebook.com/v2.9/dialog/oauth?%20client_id=512859328903997%20&redirect_uri=http://localhost/Cuenta/ReturnFromFacebook&scope=email" style="width:90%" class="btn bgm-blue waves-effect"><i class="zmdi zmdi-facebook"></i> Ingresar con Facebook</a>
+                    </div>*@
+
+
+                <button type="submit" class="btn btn-login btn-info btn-float"><i class="zmdi zmdi-arrow-forward"></i></button>
+            }
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts {
+}

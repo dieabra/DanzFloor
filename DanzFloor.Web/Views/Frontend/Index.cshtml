@@ -1,0 +1,141 @@
+﻿@using DanzFloor.Web.Models
+
+@model DanzFloor.Web.Models.ViewModels.Frontend.IndexViewModel
+@{
+    ViewBag.Title = "Bienvenido";
+    Layout = "~/Views/Shared/_LayoutFront.cshtml";
+}
+
+@*@Html.Partial("~/Views/Shared/_home_banner.cshtml", Model)*@
+
+
+<div class="container hidden-xs">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="our-selections">
+                <h3>Nuevos Eventos</h3>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-10 col-sm-offset-1 col-md-12 col-md-offset-0">
+            <div class="row box-home-categories hidden-xs">
+                    @*foreach (var item in Model.Familias.OrderBy(f=> f.Nombre))
+    {
+        <div class="col-xs-12 col-sm-6 col-md-4">
+            <a href="/Frontend/Familia/@item.Id">
+                <div class="categories-box">
+                    <div class="img-producto-familia-box">
+                        <img src="@Archivo.ObtenerUrlArchivo(item.Archivos, TipoEntidadConst.FAMILIA, "Imagen Principal")" class="img-responsive img-producto-familia" alt="@item.Nombre">
+                    </div>
+                    <img src="@Archivo.ObtenerUrlArchivo(item.Archivos, TipoEntidadConst.FAMILIA, "Logo Negro")" class="margintop20 img-responsive img-logo-categories" alt="@item.Nombre">
+                    <div>
+                        <a href="/Frontend/Familia/@item.Id" class="btn btn-primary btn-sm btn-outlined inline-block margintop30">Ver Productos</a>
+                    </div>
+                </div>
+            </a>
+        </div>
+    }*@
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<hr class="divider-line hidden-xs">
+
+<div class="container hidden-xs">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="text-center">
+                <h3>Eventos destacados</h3>
+            </div>
+        </div>
+    </div>
+    <div class="row margintop50">
+        <div class="col-xs-12">
+            <div class="owl-carousel" id="index">
+                <!-- Partial de los items del carrusel -->
+                @*foreach (var item in Model.Recomendados)
+                {
+                    <div class="relative product-item">
+                    <a href="/Frontend/DetalleArticulo/@item.Id" class="img-box">
+                        <img src="@Archivo.ObtenerUrlArchivo(item.Producto.Archivos, TipoEntidadConst.PRODUCTO, "Imagen Principal")" class="img-responsive img-producto-categoria" alt="Foto de Categoría">
+                    </a>
+                    <div class="footer-product">
+                        <a href="/Frontend/DetalleArticulo/@item.Id" class="h5 title-product show">@item.Producto.Nombre</a>
+                        <p class="h3 none">$ <span id="precio-producto">XX,XX</span></p>
+                        <a @(Model.PedidoInicial.VerModalMultiplePuntoEntrega ? "punto-entrega-elegir" : "agregar-articulo")="@item.Id" class="btn btn-primary btn-sm btn-outlined">Añadir</a>
+                    </div>
+                    <a href="/Frontend/DetalleArticulo/@item.Id"><i class="pe-7s-info"></i></a>
+                </div>
+                }*@
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+    <div class="container hidden-xs">
+       
+        <div class="row margintop60">
+            
+
+        </div>
+    </div>
+<!-- Código para versión mobile -->
+<div class="visible-xs menu-xs">
+    <div class="container">
+        <div class="row">
+            <a href="/Frontend/IndexMobile">
+                <div class="col-xs-6">
+                    <i class="pe-7s-plus icon-menu-xs"></i>
+                    <p class="title-menu-xs">Nuevo Pedido</p>
+                </div>
+            </a>
+            <a href="/Frontend/RepetirPedido">
+                <div class="col-xs-6">
+                    <i class="pe-7s-refresh-2 icon-menu-xs"></i>
+                    <p class="title-menu-xs">Repetir Pedido</p>
+                </div>
+            </a>
+        </div>
+    </div>
+    <hr />
+    <div class="submenu-xs">
+        <div class="container">
+            <div class="row">
+                <a href="/Frontend/RepetirPedido">
+                    <div class="col-xs-3">
+                        <i class="pe-7s-shopbag icon-menu-xs"></i>
+                        <p class="title-menu-xs truncate">Mis pedidos</p>
+                    </div>
+                </a>
+                <a href="/Frontend/Tickets?tipoTicketId=6D634BB3-EC59-A209-A349-39E2569CA068">
+                    <div class="col-xs-3">
+                        <i class="pe-7s-pen icon-menu-xs"></i>
+                        <p class="title-menu-xs truncate">Solicitudes</p>
+                    </div>
+                </a>
+                <a href="/Frontend/Favoritos">
+                    <div class="col-xs-3">
+                        <i class="pe-7s-like icon-menu-xs"></i>
+                        <p class="title-menu-xs truncate">Favoritos</p>
+                    </div>
+                </a>
+                <a href="/Frontend/MiPerfil">
+                    <div class="col-xs-3">
+                        <i class="pe-7s-user icon-menu-xs"></i>
+                        <p class="title-menu-xs truncate">Mi Perfil</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr class="visible-xs marginbottom0">
+<hr class="divider-line footer-line hidden-xs">
+

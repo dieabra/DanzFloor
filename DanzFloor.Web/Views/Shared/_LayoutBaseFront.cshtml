@@ -1,0 +1,78 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danzfloor</title>
+
+    <link type="image/x-icon" href="~/assets/Danzfloor/img/headphone-icon.png" rel="icon" />
+    <!-- Vendor CSS -->
+    @*<link href="~/assets/MaterialDesign/vendors/bower_components/fullcalendar/dist/fullcalendar.min.css" rel="stylesheet">
+        <link href="~/assets/MaterialDesign/vendors/bower_components/animate.css/animate.min.css" rel="stylesheet">
+        <link href="~/assets/MaterialDesign/vendors/bower_components/sweetalert/dist/sweetalert.css" rel="stylesheet">
+        <link href="~/assets/MaterialDesign/vendors/bower_components/material-design-iconic-font/dist/css/material-design-iconic-font.min.css" rel="stylesheet">
+        <link href="~/assets/MaterialDesign/vendors/bower_components/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css" rel="stylesheet">*@
+
+    <!-- CSS -->
+    @*<link href="~/assets/MaterialDesign/css/app_1.min.css" rel="stylesheet">
+        <link href="~/assets/MaterialDesign/css/app_2.min.css" rel="stylesheet">*@
+
+    <link href="~/assets/CH47strap/styles/bootstrap.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet" />
+</head>
+<body>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-77587007-5"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-77587007-5');
+    </script>
+
+    <!-- Javascript Libraries -->
+    <script src="~/assets/MaterialDesign/vendors/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="~/assets/MaterialDesign/vendors/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <div class="container body-content">
+        @RenderBody()
+    </div>
+
+
+    @*<script src="~/assets/MaterialDesign/vendors/bower_components/flot/jquery.flot.js"></script>
+        <script src="~/assets/MaterialDesign/vendors/bower_components/flot/jquery.flot.resize.js"></script>
+        <script src="~/assets/MaterialDesign/vendors/bower_components/flot.curvedlines/curvedLines.js"></script>
+        <script src="~/assets/MaterialDesign/vendors/sparklines/jquery.sparkline.min.js"></script>
+        <script src="~/assets/MaterialDesign/vendors/bower_components/jquery.easy-pie-chart/dist/jquery.easypiechart.min.js"></script>*@
+
+    @*<script src="~/assets/MaterialDesign/vendors/bower_components/moment/min/moment.min.js"></script>
+        <script src="~/assets/MaterialDesign/vendors/bower_components/fullcalendar/dist/fullcalendar.min.js "></script>
+        <script src="~/assets/MaterialDesign/vendors/bower_components/simpleWeather/jquery.simpleWeather.min.js"></script>*@
+    <script src="~/assets/MaterialDesign/vendors/bower_components/Waves/dist/waves.min.js"></script>
+    @*<script src="~/assets/MaterialDesign/vendors/bootstrap-growl/bootstrap-growl.min.js"></script>
+        <script src="~/assets/MaterialDesign/vendors/bower_components/sweetalert/dist/sweetalert.min.js"></script>
+        <script src="~/assets/MaterialDesign/vendors/bower_components/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>*@
+
+    <!-- Placeholder for IE9 -->
+    <!--[if IE 9 ]>
+        <script src="vendors/bower_components/jquery-placeholder/jquery.placeholder.min.js"></script>
+    <![endif]-->
+
+    @RenderSection("scripts", required: false)
+
+    <footer class="footer">
+        <div class="container">
+            <div class="row row-eq-height">
+                <div class="hidden-xs col-sm-6">
+                    <p class="clearmargin font11">(*) Los logos de Apple y Google Play son marcas registradas de sus respectivos propietarios.</p>
+                    <p class="clearmargin font11">Copyright 2017 47 Channel. Todos los derechos reservados.</p>
+                </div>
+
+            </div>
+        </div>
+    </footer>
+
+    <script src="~/assets/MaterialDesign/js/app.min.js"></script>
+</body>
+</html>

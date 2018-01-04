@@ -1,0 +1,65 @@
+﻿@model IEnumerable<DanzFloor.Web.Models.Destacado>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card z-depth-4">
+    <div class="card-header">
+        <h2>
+            Tipo de tickets
+        </h2>
+    </div>
+
+    <a href="/Destacado/Create" class="btn btn-float bgm-blue m-btn waves-effect waves-circle waves-float"><i class="zmdi zmdi-plus"></i></a>
+    <div class="table-responsive">
+        <table id="data-table-basic-destacado" class="table table-striped">
+            <thead>
+                <tr>
+                    <th data-column-id="Id" data-visible="false" data-searchable="false">
+                        @Html.DisplayNameFor(model => model.Id)
+                    </th>
+                    <th data-column-id="Nombre">@Html.DisplayNameFor(model => model.Nombre)</th>
+                    <th data-column-id="Fecha">Fecha Publicación</th>
+                    <th data-column-id="Habilitado">Habilitado</th>
+                    <th data-column-id="commands" data-formatter="commands" data-sortable="false">
+                        Comandos
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+            {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Id)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Nombre)
+                        </td>
+                        <td>
+                            @item.FechaPublicacion.ToShortDateString()
+                        </td>
+                        <td>
+                            @if (item.Habilitado)
+                            {
+                                <small>                                    
+                                    <i class="zmdi zmdi-check">Habilitado</i>
+                                </small>
+                            }
+                            else
+                            {
+                                <small>                                    
+                                    <i class="zmdi zmdi-close">Deshabilitado</i>
+                                </small>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script src="~/Scripts/BootgridDestacado.js"></script>

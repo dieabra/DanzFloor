@@ -1,0 +1,107 @@
+﻿<input type="hidden" aniadir-articulo-id />
+
+<div class="modal fade modal-add-to-cart" id="addCart" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <p class="title-modal general-title">Añadir al carrito</p>
+                <button type="button" class="close general-title" data-dismiss="modal" aria-label="Close">Cerrar <i class="font24 pe-va pe-7s-close-circle"></i></button>
+            </div>
+            <div class="modal-body">                
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6 col-sm-push-6 clearpadding">
+                            <div class="img-add-cart">
+                                <img aniadir-imagen src="" class="img-responsive" alt="Foto de Categoría">
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-sm-pull-6 clearpadding">
+                            <h4 articulo-nombre>Ejemplo Campesino tradicional multicereal mediano</h4>
+                            <div class="visible-xs">
+                                <div class="text-center">
+                                    <p class="general-title margintop20">Cajas</p>
+                                    <form class="cantidad-cajas text-center">
+                                        <a aniadir-cantidad-valor="1" class="btn btn-primary">1</a>
+                                        <a aniadir-cantidad-valor="2" class="btn btn-primary">2</a>
+                                        <a aniadir-cantidad-valor="3" class="btn btn-primary">3</a>
+                                        <a aniadir-cantidad-valor="4" class="btn btn-primary">4</a>
+                                        <a aniadir-cantidad-valor="5" class="btn btn-primary">5</a>
+                                    </form>
+
+                                    <p class="general-title margintop20">Otra Cantidad</p>
+
+                                    <form>
+                                        <div class="container-fluid marginbottom20">
+                                            <div class="row">
+                                                <div class="col-sm-6 col-sm-offset-3">
+                                                    <div class="input-group add-quantity">
+                                                        <input aniadir-cantidad-mobile type="text" class="form-control" placeholder="Ingresar Cantidad">
+                                                        <span class="input-group-btn">
+                                                            <a aniadir-articulo-mobile class="btn btn-primary btn-sm">Añadir</a>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <hr class="divider-modal">
+                                </div>
+                            </div>
+                            <div class="ficha-tecnica margintop30">
+                                <table class="table table-pedidos">
+                                    <tbody>
+                                        <tr>
+                                            <td><i class="pe-7s-box1"></i></td>
+                                            <td>Cada Unidad</td>
+                                            <td articulo-precio-unitario>$X,XX</td>
+                                        </tr>
+                                        <tr>
+                                            <td><i class="pe-7s-download"></i></td>
+                                            <td>Unidades Por Caja</td>
+                                            <td articulo-cantidad-unidades>XX</td>
+                                        </tr>
+                                        <tr>
+                                            <td><i class="pe-7s-box1"></i></td>
+                                            <td>Costo Por Caja</td>
+                                            <td articulo-precio>$XXX,XX</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer hidden-xs">
+                <div class="text-center">
+                    <h4 class="margintop0">Cantidad</h4>
+                    <form class="cantidad-cajas">
+                        <a aniadir-cantidad-valor="1" class="btn btn-primary">1 Caja</a>
+                        <a aniadir-cantidad-valor="2" class="btn btn-primary margintop10">2 Cajas</a>
+                        <a aniadir-cantidad-valor="3" class="btn btn-primary margintop10">3 Cajas</a>
+                        <a aniadir-cantidad-valor="4" class="btn btn-primary margintop10">4 Cajas</a>
+                        <a aniadir-cantidad-valor="5" class="btn btn-primary margintop10">5 Cajas</a>
+                    </form>
+                    <hr class="margintop40">
+
+                    <h4 class="margintop40">Otra Cantidad</h4>
+
+                    <form>
+                        <div class="container-fluid marginbottom20">
+                            <div class="row">
+                                <div class="col-sm-6 col-sm-offset-3">
+                                    <div class="input-group add-quantity">
+                                        <input aniadir-cantidad type="text" class="form-control" placeholder="Ingresar Cantidad">
+                                        <span class="input-group-btn">
+                                            <a aniadir-articulo class="btn btn-primary btn-sm">Añadir</a>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

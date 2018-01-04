@@ -1,0 +1,204 @@
+﻿
+@using DanzFloor.Web.Models.Constantes
+@using System.Globalization
+
+
+@model DanzFloor.Web.Models.ViewModels.PedidoViewModel
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card z-depth-4">
+    <div class="card-header">
+        <h2>
+            Nuevo Pedido
+        </h2>
+    </div>
+
+    <div class="card-body card-padding">
+        @using (Html.BeginForm("Create", "Pedido", FormMethod.Post, new { id = "formulario" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+            @Html.HiddenFor(m => m.EsGratis)
+            @Html.HiddenFor(m => m.PedidoIdBase)
+            <div class="row">
+
+                <div class="col-sm-6 m-b-25">
+                    <p class="f-500 m-b-15 c-black">Cliente</p>
+
+                    <select caller-method-change="/PuntoEntrega/ObtenerPorFiltro" caller-parameter-name="ClienteId"
+                            class="chosen" id="ClienteSelected" name="ClienteSelected" style="display: none;">
+                            <option></option>
+                        @foreach (var item in Model.ListaClientes)
+                        {
+                            <option @(item.Id == Model.ClienteSelected ? @"selected='selected'": "") value="@item.Id">@item.NombreYRazonSocial</option>
+                        }
+                    </select>
+
+                    @Html.ValidationMessageFor(model => model.Cliente, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="col-sm-6 m-b-25">
+                    <p class="f-500 m-b-15 c-black">Puntos de Entrega</p>
+
+                    <select caller-method-change="/Cuenta/ObtenerParaPedidoPorFiltro" caller-parameter-name="PuntoEntregaId" caller-control="usuario-cliente"
+                            class="chosen" punto-entrega-select id="PuntoEntregaSelected" name="PuntoEntregaSelected" style="display: none;"
+                            carga-fecha-onchange>
+                        <option></option>
+                        @foreach (var item in Model.ListaPuntosEntrega)
+                        {
+                            <option @(item.Id == Model.PuntoEntregaSelected ? "selected='selected'" : "") value="@item.Id">@item.NombreYDireccion</option>
+                        }
+                    </select>
+                    @Html.ValidationMessageFor(model => model.PuntoEntrega, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="col-sm-6 m-b-25">
+                    <p class="f-500 m-b-15 c-black">Usuario Cliente</p>
+
+                    <select class="chosen" id="UsuarioClienteSelected" usuario-cliente usuario-pedido name="UsuarioClienteSelected" style="display: none;">
+                        <option></option>
+                        @foreach (var item in Model.ListaUsuariosCliente)
+                        {
+                            <option @(item.Id == Model.UsuarioClienteSelected ? "selected='selected'" : "") value="@item.Id">@(item.Apellido == null ? item.Nombre : item.NombreYCliente)</option>
+                        }
+                        <option @(UsuarioClienteOtro.Id == Model.UsuarioClienteSelected ? "selected='selected'" : "") value="@UsuarioClienteOtro.Id">@UsuarioClienteOtro.Nombre</option>
+                    </select>
+                    @Html.ValidationMessageFor(model => model.UsuarioCliente, "", new { @class = "text-danger" })
+
+                </div>
+
+                <div class="col-sm-6 m-b-25">
+                    <p class="f-500 m-b-15 c-black">Fecha Programada</p>
+                    <div class="fg-line dtp-container">
+                        <select id="FechaProgramada" name="FechaProgramada" class="form-control" fecha-entrega>
+                            @foreach (var item in Model.FechasHabilitadas)
+                            {
+                                <option value="@item.ToShortDateString()"
+                                        @(Model.FechaProgramada.CustomParse().Date == item.Date ? "selected" : "")>
+                                    @item.Day de @item.ToString("MMMM", CultureInfo.CreateSpecificCulture("es-MX")) de @item.Year
+                                </option>
+                            }
+                        </select>
+                        @Html.ValidationMessageFor(model => model.FechaProgramada, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <a id="submit" class="btn btn-float bgm-blue m-btn waves-effect waves-circle waves-float"><i class="zmdi zmdi-check"></i></a>
+        }
+    </div>
+    <br />
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        @*$('#FechaProgramada').data("DateTimePicker").minDate(moment('@DateTime.Now.AddDays(1).ToString("MM/dd/yyyy")'));
+        $('#FechaProgramada').data("DateTimePicker").maxDate(moment('@DateTime.Now.AddDays(21).ToString("MM/dd/yyyy")'));
+        $('#FechaProgramada').data("DateTimePicker").disabledDates(
+            [
+                @foreach (var item in Model.FechasHabilitadas)
+                {
+                    @("moment('" + DateTime.Now.AddDays(6).ToString("MM/dd/yyyy") + "'),")
+                }
+            ]
+        );
+            $('#FechaProgramada').data("DateTimePicker").maxDate(moment('@DateTime.Now.AddDays(21).ToString("MM/dd/yyyy")'));
+            *@
+
+        $('[carga-fecha-onchange]').change(function () {
+            var puntoEntregaId = $(this).find('option:selected').val();
+
+            var select = $('[fecha-entrega]');
+            select.find('option').remove();
+
+            $.ajax({
+                dataType: 'json',
+                type: 'GET',
+                url: core + '/PuntoEntrega/ObtenerFechasEntrega/' + puntoEntregaId,
+                success: function (resultado) {
+                    var fechas = resultado.Mensaje;
+
+                    if (fechas.length > 0) {
+                        for (var i = 0; i < fechas.length; i++) {
+                            select.append('<option value=' + fechas[i].FechaValor + '>' + fechas[i].FechaDescripcion + '</option>');
+                        }
+
+                    }
+
+                    select.trigger("chosen:updated");
+                },
+                error: function (ex) {
+                    console.log(ex)
+                },
+            });
+        });
+
+        var submitForm = function () {
+            var usuarioCliente = $('#UsuarioClienteSelected').val();
+
+            if (usuarioCliente == '@UsuarioClienteForzado.Id.ToString().ToLower()' ||
+                usuarioCliente == '@UsuarioClienteOtro.Id.ToString().ToLower()') {
+                var nombreUsuarioSeleccionado = "Otro";
+
+                if (usuarioCliente == '@UsuarioClienteForzado.Id.ToString().ToLower()')
+                    nombreUsuarioSeleccionado = '@UsuarioClienteForzado.Nombre';
+                else if (usuarioCliente == '@UsuarioClienteOtro.Id.ToString().ToLower()')
+                    nombreUsuarioSeleccionado = '@UsuarioClienteOtro.Nombre';
+
+                swal({
+                    title: "¿Está seguro de generar un pedido utilizando el usuario '" + nombreUsuarioSeleccionado + "'?",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "Sí",
+                    cancelButtonText: "No",
+                    closeOnConfirm: true
+                }, function () {
+                    $('#formulario').submit();
+                })
+            }
+            else {
+                $('#formulario').submit();
+            }
+        }
+        $('#submit').click(function () {
+            var fechaProgramada = $('#FechaProgramada').val();
+
+            if (fechaProgramada == null)
+            {
+                submitForm();
+                return;
+            }
+
+            $.ajax({
+                dataType: 'json',
+                type: 'GET',
+                url: core + '/DiaNoLaborable/VerificarFechaProgramada?fechaProgramada=' + fechaProgramada,
+                success: function (data) {
+                    if (data.Mensaje.EsDiaNoLaborable) {
+                        swal({
+                            title: data.Mensaje.Mensaje,
+                            type: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "#DD6B55",
+                            confirmButtonText: "Continuar",
+                            cancelButtonText: "Cancelar",
+                            closeOnConfirm: true
+                        }, function () {
+                            submitForm();
+                        })
+                    }
+                    else
+                        submitForm();
+                },
+                error: function () {
+                    callerMethodChangeInServer = false;
+                },
+            });
+        });
+    })
+
+</script>

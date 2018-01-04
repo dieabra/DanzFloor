@@ -1,0 +1,397 @@
+﻿@using Newtonsoft.Json
+
+@model DanzFloor.Web.Models.ViewModels.FileComponentViewModel
+@{
+    var contador = 0;
+}
+
+<script type="text/javascript">
+    var ArchivosId = "";
+    var ExtensionArchivo = "";
+    var NombreArchivo = "";
+
+    //File Upload response from the server
+    Dropzone.options.dropzoneForm = {
+        init: function () {
+            this.on("complete", function (data) {
+                //res.Message devolución de mensajes dropzone
+                var res = JSON.parse(data.xhr.responseText);
+                NombreArchivo = data.name;
+                ExtensionArchivo = data.type.split('/')[1];
+                ArchivosId = res.Message;
+            });
+        }
+    };
+
+    var removerArchivo = function ()
+    {
+        var idEliminar = $(this).attr('id');
+
+        $('[name=ArchivosId]').each(function(){
+            var array = $(this).val().split(';');
+            var index = array.indexOf(idEliminar);
+
+            if (index > -1) {
+                array.splice(index, 1);
+                $(this).val(array.join(';'));
+            }
+        });
+
+        $(this).parent().parent().remove();
+    }
+
+    var mandarImagenAlFormulario = function (event) {
+        if(ArchivosId != "")
+        {
+            var archivosId = $('[name=ArchivosId]').val();
+
+            if(archivosId != "")
+                archivosId = archivosId + ';';
+
+            var habilitarTagsCliente = $('#tbody' + event.data.configuracionId).attr('habilitarTagsCliente');
+            var row = '';
+
+            if (habilitarTagsCliente == 'true') {
+                row =   '<tr>' +
+                            '<td><img class="ticket-thumbnail" imagen-extension src="" nombre="' + ArchivosId + '" /></td>' +
+                            '<td>' + NombreArchivo + '</td>' +
+                            '<td tagCliente-descripcion="' + ArchivosId + '"></td>' + 
+                            '<td>' +
+                                '<a id="' + ArchivosId + '" eliminar-archivo class="btn btn-icon command-edit waves-effect waves-circle" ><span class="zmdi zmdi-close"></span></a>' +
+                                '<a nombre="' + ArchivosId + '" target="_blank" descargar-archivo class="btn btn-icon command-edit waves-effect waves-circle"><span class="zmdi zmdi-download"></span></a>' +
+                                '<a tagCliente-editar="' + ArchivosId + '" class="btn btn-icon command-edit waves-effect waves-circle"><span class="zmdi zmdi-bookmark"></span></a>' +
+                            '</td>' +
+                        '</tr>';
+            }
+            else {
+                row =   '<tr>' +
+                            '<td><img class="ticket-thumbnail" imagen-extension src="" nombre="' + ArchivosId + '" /></td>' +
+                            '<td>' + NombreArchivo + '</td>' +
+                            '<td>' +
+                                '<a id="' + ArchivosId + '" eliminar-archivo class="btn btn-icon command-edit waves-effect waves-circle" ><span class="zmdi zmdi-close"></span></a>' +
+                                '<a nombre="' + ArchivosId + '" target="_blank" descargar-archivo class="btn btn-icon command-edit waves-effect waves-circle"><span class="zmdi zmdi-download"></span></a>' +
+                            '</td>' +
+                        '</tr>'
+            }
+
+            $('#tbody' + event.data.configuracionId)
+                .append(row);
+
+
+            $('[name=ArchivosId]').each(function(){
+                $(this).val(archivosId + ArchivosId)
+            });
+
+            $('[eliminar-archivo]').off('click');
+            $('[eliminar-archivo]').on('click', removerArchivo);
+
+            $('[tagCliente-editar]').off('click');
+            $('[tagCliente-editar]').on('click', EditarTags);
+            cerrarModalImagen(event, true);
+        }
+        else
+            swal('Debe esperar que finalice la carga.');
+
+        ObtenerIconoArchivo();
+        ObtenerHrefDescargarArchivos();
+    };
+
+    var limpiarValores = function() {
+        ArchivosId = "";
+        NombreArchivo = "";
+    };
+
+    var cerrarModalImagen = function (event) {
+        $('#modalDefault' + event.data.configuracionId).modal('hide');
+        $('.modal-backdrop').hide();
+        $('div.dz-image-preview').remove();
+        limpiarValores();
+    };
+
+    var validarControl = function () {
+        limpiarValores();
+        var configuracion = JSON.parse($(this).attr('configuracion'));
+        var valido = true;
+        var mensaje = '';
+
+        if(!configuracion.EsCargaMultiple)
+        {
+            // Se contabilizan las rows de la tabla en cada pestaña.
+            // length debe superar a 1 porque contabiliza el tr del thead
+            if($(this).parent().find('tr').length > 1)
+            {
+                valido = false;
+                mensaje = 'Solo se permite la carga de un archivo.';
+            }
+        }
+
+        if(valido)
+            $('#modalDefault' + configuracion.Id).modal('show');
+        else
+            swal(mensaje);
+    }
+
+    var ObtenerIconoArchivo = function(){
+        $('[imagen-extension]').each(function(index){
+            var contenido = $(this).attr('contenido');
+            var file_name_string = $(this).attr('nombre');
+
+            var file_name_array = file_name_string.split(".");
+            //var file_extension = file_name_array[file_name_array.length - 1];
+            //file_extension = file_extension.toLowerCase();
+            var file_extension = ExtensionArchivo;
+
+            if(file_extension == 'jpg' || file_extension == 'jpeg' || file_extension == 'png' || file_extension == 'gif' || contenido == 'jpg' || contenido == 'jpeg' || contenido == 'png' || contenido == 'gif')
+                $(this).attr('src', location.origin + '/Archivo/ObtenerImagenPorId/' + file_name_string);
+                //$(this).attr('src', location.origin + '/Archivo/ObtenerImagen?name=' + file_name_string + '&height=128&width=128')
+            else
+                $(this).attr('src', '/assets/fileType/' + file_extension + '.png')
+        });
+    }
+
+    var ObtenerHrefDescargarArchivos = function(){
+        $('[descargar-archivo]').each(function(index){
+            var archivoId = $(this).attr('descargar-archivo');
+
+            $(this).attr('href', location.origin + '/Archivo/ObtenerArchivo/' + archivoId);
+        });
+    }
+
+    var idEditarTag = '';
+    var EditarTags = function () {
+
+        $('[tagCliente-input]').prop('checked', false);
+
+        $('#modalEditarTags').modal('show');
+        idEditarTag = $(this).attr('tagCliente-editar');
+
+        $.ajax({
+            dataType: 'json',
+            type: 'GET',
+            url: core + '/TagCliente/ObtenerTagClienteArchivo?archivoId=' + idEditarTag,
+            success: function (data) {
+                var tags = data.Mensaje;
+
+                $('[tagCliente-input]').each(function () {
+                    for (var i = 0; i < tags.length; i++) {
+                        if (tags[i].Id == $(this).val()) {
+                            $(this).prop('checked', true);
+                        }
+                    }
+                });
+            },
+            error: function () {
+                callerMethodChangeInServer = false;
+            },
+        });
+
+    }
+
+    var GuardarTags = function () {
+        var tagsSeleccionados = [];
+
+        $('[tagCliente-input]:checked').each(function () {
+            tagsSeleccionados.push($(this).val());
+        });
+
+        $.ajax({
+            dataType: 'json',
+            type: 'GET',
+            url: core + '/TagCliente/GuardarTagClienteArchivo?archivoId=' + idEditarTag + '&tagsClienteCSV=' + tagsSeleccionados.join(),
+            success: function (data) {
+                var tags = data.Mensaje;
+
+                $('td[tagCliente-descripcion="' + idEditarTag + '"]').html(data.Nombres);
+
+                $('#modalEditarTags').modal('hide');
+            },
+            error: function () {
+                callerMethodChangeInServer = false;
+            },
+        });
+
+    }
+
+    $(document).ready(function(){
+        $('[eliminar-archivo]').on('click', removerArchivo);
+        $('[abrir-modal]').on('click', validarControl);
+        $('[tagCliente-editar]').on('click', EditarTags);
+        $('[tagCliente-guardar]').on('click', GuardarTags);
+        ObtenerIconoArchivo();
+        ObtenerHrefDescargarArchivos();
+    });
+</script>
+<div class="card z-depth-4">
+    <div class="card-header">
+        <h2>
+            Archivos
+        </h2>
+    </div>
+
+    <div class="card-body card-padding">
+        <div class="row">
+            <div class="col-sm-12">
+                <div role="tabpanel" class="tab">
+
+                    <ul class="tab-nav" role="tablist">
+                        @foreach (var configuracion in Model.Configuraciones)
+                        {
+                            <li class="@(configuracion == Model.Configuraciones.First() ? "active" : "")">
+                                <a href="#@configuracion.Id" aria-controls="@configuracion.Id" role="tab"
+                                   data-toggle="tab">@configuracion.Nombre</a>
+                            </li>
+                        }
+                    </ul>
+
+                    <div class="tab-content">
+                        @foreach (var configuracion in Model.Configuraciones)
+                        {
+                            <div class="hide" id="modalDefault12312312-123123-123" tabindex="-1" role="dialog" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title">Imágenes</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="jumbotron">
+                                                <form action="~/Archivo/Create" method="post" enctype="multipart/form-data" class="dropzone" id="dropzoneForm">
+                                                    <div class="fallback">
+                                                        <input name="file" type="file" multiple />
+                                                        <input type="submit" value="Upload" />
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button id="guardarImagen12312312-123123-123" type="button" class="btn btn-link">Guardar</button>
+                                            <button id="cancelarImagen12312312-123123-123" type="button" class="btn btn-link">Descartar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div role="tabpanel" class="tab-pane animated @(configuracion == Model.Configuraciones.First() ? "active" : "")" id="@configuracion.Id">
+
+                                <!-- MODALES -->
+                                <!-- Modal Carga imagen -->
+
+                                <div class="modal fade" id="modalDefault@(configuracion.Id)" tabindex="-1" role="dialog" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title">Imágenes</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="jumbotron">
+                                                    <form action="~/Archivo/Create?ArchivoConfiguracionId=@(configuracion.Id)" method="post" enctype="multipart/form-data" class="dropzone" id="dropzoneForm">
+                                                        <div class="fallback">
+                                                            <input name="file" type="file" multiple />
+                                                            <input type="submit" value="Upload" />
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button id="guardarImagen@(configuracion.Id)" type="button" class="btn btn-link">Guardar</button>
+                                                <button id="cancelarImagen@(configuracion.Id)" type="button" class="btn btn-link">Descartar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- END MODALES -->
+                                <!-- CAMPO Y CARGA DE IMAGEN -->
+
+                                <div class="hide">
+                                    <input type="text" name="ArchivosId" id="ArchivosId" />
+                                </div>
+
+                                <a id="btnModalDefault@(configuracion.Id)" href="#modalDefault@(configuracion.Id)" configuracion="@(Newtonsoft.Json.JsonConvert.SerializeObject(configuracion))" abrir-modal class="btn btn-default waves-effect m-b-15"><i class="zmdi zmdi-upload m-r-5"></i>Subir Archivo</a>
+
+                                <div class="table-responsive">
+                                    <table class="table table-condensed">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Nombre</th>
+                                                @if (configuracion.HabilitaTagsCliente)
+                                                {
+                                                    <th>Tags</th>
+                                                }
+                                                <th>Eliminar</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tbody@(configuracion.Id)" habilitarTagsCliente="@(configuracion.HabilitaTagsCliente ? "true" : "false")">
+                                            @foreach (var archivo in Model.Archivos.Where(x => x.ArchivoConfiguracion.Id == configuracion.Id))
+                                            {
+                                                <tr>
+                                                    <td><img class="ticket-thumbnail" imagen-extension src="" nombre="@archivo.Id" contenido="@archivo.Contenido" /></td>
+                                                    <td>@archivo.Nombre</td>
+                                                    @*<td tagCliente-descripcion="@archivo.Id">@(string.Join(", ", archivo.TagsCliente.Select(x => x.Nombre).ToArray()))</td>*@
+                                                    <td>
+                                                        @if (!configuracion.NoEditable)
+                                                        {
+                                                            <a id="@archivo.Id" eliminar-archivo class="btn btn-icon command-edit waves-effect waves-circle"><span class="zmdi zmdi-close"></span></a>
+                                                        }
+                                                        <a nombre="@archivo.Nombre" target="_blank" descargar-archivo="@archivo.Id" class="btn btn-icon command-edit waves-effect waves-circle"><span class="zmdi zmdi-download"></span></a>
+                                                        @if (configuracion.HabilitaTagsCliente)
+                                                        {
+                                                            <a tagCliente-editar="@archivo.Id" class="btn btn-icon command-edit waves-effect waves-circle"><span class="zmdi zmdi-bookmark"></span></a>
+                                                        }
+                                                    </td>
+                                                </tr>
+                                            }
+                                            
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <!-- END CAMPO Y CARGA DE IMAGEN -->
+
+
+                                <script type="text/javascript">
+                                    var EsCargaMultiple = @(configuracion.EsCargaMultiple ? "true": "false");
+
+                                    $('#guardarImagen@(configuracion.Id)').click({configuracionId: '@(configuracion.Id)'}, mandarImagenAlFormulario);
+                                    $('#cancelarImagen@(configuracion.Id)').click({configuracionId: '@(configuracion.Id)'}, cerrarModalImagen);
+                                </script>
+                                
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- MODALES EDITAR TAGS-->
+
+@*<div class="modal fade" id="modalEditarTags" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Tags de Cliente</h4>
+            </div>
+            <div class="modal-body">
+                <div class="jumbotron">
+                    @foreach (var item in Model.TagsCliente.OrderBy(x => x.Nombre))
+                    {
+                        <div class="toggle-switch toggle-switch-demo m-b-20 w-100" data-ts-color="blue">
+                            <input tagCliente-input data-val="true" id="tagCliente@(contador)" name="tagCliente@(contador)" type="checkbox" value="@item.Id" hidden="hidden">
+                            <label for="tagCliente@(contador)" class="ts-helper"></label>
+                            <label for="tagCliente@(contador)" class="ts-label m-l-10">@item.Nombre</label>
+                        </div>
+
+                        contador++;
+                    }                    
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a class="btn btn-link" tagCliente-guardar>Guardar</a>
+                <a class="btn btn-link" data-dismiss="modal">Descartar</a>
+            </div>
+        </div>
+    </div>
+</div>*@

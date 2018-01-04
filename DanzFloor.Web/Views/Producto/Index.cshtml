@@ -1,0 +1,58 @@
+﻿@using DanzFloor.Web.Models.Enum
+@model IEnumerable<DanzFloor.Web.Models.Dominio.Producto>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card z-depth-4">
+    <div class="card-header">
+        <h2>
+            Productos
+        </h2>
+    </div>
+
+    <a href="/Producto/Create" class="btn btn-float bgm-blue m-btn waves-effect waves-circle waves-float"><i class="zmdi zmdi-plus"></i></a>
+    <div class="table-responsive">
+        <table id="data-table-basic-producto" class="table table-striped">
+            <thead>
+                <tr>
+                    <th data-column-id="Id" data-visible="false" data-searchable="false">
+                        @Html.DisplayNameFor(model => model.Id)
+                    </th>
+                    <th data-column-id="Nombre">@Html.DisplayNameFor(model => model.Nombre)</th>
+                    <th data-column-id="Familia">@Html.DisplayNameFor(model => model.Familia)</th>
+                    <th data-column-id="Destacado">@Html.DisplayNameFor(model => model.NivelRecomendado)</th>
+                    <th data-column-id="commands" data-formatter="commands" data-sortable="false">
+                        Comandos
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Id)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Nombre)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Familia.Nombre)
+                        </td>
+                        <td>
+                            @NivelRecomendadoConst.ObtenerDescripcion(item.NivelRecomendado)
+                        </td>
+
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script src="~/Scripts/BootgridProducto.js"></script>

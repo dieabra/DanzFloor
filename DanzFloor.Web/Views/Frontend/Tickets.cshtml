@@ -1,0 +1,178 @@
+﻿@using DanzFloor.Web.Models.ViewModels.Frontend
+@using DanzFloor.Web.Models.Dominio
+@using DanzFloor.Web.Models
+
+@model FrontendTicketViewModel
+@{
+    ViewBag.Title = "Ticket";
+    Layout = "~/Views/Shared/_LayoutFront.cshtml";
+}
+
+@using (Html.BeginForm("Tickets", "Frontend", FormMethod.Post, new { @class="formulario-paginado"}))
+{
+<div class="container">
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+            <div class="text-center margintop30">
+                <div class="margintop60 hidden-xs"></div>
+                <h3>Gestión de @TipoTicket.ObtenerNombreSeccion(Model.TipoTicketId)</h3>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="container-info-pedido reclamo">
+                        <div class="row">
+                            <div class="col-sm-8">
+                                <div class="datos-pedido">
+                                    @if (Model.PedidoInicial.Cliente.Vendedor != null)
+                                    {
+                                        <div class="row @(Model.PedidoInicial.Cliente.Vendedor.BejermanId == "0001" ? "hide" : "") ">
+                                            <div class="col-xs-4 col-sm-3">
+                                                <div class="item-box">
+                                                    <p class="general-title text-right-left">Representante</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-8 col-sm-9">
+                                                <div class="item-box">
+                                                    <p class="descripcion-item-box">@Model.PedidoInicial.Cliente.Vendedor.Nombre</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }                                    
+                                    <div class="row datos-pedido-box">
+                                        <div class="col-xs-4 col-sm-3">
+                                            <div class="item-box">
+                                                <p class="general-title text-right-left">Cliente</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-8 col-sm-9">
+                                            <div class="item-box">
+                                                <p class="descripcion-item-box">@Model.PedidoInicial.Cliente.Nombre</p>
+                                            </div>
+                                        </div>
+                                    </div> 
+                                    <div class="row datos-pedido-box">
+                                        <div class="col-xs-4 col-sm-3">
+                                            <div class="item-box">
+                                                <p class="general-title text-right-left">Razón Social</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-8 col-sm-9">
+                                            <div class="item-box">
+                                                <p class="descripcion-item-box">@Model.PedidoInicial.Cliente.RazonSocial</p>
+                                            </div>
+                                        </div>
+                                    </div> 
+                                </div>	
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="pedido-acciones">
+                                    <a href="#" class="btn btn-primary hidden-xs btn-add-reclamo" data-toggle="modal" data-target="#modal-nuevo-reclamo">@TipoTicket.ObtenerNombreNuevoTicket(Model.TipoTicketId)</a>
+                                    <div class="visible-xs">
+                                        <a href="#" class="btn btn-primary btn-sm btn-add-reclamo" data-toggle="modal" data-target="#modal-nuevo-reclamo">@TipoTicket.ObtenerNombreNuevoTicket(Model.TipoTicketId)</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="table-responsive margintop40 hidden-xs">
+                <table class="table table-reclamos">
+                    <thead>
+                        <tr>
+                            <th>CÓDIGO</th>
+                            <th>FECHA</th>
+                            <th>ESTADO</th>
+                            <th>DETALLES</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in (List<Ticket>)Model.Resultado)
+                        {
+                            <tr>
+                                <td>@(item.Numero.ToString().Substring((item.Numero.ToString().Length - 5), 5))</td>
+                                <td>@item.FechaCreacion.ToString("dd/MM/yyyy")</td>
+                                <td><span class="label label-default label-reclamo @(item.Estado == DanzFloor.Web.Models.Enum.EstadoTicket.Abierto ? "label-default" : "label-success") font10">@(item.Estado == DanzFloor.Web.Models.Enum.EstadoTicket.Abierto ? "En Proceso" : "Finalizado")</span></td>
+                                <td class="nombre-reclamo"><div>@item.ComentarioOriginal</div></td>
+                                <td>
+                                    <a var-detalle-reclamo="@item.Id" class="btn btn-primary btn-sm btn-outlined">Ver</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            @Html.Partial("~/Views/Frontend/Partial/_Paginador.cshtml", Model)
+
+            <div class="visible-xs table-pedidos-xs reclamos margintop10 brandon">
+                @foreach (var item in (List<Ticket>)Model.Resultado)
+                {
+                    <div class="tpxs-item">
+                        <a var-detalle-reclamo="@item.Id" class="">
+
+                            <div class="box-fecha">
+                                <i class="pe-7s-pen"></i>
+                                <span class="fecha-programada">@item.FechaCreacion.ToString("dd/MM/yyyy")</span>
+                                @*<i class="pe-7s-angle-right"></i>*@
+                            </div>
+
+                            <div class="detail-item truncate">
+                                <span class="label label-default label-reclamo @(item.Estado == DanzFloor.Web.Models.Enum.EstadoTicket.Abierto ? "label-default" : "label-success")">@(item.Estado == DanzFloor.Web.Models.Enum.EstadoTicket.Abierto ? "En Proceso" : "Finalizado")</span>
+                                <span class="subitem"><span class="brandonMd">Detalle: </span>@item.ComentarioOriginal</span>
+                            </div>
+                        </a>
+                    </div>
+                }
+            </div>    
+
+        </div>
+    </div>
+</div>
+}
+
+@Html.Partial("~/Views/Frontend/Partial/_ModalReclamo.cshtml", Model)
+
+<div class="modal fade modal-nuevo-reclamo modal-nuevo-reclamo-detalle modal-delivery-point" id="modal-nuevo-reclamo-detalle" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+
+</div>
+
+<hr class="divider-line footer-line hidden-xs">
+
+<script type="text/javascript">
+    var cargarDetalleReclamo = function (ticketId) {
+        var control = $('#modal-nuevo-reclamo-detalle');
+
+        if (control.length == 0)
+            return;
+
+        $.ajax({
+            dataType: 'json',
+            type: 'GET',
+            url: core + '/Frontend/_ModalReclamoDetalle/?ticketId=' + ticketId,
+            success: function (result) {
+            },
+            error: function (ex) {
+                control.html(ex.responseText);
+                control.modal('show');
+                console.log(ex)
+            },
+        });
+    }
+
+    $(document).ready(function () {
+        $('[var-detalle-reclamo]').click(function () {
+            cargarDetalleReclamo($(this).attr('var-detalle-reclamo'))
+        });
+    });
+
+    setTimeout(function () {
+        $('[data-page=first]').remove();
+        $('[data-page=prev]').append('ANTERIOR');
+        $('[data-page=next]').append('SIGUIENTE');
+        $('[data-page=last]').remove();
+    }, 2000);
+</script>

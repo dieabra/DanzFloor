@@ -1,0 +1,93 @@
+﻿@model DanzFloor.Web.Models.ViewModels.FamiliaViewModel
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(m => m.ArchivosId)
+<div class="card z-depth-4">
+    <div class="card-header">
+        <ul class="actions">
+            <li>
+                <a id="deleteFamilia">
+                    <i class="zmdi zmdi-delete" style="cursor: pointer;"></i>
+                </a>
+            </li>
+        </ul>
+        <h2>
+            Familia: @Model.Nombre
+        </h2>
+    </div>
+
+    <div class="card-body card-padding">
+            @Html.AntiForgeryToken()
+
+            <div class="card-header">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.Id)
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Nombre, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 form-group fg-float m-t-25 m-b-0">
+                        <div class="fg-line">
+                            @Html.TextAreaFor(model => model.Titulo, new { rows = 5, @class = "form-control" })
+                            <label class="fg-label">Título</label>
+                        </div>
+                        @Html.ValidationMessageFor(model => model.Titulo, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 form-group fg-float m-t-25 m-b-0">
+                        <div class="fg-line">
+                            @Html.TextAreaFor(model => model.Descripcion, new { rows = 5, @class = "form-control" })
+                            <label class="fg-label">Descripción</label>
+                        </div>
+                        @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+            </div>
+            <button type="submit" class="btn btn-float bgm-blue m-btn waves-effect waves-circle waves-float"><i class="zmdi zmdi-check"></i></button>
+    </div>
+</div>
+
+@Html.Partial("_FileComponent", Model.FileComponentViewModel)
+}
+
+<script type="text/javascript">
+    var familiaId = '@(Model.Id)';
+
+    $('#deleteFamilia').click(function () {
+        swal({
+            title: "¿Está seguro de que desea eliminar la familia?",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Sí",
+            cancelButtonText: "No",
+            closeOnConfirm: false
+        }, function () {
+            $.ajax({
+                dataType: 'json',
+                type: 'GET',
+                url: window.location.origin + '/familia/delete/' + familiaId,
+                success: function (result) {
+                    swal("¡Eliminado!", "La familia fue eliminada.", "success");
+                    window.location.assign(window.location.origin + "/familia");
+                },
+                error: function (error) {
+                    swal("¡Error!", "La familia no fue eliminada.", "error");
+                }
+            });
+        });
+    });
+</script>

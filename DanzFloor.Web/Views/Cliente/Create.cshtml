@@ -1,0 +1,168 @@
+﻿@model DanzFloor.Web.Models.Dominio.Cliente
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card z-depth-4">
+    <div class="card-header">
+        <h2>
+            Cliente Nuevo
+        </h2>
+    </div>
+
+    <div class="card-body card-padding">
+        @using (Html.BeginForm("Edit", "Cliente", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="row m-b-30">
+
+                <div class="col-md-6 form-group fg-float m-t-25 m-b-0">
+                    <div class="fg-line">
+                        @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control input-sm" } })
+                        @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+                        <label class="fg-label">@Html.DisplayNameFor(model => model.Nombre)</label>
+                    </div>
+                </div>
+
+                <div class="col-md-6 form-group fg-float m-t-25 m-b-0">
+                    <div class="fg-line">
+                        @Html.EditorFor(model => model.RazonSocial, new { htmlAttributes = new { @class = "form-control input-sm" } })
+                        @Html.ValidationMessageFor(model => model.RazonSocial, "", new { @class = "text-danger" })
+                        <label class="fg-label">@Html.DisplayNameFor(model => model.RazonSocial)</label>
+                    </div>
+                </div>
+
+                <div class="col-md-6 form-group fg-float m-t-25 m-b-0">
+                    <div class="fg-line">
+                        @Html.EditorFor(model => model.Telefono, new { htmlAttributes = new { @class = "form-control input-sm" } })
+                        @Html.ValidationMessageFor(model => model.Telefono, "", new { @class = "text-danger" })
+                        <label class="fg-label">@Html.DisplayNameFor(model => model.Telefono)</label>
+                    </div>
+                </div>
+
+                <div class="col-md-6 form-group fg-float m-t-25 m-b-0">
+                    <div class="fg-line">
+                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control input-sm" } })
+                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                        <label class="fg-label">@Html.DisplayNameFor(model => model.Email)</label>
+                    </div>
+                </div>
+
+                <div class="col-md-6 form-group fg-float m-t-25 m-b-0">
+                    <div class="fg-line">
+                        @Html.EditorFor(model => model.CreditoMaximo, new { htmlAttributes = new { @class = "form-control input-sm" } })
+                        @Html.ValidationMessageFor(model => model.CreditoMaximo, "", new { @class = "text-danger" })
+                        <label class="fg-label">@Html.DisplayNameFor(model => model.CreditoMaximo)</label>
+                    </div>
+                </div>
+
+                <div class="col-md-6 form-group fg-float m-t-25 m-b-0">
+                    <div class="fg-line">
+                        @Html.EditorFor(model => model.MedioPago, new { htmlAttributes = new { @class = "form-control input-sm" } })
+                        @Html.ValidationMessageFor(model => model.MedioPago, "", new { @class = "text-danger" })
+                        <label class="fg-label">@Html.DisplayNameFor(model => model.MedioPago)</label>
+                    </div>
+                </div>
+
+            </div>
+
+            <h5 class="t-center p-b-15">Puntos de entrega</h5>
+            
+            <br />
+            
+            <div class="table-responsive">
+
+               <table id="data-table-basic-puntoentrega" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th data-column-id="Id" data-visible="false" data-searchable="false">Id</th>
+                            <th data-column-id="name">Nombre</th>
+                            <th data-column-id="estado">Estado</th>
+                            <th data-column-id="commands" data-formatter="commands" data-sortable="false">
+                                Comandos
+                            </th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>2342342</td><td value="11972eda-54a8-43d1-a68d-155e40bddc80">(Mostaza) N° 3523 Corrientes 1244</td>   <td>Habilitado</td></tr>
+                        <tr><td>2342342</td><td value="4e2303f9-17db-4591-9c0e-ebb016141e07">(Mostaza) N° 3452 Santa Fe 2342</td>     <td>Habilitado</td></tr>
+                        <tr><td>2342342</td><td value="f5074b33-b91b-45e6-ab35-56125870b86f">(Mostaza) N° 453 San Martín 5341</td> <td>Deshabilitado</td></tr>
+                        <tr><td>2342342</td><td value="f5074b33-b91b-45e6-ab35-56125870b86f">(Mostaza) N° 7463 Monrroe 6431</td>   <td>Deshabilitado</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <br />
+            <hr />
+
+            <h5 class="t-center p-b-15">Usuarios</h5>
+
+            <br />
+
+            <div class="table-responsive">
+
+                <a href="/Cuenta/Register" class="btn btn-primary btn-icon waves-effect waves-circle waves-float right"><i class="zmdi zmdi-plus"></i></a>
+                
+                <table id="data-table-basic" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th data-column-id="Id" data-visible="false" data-searchable="false">Id</th>
+                            <th data-column-id="name">@Html.DisplayNameFor(model => model.Nombre)</th>
+                            <th data-column-id="cliente">>@Html.DisplayNameFor(model => model.Nombre)</th>
+                            <th data-column-id="cliente">Cliente</th>
+                            <th data-column-id="commands" data-formatter="commands" data-sortable="false">
+                                Comandos
+                            </th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>873694</td>
+                            <td>lharillo@binit.com.ar</td>
+                            <td>
+                                UsuarioBackend, Administrador
+                            </td>
+                            <td>Mostaza</td>
+                        </tr>
+                        <tr>
+                            <td>2876384726</td>
+                            <td>lyaque@binit.com.ar</td>
+                            <td>
+                                Administrador
+                            </td>
+                            <td>Mostaza</td>
+
+                        </tr>
+                        <tr>
+                            <td>83874658736</td>
+                            <td>rgimenez@binit.com.ar</td>
+                            <td>
+                                UsuarioBackend
+                            </td>
+                            <td>Mostaza</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <button type="submit" class="btn btn-float bgm-blue m-btn waves-effect waves-circle waves-float"><i class="zmdi zmdi-check"></i></button>
+        }
+       
+    </div>
+</div>
+
+<div>
+    
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<script src="~/Scripts/BootgridPuntoEntrega.js"></script>

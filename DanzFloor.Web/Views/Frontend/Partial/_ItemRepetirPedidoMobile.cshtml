@@ -1,0 +1,36 @@
+﻿@model DanzFloor.Web.Models.Dominio.Pedido
+
+@{
+    Layout = null;
+}
+
+
+<div class="tpxs-item">
+    <a href="/Frontend/DetallePedido/@Model.Id" class="">
+
+        <div class="box-fecha">
+            <i class="pe-7s-shopbag"></i>
+            <span class="fecha-programada">@Model.FechaProgramada.ToString("dd/MM/yyyy")</span>
+            <i class="pe-7s-angle-right"></i>
+        </div>
+
+
+        <div class="margintop5">
+            @foreach (var subitem in Model.Articulos)
+            {
+                <div class="detail-item truncate">
+                    <span class="item">@subitem.Cantidad cajas</span>
+                    <span class="subitem">@subitem.Articulo.Producto.Nombre</span>
+                </div>
+            }
+        </div>
+    </a>
+
+    @if (Model.Instancia == DanzFloor.Web.Models.Enum.InstanciaPedido.Facturado)
+    {
+        <div class="box-action-pedido text-right">
+            <a abrir-repetir-pedido="@Model.Id" class="btn btn-primary btn-xs"><span class="white">Repetir</span></a>
+        </div>
+    }
+
+</div>

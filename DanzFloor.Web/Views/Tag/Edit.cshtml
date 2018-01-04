@@ -1,0 +1,83 @@
+﻿@model DanzFloor.Web.Models.Dominio.Tag
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card z-depth-4">
+    <div class="card-header">
+        <ul class="actions">
+            <li>
+                <a id="deleteTag">
+                    <i class="zmdi zmdi-delete" style="cursor: pointer;"></i>
+                </a>
+            </li>
+        </ul>
+        <h2>
+            Tag
+        </h2>
+    </div>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="card-body card-padding">
+
+            <div class="row">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.Id)
+
+
+                <div class="col-md-6 form-group fg-float m-b-15">
+                    <div class="fg-line">
+                        @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control input-sm" } })
+                        @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+                        <label class="fg-label">Nombre</label>
+                    </div>
+                </div>
+
+                <div class="col-sm-6 m-b-20">
+                    <div class="toggle-switch toggle-switch-demo" data-ts-color="blue">
+                        <label for="VisibleFront" class="ts-label">Visble en Frontend</label>
+                        <input @(Model.VisibleFront ? "checked='checked'" : "") data-val="true"
+                               data-val-required="The Es administrador field is required."
+                               id="VisibleFront" name="VisibleFront" type="checkbox" value="true" hidden="hidden" chk-alerta>
+                        <label for="VisibleFront" class="ts-helper"></label>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-float bgm-blue m-btn waves-effect waves-circle waves-float"><i class="zmdi zmdi-check"></i></button>
+        
+    </div>
+}
+</div>
+
+<script type="text/javascript">
+    var tagId = '@(Model.Id)';
+
+    $('#deleteTag').click(function () {
+        swal({
+            title: "¿Está seguro de que desea eliminar la característica?",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Sí",
+            cancelButtonText: "No",
+            closeOnConfirm: false
+        }, function () {
+            $.ajax({
+                dataType: 'json',
+                type: 'GET',
+                url: window.location.origin + '/tag/delete/'+tagId,
+                success: function (result) {
+                    swal("¡Eliminado!", "La característica fue eliminada.", "success");
+                    window.location.assign(window.location.origin + "/tag");
+                },
+                error: function (error) {
+                    swal("¡Error!", "La característica no fue eliminada.", "error");
+                }
+            });
+        });
+    });
+</script>

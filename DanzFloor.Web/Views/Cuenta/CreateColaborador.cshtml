@@ -1,0 +1,135 @@
+﻿@using System;
+@using System.Linq;
+@using System.Collections.Generic;
+@model DanzFloor.Web.Models.RegisterViewModel
+@{
+    ViewBag.Title = "Create Colaborador";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card">
+    <div class="card-header">
+        <h2>
+            @ViewBag.Title
+        </h2>
+        @if (Model.Id != Guid.Empty)
+        {
+            <ul class="actions">
+                <li class="dropdown">
+                    <a href="" data-toggle="dropdown">
+                        <i class="zmdi zmdi-more-vert"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-right">
+                        <li>
+                            <a style="cursor:pointer" id="btnRestaurarContrasena">Reestablecer contraseña</a>
+                        </li>
+
+                    </ul>
+                </li>
+            </ul>
+        }
+    </div>
+
+    <div class="card-body card-padding ">
+        @*@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { role = "form" }))*@
+        @using (Html.BeginForm())
+        {
+            @Html.HiddenFor(m => m.IdUsuarioApplicacion);
+            @Html.HiddenFor(m => m.Id);
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary("", new { @class = "text-danger" })
+            if (!string.IsNullOrWhiteSpace(ViewBag.Error))
+            {
+                <div class="alert alert-danger">@Html.Raw(ViewBag.Error)</div>
+            }
+            <div class="form-group fg-line">
+                @Html.LabelFor(m => m.Email)
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control input-sm" })
+            </div>
+
+            <div class="form-group fg-line">
+                @Html.LabelFor(m => m.Name)
+                @Html.TextBoxFor(m => m.Name, new { @class = "form-control input-sm" })
+            </div>
+
+            <div class="form-group fg-line">
+                @Html.LabelFor(m => m.Lastname)
+                @Html.TextBoxFor(m => m.Lastname, new { @class = "form-control input-sm" })
+            </div>
+                @*<div class="form-group fg-line">
+                    @Html.LabelFor(m => m.Password)
+                    @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Contraseña" })
+                </div>
+                <div class="form-group fg-line">
+                    @Html.LabelFor(m => m.ConfirmPassword)
+                    @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", @placeholder = "Contraseña" })
+                </div>*@
+            <div class="form-group fg-line">
+                @Html.ListBoxFor(m => m.UserRolesSelected, new MultiSelectList(Model.Perfiles, "Value", "Text"), new { @class = "chosen" })
+            </div>
+            @*<div class="form-group fg-line">
+                @Html.LabelFor(m => m.UserRolesSelected)
+                @Html.DropDownListFor(m => m.UserRolesSelected, Model.PerfilesUsuarios)
+            </div>*@
+
+            <div class="row">
+
+                <button type="submit" class="btn btn-float bgm-blue m-btn waves-effect waves-circle waves-float"><i class="zmdi zmdi-check"></i></button>
+
+            </div>
+        }
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    $("#btnRestaurarContrasena").click(function () {
+        var id = '@Model.Id';
+        swal({
+            title: "¿Está seguro de que desea restaurar la contraseña de este usuario?",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Sí",
+            cancelButtonText: "No",
+            closeOnConfirm: false
+        }, function () {
+            $.ajax({
+                dataType: 'json',
+                type: 'GET',
+                url: window.location.origin + '/Cuenta' + '/RestaurarContrasena/' + id,
+                success: function () {
+                    swal("¡Genial!", "La contraseña fue restaura, se ha enviado un email al usuario.", "success");
+                },
+                error: function (error) {
+                    swal("¡Error!", "La contraseña no ha podido ser restaurada", "error");
+                }
+            });
+        });
+    });
+
+</script>
+
+<script src="~/Scripts/CallerService.js"></script>
+@section Scripts {
+    @if (!string.IsNullOrEmpty(Request.Params["result"]))
+    {
+        <script>
+            swal("Buen trabajo!", "El usuario ha sido registrado", "success");
+        </script>
+    }
+    @if (Request.Params["Message"] == "UpdateUserError")
+    {
+        <script>
+            swal("No se realizo la modificación.", "Revise los campos obligatorios del formulario.", "warning");
+        </script>
+    }
+
+    @if (Request.Params["Message"] == "UpdataPassword")
+    {
+        <script>
+            swal("Contraseña restaurada!.", "Se ha enviado un email al usuario con los pasos a seguir.", "success");
+        </script>
+    }
+
+}

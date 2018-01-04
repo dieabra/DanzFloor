@@ -1,0 +1,99 @@
+﻿
+@model DanzFloor.Web.Models.ViewModels.Frontend.RegisterFrontViewModel
+@{
+    ViewBag.Title = "Registrar";
+    Layout = "~/Views/Shared/_LayoutBase.cshtml";
+}
+<style>
+    .lc-block, .login-content:before{
+        display:none !important;
+    }
+</style>
+<nav class="navbar navbar-default navbar-fixed-top navbar-login">
+    <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li><a class="title-tab hidden-xs">47 Channel</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#">Sobre 47 Channel</a></li>
+                <li><a href="#">Contacto</a></li>
+                <li><a href="#">Términos y Condiciones</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="login-content" style="padding-top:60px;">
+    <div class="row">
+        <div class="col-sm-8 col-sm-offset-2">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <p class="clearmargin robotoLt font18">Registrate</p>
+                    @using (Html.BeginForm("Registrar", "Frontend", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { role = "form" }))
+                    {
+
+                        @Html.ValidationSummary("", new { @class = "text-danger" })
+
+                        if (!string.IsNullOrWhiteSpace(ViewBag.Error))
+                        {
+                            <div class="alert alert-danger">@Html.Raw(ViewBag.Error)</div>
+                        }
+                        <div class="form-group">
+                            <div class="margintop5">
+                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = "Email" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="margintop5">
+                                @Html.TextBoxFor(m => m.Name, new { @class = "form-control", @placeholder = "Nombre" })
+                            </div>
+                        </div>
+                        if (string.IsNullOrWhiteSpace(Model.IdSocial))
+                        {
+                            <div class="form-group">
+                                <div class="margintop5">
+                                    @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Contraseña" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="margintop5">
+                                    @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", @placeholder = "Confirmar Contraseña" })
+                                </div>
+                            </div>
+                        }
+                        @Html.HiddenFor(m => m.IdSocial)
+                        @*<div class="form-group fg-line">
+                                @Html.LabelFor(m => m.Mail)
+                                @Html.TextBoxFor(m => m.Mail, new { @class = "form-control input-sm", @placeholder = ""})
+                                @Html.ValidationMessageFor(model => model.Mail)
+                            </div>
+
+                            <div class="form-group fg-line">
+                                @Html.LabelFor(m => m.Nombre)
+                                @Html.TextBoxFor(m => m.Nombre, new { @class = "form-control input-sm" })
+                            </div>
+                            <div class="form-group fg-line">
+                                @Html.LabelFor(m => m.Password)
+                                @Html.PasswordFor(m => m.Password, new { @class = "form-control input-sm" })
+                            </div>
+                            <div class="form-group fg-line">
+                                @Html.LabelFor(m => m.ConfirmPassword)
+                                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control input-sm" })
+                            </div>*@
+                        <button type="submit" class="btn btn-primary btn-block">Registrarme</button>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

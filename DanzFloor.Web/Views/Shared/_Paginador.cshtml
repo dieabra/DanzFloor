@@ -1,0 +1,38 @@
+﻿@model DanzFloor.Web.Models.ViewModels.PaginadoViewModel
+@{ 
+    var contador = 0;
+}
+
+@Html.HiddenFor(m => m.Pagina);
+
+<ul class="pagination lg-pagination">
+    <li class="@Html.Raw(Model.Pagina == 1 ? "disabled" : "")"><a btn-buscar="1" class="button"><i class="zmdi zmdi-more-horiz"></i></a></li>
+    <li class="@Html.Raw(Model.Pagina == 1 ? "disabled" : "")">
+        <a btn-buscar="anterior" aria-label="Anterior">
+            <i class="zmdi zmdi-chevron-left"></i>
+        </a>
+    </li>
+    
+    @for (var i = 1; i <= Model.TotalPaginas; i++)
+    {
+
+        if (i > (Model.Pagina - 5))
+        {
+            contador++;
+            <li class="@(Model.Pagina == i ? "active": "")"><a btn-buscar="@i">@i</a></li>
+        }
+
+        if (contador >= 10)
+        {
+            break;
+        }
+    }
+    <li class="@Html.Raw(Model.Pagina == Model.TotalPaginas ? "disabled": "")">
+        <a btn-buscar="siguiente" aria-label="Siguiente">
+            <i class="zmdi zmdi-chevron-right"></i>
+        </a>
+    </li>
+    <li class="@Html.Raw(Model.Pagina == Model.TotalPaginas ? "disabled": "")"><a btn-buscar="@Model.TotalPaginas" class="button"><i class="zmdi zmdi-more-horiz"></i></a></li>
+</ul>
+
+<script src="~/Scripts/PaginadorController.js"></script>

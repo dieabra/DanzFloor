@@ -1,0 +1,304 @@
+@font-face {
+  font-family: 'RobotoLight';
+  src:url('../assets/fonts/Roboto-Light.ttf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'RobotoRegular';
+  src:url('../assets/fonts/Roboto-Regular.ttf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'RobotoMedium';
+  src:url('../assets/fonts/Roboto-Medium.ttf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'RobotoBold';
+  src:url('../assets/fonts/Roboto-Bold.ttf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+h1, h2, h3, h4, h5 {
+	font-family: 'Roboto Medium', 'RobotoMedium', 'Roboto', Helvetica, sans-serif;
+	font-weight: 500;
+}
+
+.robotoLt{
+  font-family: 'Roboto Light', 'RobotoLight', 'Roboto', Helvetica, sans-serif;
+  font-weight: 300;
+}
+.robotoRg{
+  font-family: 'Roboto Regular', 'RobotoRegular', 'Roboto', Helvetica, sans-serif;
+	font-weight: 400;
+}
+
+.robotoMd{
+  font-family: 'Roboto Medium', 'RobotoMedium', 'Roboto', Helvetica, sans-serif;
+	font-weight: 500;
+}
+
+.robotoBd{
+  font-family: 'Roboto Bold', 'RobotoBold', 'Roboto', Helvetica, sans-serif;
+	font-weight: 700;
+}
+
+
+$min-height-toolbar: 45px;
+
+.header-ios{
+	.toolbar-ios{
+		min-height: $min-height-toolbar;
+		&:last-child{
+			.toolbar-background-ios{
+				border: 0;
+			}
+		} 
+	}
+}
+
+.has-refresher{
+	.refresher-pulling-icon{
+		font-size: 20px;
+		ion-icon{
+			color: #999;
+		}
+	}
+	.refresher-pulling-text{
+		color: #999;
+		font-size: 14px;
+	}
+	> .scroll-content{
+		margin-top: calc(#{$min-height-toolbar} - 1px) !important;
+		border-top: 1px solid #eee;
+		background-color: #fff;
+	}
+}
+
+.novedades-page{
+	&.content{
+		.scroll-content{
+			padding-top: 20px !important;
+			border: 0;
+		}
+	}	
+}
+
+/*.canal-video-page{
+	&.content{
+		.fixed-content{
+			margin-top: 0 !important;
+		}
+		.scroll-content{
+			margin-top: 0 !important;
+			border: 0;
+		}
+	}	
+}
+*/
+ion-label {
+	letter-spacing: 0;
+	.label {
+		text-align: left;
+		color: #000;
+	}
+}
+
+ion-icon[name="ios-bookmark-outline"]{
+	color: #000;
+}
+
+.item-ios, .item-md, .item-wp{
+	ion-avatar[item-right]{
+		margin: 0;
+	}
+	ion-avatar[item-start], ion-avatar[item-left]{
+		margin-right: 7px;
+	}
+}	
+
+.card-home{
+	margin: 0;
+	width: 100%;
+	box-shadow: none;
+	.item-ios{
+		padding-left: 9px;
+	}
+	ion-avatar{
+		min-width: 30px;
+		min-height: 30px;
+		.loading-avatar{
+			width: 30px;
+			height: 30px;
+			border-radius: 50%;
+			overflow: hidden;
+			background-color: #ccc;
+			img{
+				width: 30px;
+				height: 30px;
+			}
+		}
+	}
+	button{
+		.button-inner{
+			font-size: 1.3rem;
+		}
+	}
+	
+	.btn-share{
+		.button-inner{
+			font-size: 1.6rem;
+		}
+	}
+
+	.loading-post{
+		width: 100%;
+		min-height: 178px;
+		background-color: #ccc;
+		position: relative;
+		@media (min-height: 666px) {
+			min-height: 195px;
+		}
+		@media (min-height: 730px) {
+			min-height: 210px;
+		}
+			
+		ion-icon{
+			color: #fff;
+		    font-size: 8rem;
+		}
+		.center-center{
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+		}
+	}
+	.col{
+		padding: 0 5px;
+	}
+	button[clear]{
+		margin: 0;
+	}
+}
+
+.toolbar{
+	-moz-box-shadow: 0px 1px 5px rgba(0,0,0,0.1);
+	-webkit-box-shadow: 0px 1px 5px rgba(0,0,0,0.1);
+	box-shadow: 0px 1px 5px rgba(0,0,0,0.1);
+	ion-title{
+		padding-left: 12px;
+		padding-right: 220px;
+		.toolbar-title{
+			font-weight: 300;
+			font-family: Roboto;
+			font-size: 2rem;
+			@media(max-width: 375px){
+				font-size: 1.7rem;
+			}
+		}
+	}
+}
+
+ion-title{
+	left: 0;
+    top: 0;
+    padding-top: 0;
+    padding-bottom: 1px;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    pointer-events: none;
+    padding-right: 220px;
+}
+
+.tabs-md, .tabs-ios, .tabs-wp{
+	.tab-button[aria-selected=true]{
+		border-top: 0;
+	    border-bottom: 4px solid #F8AED0;
+	}	
+}
+
+.card-content-ios, .card-content-md, .card-content-wp{
+	padding-top: 0;
+	h2{
+		font-family: Roboto;
+		font-weight: 300;
+		font-size: 2rem;
+		margin-top: 0;
+		margin-bottom: 0;
+	}
+	p{
+		color: #262626;
+		margin-top: 5px;
+		&.upload-time{
+			color: #999;
+			margin-top: 8px;
+			font-size: 1.1rem;
+			line-height: 1.3;
+		}
+	}
+	&.content-related{
+		margin-top: 5px;
+	}
+}
+
+.card{
+	ion-grid{
+		&.card-padding{
+			padding: 3px 5px 0 11px;
+			ion-note{
+				font-size: 1.1rem;
+			}
+		}
+	}
+}
+
+// Estilos navbar
+
+.img-navbar-heart{
+	max-width: 33px;
+	margin: auto;
+	display: block;
+}
+
+.btn-active{
+	color: pink;
+	ion-icon{
+		color: pink;
+	}
+}
+
+button[icon-only]{
+	width: 24pt;
+	height: 30pt;
+	.button-inner{
+		ion-icon{
+			padding: 0;
+		}
+	}
+}
+
+/*ion-icon[name="ios-heart-outline"], ion-icon[name="heart"]{
+	margin-right: -9px;
+}*/
+
+ion-col.negative-margin{
+	button{
+		position: absolute;
+		right: -15px;
+		@media (min-width: 400px) {
+			right: -25px;
+		}
+	}
+}

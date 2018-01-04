@@ -1,0 +1,76 @@
+﻿@using DanzFloor.Web.Models.Dominio
+
+@model Pedido
+@{
+    var subtotal = Model.Articulos.Sum(x => (x.Precio * x.Cantidad));
+    var iva = (Convert.ToDouble(Model.Cliente.IVA) * subtotal / 100);
+    var iibb = (Convert.ToDouble(Model.Cliente.IIBB) * subtotal / 100);
+}
+
+<div class="item-box">
+    <div class="col-xs-6 col-sm-8">
+        <p class="general-title pull-right">SUBTOTAL</p>
+    </div>
+    <div class="col-xs-6 col-sm-4">
+        <p class="precio pull-right">$@subtotal.VistaPrecio()</p>
+    </div>
+</div>
+<div class="item-box">
+    <div class="col-xs-6 col-sm-8">
+        <p class="general-title pull-right">IVA</p>
+    </div>
+    <div class="col-xs-6 col-sm-4">
+        <p class="precio pull-right">$@iva.VistaPrecio()</p>
+    </div>
+</div>
+<div class="item-box">
+    <div class="col-xs-6 col-sm-8">
+        <p class="general-title pull-right">IIBB</p>
+    </div>
+    <div class="col-xs-6 col-sm-4">
+        <p class="precio pull-right">$@iibb.VistaPrecio()</p>
+    </div>
+</div>
+<div class="item-box last-item">
+    <div class="col-xs-6 col-sm-8">
+        <p class="general-title pull-right"><span class="black">TOTAL</span></p>
+    </div>
+    <div class="col-xs-6 col-sm-4">
+        <p class="precio final pull-right">$@Model.MontoTotal.VistaPrecio()</p>
+    </div>
+</div>	
+
+@*<div class="visible-xs" >*@
+<div class="checkout-fixed" item-tabla-articulo>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-11 col-md-offset-1">
+                <div class="row">
+                    <div class="col-xs-6">
+                        <div>
+                            <p class="general-title clearmargin">Total:</p>
+                            <p class="font26 brandonMd clearmargin">$@Model.MontoTotal.VistaPrecio()</p>
+                        </div>
+                    </div>
+                    <div class="col-xs-6 margintop5">
+                        <div class="text-right hidden-xs">
+                            <a href="/Frontend/ConfirmarCompra/@Model.Id" class="btn btn-primary checkout-fixed-btn hidden-xs">Confirmar compra</a>
+                        </div>
+                        <div class="text-right visible-xs">
+                            <a href="/Frontend/ConfirmarCompra/@Model.Id" class="btn btn-primary checkout-fixed-btn visible-xs">Pedir</a>                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+@*</div>*@
+
+
+<script type="text/javascript">
+    if (location.pathname.toLowerCase().indexOf('checkout') == -1) {
+        $('[item-tabla-articulo]').hide();
+    }
+</script>

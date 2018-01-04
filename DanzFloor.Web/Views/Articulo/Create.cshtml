@@ -1,0 +1,66 @@
+﻿@model DanzFloor.Web.Models.ViewModels.ArticuloViewModel
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card z-depth-4">
+    <div class="card-header">
+        <h2>
+            Nuevo Artículo
+        </h2>
+    </div>
+
+    <div class="card-body card-padding">
+        @using (Html.BeginForm("Create", "Articulo", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="row">
+                <div class="col-md-6 form-group fg-float m-t-25">
+                    <div class="fg-line">
+                        @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control input-sm" } })
+                        @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+                        @Html.LabelFor(model => model.Nombre, new { @class = "fg-label" })
+                    </div>
+                </div>
+                <div class="col-md-6 form-group fg-float m-t-0 m-b-0">
+                    <div class="fg-line">
+                        @Html.EditorFor(model => model.CantidadUnidades, new { htmlAttributes = new { @class = "form-control input-sm" } })
+                        @Html.ValidationMessageFor(model => model.CantidadUnidades, "", new { @class = "text-danger" })
+                        @Html.LabelFor(model => model.CantidadUnidades, new { @class = "fg-label" })
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 form-group fg-float m-t-25 m-b-0">
+                    <label>Producto</label>
+                    <div class="fg-line">
+                        <select class="chosen" id="ProductoSelected" name="ProductoSelected" style="display: none;">
+                            @if (Model.ListaProductos != null)
+                            {
+                                foreach (var item in Model.ListaProductos)
+                                {
+                                    <option value="@item.Id">@item.Nombre</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-float bgm-blue m-btn waves-effect waves-circle waves-float"><i class="zmdi zmdi-check"></i></button>
+        }
+    </div>
+    <br />
+</div>
+
+<div>
+
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

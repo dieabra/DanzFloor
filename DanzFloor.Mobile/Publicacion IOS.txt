@@ -1,0 +1,8 @@
+Publish en IOS basada en un build previo:
+
+1) tomamos la version original que buildeaba
+2) reemplazo toda la carpeta src  
+3) ionic cordova run ios (eso lo corre y recompila) sobre el proyecto original con la carpeta modificada src
+4) cambiamos la version del General TAB (en XCODE ej: 0.3.0925)
+5) PRODUCT->ARCHIVE y desp "upload to appstore" (en el menu superior)
+6) web: itunesconnect.apple.com -> my apps -> TestFlight -> esperar a q te la den como OK desde apple

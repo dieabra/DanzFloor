@@ -1,0 +1,49 @@
+View: Login (entra a la app o luego de desloguearse)
+- Google Login (es el login social utilizando Gmail)
+- Login Facebook (es el login social utilizando Facebook)
+- Login Instagram (es el login social utilizando Instagram
+
+View: Login No Social (luego de entrar a Login entro a la pantalla de login no social)
+- Login No Social (log in manual con user y password)
+
+View: Registro (luego de entrar a Login entro a la pantalla de registro)
+- Registrar (formulario de registro enviado)
+
+View: Novedades
+- Share (ha compartido un link de un episodio)
+- Like (ha likeado un episodio)
+- Bookmark (ha bookmarkeado un episodio)
+- ObtenerMasNovedades (solicito una nueva pagina de novedades, es decir hizo scroll hasta el final)
+- Refresh
+
+View: Programas
+- Favorito (ha puesto un video como favorito)
+- ObtenerMasProgramas (solicito una nueva pagina de programas, es decir hizo scroll hasta el final)
+- Refresh
+
+View: Bookmarks
+- Share (ha compartido un link de un episodio)
+- Like (ha likeado un episodio)
+- Bookmark (ha bookmarkeado un episodio)
+- ObtenerMasBookmarks (solicito una nueva pagina de bookmarks es decir hizo scroll hasta el final)
+- Refresh
+
+View: Cuenta
+- LogOff (el user se deslogueo)
+- Refresh
+
+View: ProgramaPerfil
+- Share (ha compartido un link de un episodio)
+- Like (ha likeado un episodio)
+- Bookmark (ha bookmarkeado un episodio)
+- Favorito (ha puesto un video como favorito)
+- ObtenerMasEpisodios (solicita ver mas episodios, es decir hizo scroll hasta el final)
+
+View: Reproducir
+- VideoRelacionado (selecciono ver un video del contenido relacionado)
+- Share (ha compartido un link de un episodio)
+- Like (ha likeado un episodio)
+- Bookmark (ha bookmarkeado un episodio)
+- TraerMasEpisodios (solicita mas episodios, es decir que llego al final de la pantalla)
+- Refresh
+- "Video - [NombreVideo]" (trackea el video que se reprodujo con el nombre ej: "Video-Cookies con valu ramallo"

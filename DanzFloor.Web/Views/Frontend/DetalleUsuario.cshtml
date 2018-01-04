@@ -1,0 +1,65 @@
+﻿@using DanzFloor.Web.Datos
+@using DanzFloor.Web.Models.Dominio
+
+@model DanzFloor.Web.Models.ViewModels.UsuarioClienteFrontViewModel
+
+@{
+    ViewBag.Title = "Usuario";
+    Layout = "~/Views/Shared/_LayoutFront.cshtml";
+}
+
+
+<div class="container">
+    <div class="row margintop40">
+        <div class="col-xs-12">
+            <h3>@ViewBag.Title</h3>
+
+            <div class="panel panel-default margintop30">
+                <div class="panel-body">
+                    <div class="margintop20">
+                        <label>Email:</label>
+                        <span>@Model.Email</span>
+                    </div>
+
+                    <div class="margintop20">
+                        <label>Nombre:</label>
+                        <span>@Model.Name</span>
+                    </div>
+
+                    <div class="margintop20">
+                        <label>Apellido:</label>
+                        <span>@Model.Lastname</span>
+                    </div>
+
+                    <div class="margintop20">
+                        <label>Cliente:</label>
+                        <span>@Model.NombreCliente</span>
+                    </div>
+
+                    <div class="margintop20">
+                        <label> Puntos de Entrega:</label>
+                        @foreach (var item in Model.ListaPuntosEntrega)
+                        {
+                            if (Model.PuntosEntregaSelected != null && Model.PuntosEntregaSelected.Contains(item.Id))
+                            {
+                                <span>@item.NombreYDireccion</span>
+                            }
+                        }
+                    </div>
+
+                    <div class="margintop20">
+                        <label> Rol:</label>
+                        <span>
+                            @(Model.EsAdministrador ? "Administrador" : Model.EsGerenteSucursal ? "Gerente sucursal" : "Usuario")
+                        </span>
+                    </div>
+                </div>
+            </div>
+    
+            <a href="/Frontend/MiPerfil" class="btn btn-primary btn-sm margintop20">Volver</a>
+        </div>
+
+    </div>
+</div>
+
+<hr class="divider-line footer-line" />
